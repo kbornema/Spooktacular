@@ -29,4 +29,13 @@ public class InputController : MonoBehaviour {
 
         return DIRECTION.NONE;
     }
+
+    Vector2 GetControllerVector(string controllerName)
+    {
+        Vector2 result = Vector2.zero;
+
+        result = new Vector2(Input.GetAxis(controllerName + "_X"), Input.GetAxis(controllerName + "_Y")); 
+
+        return result;
+    }
 }

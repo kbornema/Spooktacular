@@ -7,7 +7,7 @@ using System;
 
 public sealed class MySpriteImporter : AssetPostprocessor
 {
-    const float PIXELS_PER_UNIT = 16.0f;
+    const float PIXELS_PER_UNIT = 32.0f;
    
     void OnPreprocessTexture()
     {

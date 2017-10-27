@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: JoyStickCreator
+  m_EditorClassIdentifier: Assembly-CSharp-Editor::JoystickCreator
+  _numJoysticks: 4
+  _ignoreCount: 9
+  _axisSensitivity: 3
+  _axisGravity: 0.0001
+  _axisDead: 3
+  _invertY: 0
+  _invertX: 0
+  _moveAxisXName: X_
+  _moveAxisYName: Y_
+  _buttonNames:
+  - Button1_
+  - Button2_
+  - Button3_
+  - Button4_
+  _keyboardButtons:
+  - 1
+  - 2
+  - 3
+  - 4
+  _keyHorizontalPos: Right
+  _keyHorizontalNeg: Left
+  _keyVerticalPos: Up
+  _keyVerticalNeg: Down
