@@ -2,6 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum DIRECTION
+{
+    NORTH,
+    EAST,
+    SOUTH,
+    WEST,
+    NONE
+}
+
 public class InputController : MonoBehaviour {
 
     [SerializeField]
@@ -11,14 +20,6 @@ public class InputController : MonoBehaviour {
     float minimumAxisInput;
 
     Vector2 defaultVector = new Vector2(-1, 1).normalized;
-
-    enum DIRECTION
-    {
-        NORTH,
-        EAST,
-        SOUTH,
-        WEST
-    }
 
 	// Use this for initialization
 	void Start () {
@@ -34,7 +35,7 @@ public class InputController : MonoBehaviour {
         return Input.GetButtonDown(buttonName + "_" + playerIndex);
     }
 
-    DIRECTION GetPlayerDirection(int playerIndex)
+    public DIRECTION GetPlayerDirection(int playerIndex)
     {
         Vector2 inputVector = GetControllerVector("" + playerIndex);
         if(inputVector.magnitude < minimumAxisInput)
