@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputController : MonoBehaviour {
+public enum DIRECTION
+{
+    NORTH,
+    EAST,
+    SOUTH,
+    WEST,
+    NONE
+}
 
-    enum DIRECTION
-    {
-        NORTH,
-        EAST,
-        SOUTH,
-        WEST
-    }
+public class InputController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -22,10 +23,10 @@ public class InputController : MonoBehaviour {
 		
 	}
 
-    DIRECTION GetPlayerDirection(int playerIndex)
+    public DIRECTION GetPlayerDirection(int playerIndex)
     {
 
 
-        return DIRECTION.NORTH;
+        return DIRECTION.NONE;
     }
 }

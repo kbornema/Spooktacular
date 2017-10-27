@@ -6,7 +6,8 @@ public class Squad : MonoBehaviour {
 
     [SerializeField]
     List<WayPoint> currentPath;
-
+    [SerializeField]
+    WayPoint currentPoint;
 
 	// Use this for initialization
 	void Start () {
