@@ -47,10 +47,6 @@ public class PlayerController : MonoBehaviour
         SelectionArrowInstance.SetActive(false);
 
         SelectionArrowInstance.GetComponent<SpriteRenderer>().color = _color;
-        
-        CreateSquads(3);
-
-        SelectSquad(0);
     }
 
     public void SelectSquad(int i)

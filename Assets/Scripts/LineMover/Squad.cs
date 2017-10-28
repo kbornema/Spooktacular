@@ -225,10 +225,13 @@ public class Squad : MonoBehaviour {
                 
 
         }
+
+        var otherSquad = coll.GetComponent<Squad>();
+        
         // Check if colliding objects is an opponent
-        else if(coll.gameObject.transform.parent.GetComponent<PlayerController>() != gameObject.GetComponent<PlayerController>() && isFighting == false)
+        if (otherSquad && otherSquad._player != _player && isFighting == false)
         {
-            CurrentOpponent = coll.gameObject.GetComponent<Squad>();
+            CurrentOpponent = otherSquad;
             CurrentOpponent.startFight();
             startFight();
 
