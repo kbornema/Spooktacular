@@ -9,20 +9,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 0}
-  m_Name: JoystickCreator
+  m_Name: JoyStickCreator
   m_EditorClassIdentifier: Assembly-CSharp-Editor::JoystickCreator
   _numJoysticks: 4
   _ignoreCount: 9
-  _axisSensitivity: 0
-  _axisGravity: 0
-  _axisDead: 0
+  _axisSensitivity: 3
+  _axisGravity: 3
+  _axisDead: 0.0001
   _invertY: 0
   _invertX: 0
-  _moveAxisXName: 
-  _moveAxisYName: 
-  _buttonNames: []
-  _keyboardButtons: []
-  _keyHorizontalPos: 
-  _keyHorizontalNeg: 
-  _keyVerticalPos: 
-  _keyVerticalNeg: 
+  _moveAxisXName: X_
+  _moveAxisYName: Y_
+  _buttonNames:
+  - Button1_
+  - Button2_
+  - Button3_
+  - Button4_
+  _keyboardButtons:
+  - 1
+  - 2
+  - 3
+  - 4
+  _keyHorizontalPos: right
+  _keyHorizontalNeg: left
+  _keyVerticalPos: up
+  _keyVerticalNeg: down

@@ -2,17 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Squad : MonoBehaviour {
+public class StatsManager : MonoBehaviour {
 
     [SerializeField]
-    List<WayPoint> currentPath;
-    [SerializeField]
-    WayPoint currentPoint;
-
-    public WayPoint getCurrentPoint()
-    {
-        return currentPoint;
-    }
+    string statNames;
 
 	// Use this for initialization
 	void Start () {

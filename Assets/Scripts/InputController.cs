@@ -10,6 +10,16 @@ public enum DIRECTION
     WEST,
     NONE
 }
+public static class EnumExtension
+{
+    public static bool areOpposingSides(this DIRECTION first, DIRECTION second) //Lol Brute Force "Logik"
+    {
+        return first.Equals(DIRECTION.NORTH) && second.Equals(DIRECTION.SOUTH) ||
+                first.Equals(DIRECTION.SOUTH) && second.Equals(DIRECTION.NORTH) ||
+                first.Equals(DIRECTION.EAST) && second.Equals(DIRECTION.WEST) ||
+                first.Equals(DIRECTION.WEST) && second.Equals(DIRECTION.EAST);
+    }
+}
 
 public class InputController : MonoBehaviour {
 
@@ -23,7 +33,8 @@ public class InputController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+        DIRECTION test = DIRECTION.NORTH;
+        Debug.Log(test.areOpposingSides(DIRECTION.SOUTH));
 	}
 	
 	// Update is called once per frame
@@ -40,7 +51,7 @@ public class InputController : MonoBehaviour {
         Vector2 inputVector = GetControllerVector("" + playerIndex);
         if(inputVector.magnitude < minimumAxisInput)
         {
-            
+            return DIRECTION.NONE;
         }
 
         inputVector.Normalize();
