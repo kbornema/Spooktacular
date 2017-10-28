@@ -9,6 +9,11 @@ public class Squad : MonoBehaviour {
     [SerializeField]
     WayPoint currentPoint;
 
+    public WayPoint getCurrentPoint()
+    {
+        return currentPoint;
+    }
+
 	// Use this for initialization
 	void Start () {
 		
