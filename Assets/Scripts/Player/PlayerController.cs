@@ -1,27 +1,27 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour 
+{
     [SerializeField]
-    public int playerIndex;
+    private int playerIndex;
+    public int PlayerIndex { get { return playerIndex; } }
 
     [SerializeField]
-    public GameController gameController;
+    private PlayerStats stats;
+    public PlayerStats Stats { get { return stats; } }
+
 
     [SerializeField]
-    public PlayerStats stats;
-
-    [SerializeField]
-    public Squad[] squads;
-
-	// Use this for initialization
-	void Start () {
-        stats = new PlayerStats();
-	}
+    private Squad[] squads;
+    public Squad[] Squads { get { return squads; } }
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+    public void Setup(int playerIndex)
+    {
+        this.playerIndex = playerIndex;
+        stats = new PlayerStats();
+        stats.Reset();
+    }
 }
