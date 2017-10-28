@@ -53,6 +53,9 @@ public class TileMapcontroller : MonoBehaviour {
 
     List<WayPoint> finishedWayPointList;
 
+    [SerializeField]
+    public GameObject wayPointPrefab;
+
     Tilemap tileMap;
 
 	// Use this for initialization
@@ -72,7 +75,6 @@ public class TileMapcontroller : MonoBehaviour {
         Vector3Int startPoint = findWalkableTile();
 
         
-
 
     }
 
@@ -174,7 +176,7 @@ public class TileMapcontroller : MonoBehaviour {
             return true;
     }
 
-    public void CheckNeighbors(checkabletile tile)
+   /* public void CheckNeighbors(checkabletile tile)
     {
         if (tileMap.HasTile(tile.tilePos) == false)
         {
@@ -230,7 +232,7 @@ public class TileMapcontroller : MonoBehaviour {
             case 4:
                 break;
         }
-
+        */
         /*Vector3Int distanceVector = new Vector3Int(0, 0, 0);
         distanceVector.x = ((northTile.IsWalkable()) ? 1 : 0) + ((southTile.IsWalkable()) ? 1 : 0);
         distanceVector.y = ((eastTile.IsWalkable()) ? 1 : 0) + ((westTile.IsWalkable()) ? 1 : 0);
@@ -258,7 +260,4 @@ public class TileMapcontroller : MonoBehaviour {
 
         }
         */
-    }
-
-
 }

@@ -8,7 +8,6 @@ using UnityEditor;
 [CreateAssetMenu(fileName = "RoadTile", menuName = "OwnTiles/RoadTile")]
 public class RoadTile : MyTile
 {
-    bool walkable = true;
     public Sprite[] m_Sprites;
     public Sprite m_Preview;
 
