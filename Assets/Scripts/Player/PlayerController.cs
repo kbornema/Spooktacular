@@ -31,8 +31,7 @@ public class PlayerController : MonoBehaviour
         _color = GetColor(playerId);
         stats = new PlayerStats();
         stats.Reset();
-
-
+        
         CreateSquads(3);
     }
 
@@ -43,7 +42,6 @@ public class PlayerController : MonoBehaviour
             for (int i = 0; i < squads.Length; i++)
                 Destroy(squads[i].gameObject);
         }
-
         
         squads = new Squad[num];
 
@@ -61,13 +59,13 @@ public class PlayerController : MonoBehaviour
         if (playerId == 0)
             return Color.red;
 
-        if (playerId == 1)
+        else if (playerId == 1)
             return Color.green;
 
-        if (playerId == 2)
+        else if (playerId == 2)
             return Color.blue;
 
-        if (playerId == 3)
+        else if (playerId == 3)
             return Color.yellow;
 
         return Color.magenta;
