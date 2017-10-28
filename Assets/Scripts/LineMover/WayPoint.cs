@@ -7,13 +7,13 @@ using UnityEngine;
 public class WayPoint : MonoBehaviour {
 
     [SerializeField]
-    WayPoint top;
+    public WayPoint top;
     [SerializeField]
-    WayPoint right;
+    public WayPoint right;
     [SerializeField]
-    WayPoint down;
+    public WayPoint down;
     [SerializeField]
-    WayPoint left;
+    public WayPoint left;
 
     [SerializeField]
     GameObject TrackPrefab;
