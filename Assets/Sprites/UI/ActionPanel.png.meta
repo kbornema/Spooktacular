@@ -1,9 +1,10 @@
 fileFormatVersion: 2
-guid: 62fec81e146a6d346b46163a800b5dcc
-timeCreated: 1509141972
+guid: 8280bfbdec4587340940cb9108d062fc
+timeCreated: 1509221373
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: ActionPanel_0
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -46,7 +47,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 24
+  spritePixelsToUnits: 50
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -76,7 +77,21 @@ TextureImporter:
     overridden: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: ActionPanel_0
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 20
+        width: 978
+        height: 288
+      alignment: 9
+      pivot: {x: 0, y: 0}
+      border: {x: 150, y: 0, z: 150, w: 287}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
     outline: []
     physicsShape: []
   spritePackingTag: 
