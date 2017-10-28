@@ -1,4 +1,4 @@
-﻿
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,6 +19,8 @@ public class Squad : MonoBehaviour
     private bool _randomizeChildren = false;
     [SerializeField]
     private AnimatedSpriteReplacer[] _childrenSpriteReplacer;
+    [SerializeField]
+    private SpriteRenderer _squadRing;
 
 
     [Header("Interaction")]
@@ -202,5 +204,6 @@ public class Squad : MonoBehaviour
     {   
         _player = player;
         _flag.SetColor(_color);
+        _squadRing.color = _color;
     }
 }
