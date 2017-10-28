@@ -6,10 +6,10 @@ using UnityEngine.Tilemaps;
 [CreateAssetMenu(fileName = "MyTile", menuName = "OwnTiles/MyTile")]
 public class MyTile : Tile
 {
-    bool walkable = true;
+    protected bool m_walkable = true;
 
     public virtual bool IsWalkable()
     {
-        return walkable;
+        return m_walkable;
     }
 }
