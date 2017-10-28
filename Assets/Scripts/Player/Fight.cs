@@ -8,6 +8,8 @@ public class Fight
     public Squad secondPlayer;
     public int FightMode;
 
+    public bool fightIsDone = false;
+
      public Fight(Squad _firstPlayer, Squad _secondPlayer)
     {
         firstPlayer = _firstPlayer;
