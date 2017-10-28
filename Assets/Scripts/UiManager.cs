@@ -7,8 +7,7 @@ using UnityEngine.UI;
 public class UiManager : AManager<UiManager> 
 {
     [SerializeField]
-    private GameObject[] _playerScoreUi;
-    private Text[] _playerScoreTexts;
+    private UiPlayerScore[] _playerScoreUi;
 
     [SerializeField]
     private Text _timer;
@@ -22,24 +21,22 @@ public class UiManager : AManager<UiManager>
 	// Use this for initialization
 	void Start ()
     {
-        int iPlayerCount = GameManager.Instance.NumberOfPlayer;
-        Debug.Log(iPlayerCount + " Players joined the game.");
-
-        _playerScoreTexts = new Text[iPlayerCount];
+        var players = GameManager.Instance.GetPlayers();
+        Debug.Log(players.Length + " Players joined the game.");
 
         for (int i = 0; i < _playerScoreUi.Length; i++)
-            _playerScoreUi[i].SetActive(false);
+            _playerScoreUi[i].gameObject.SetActive(false);
 
-        for (int i = 0; i < iPlayerCount; i++)
+        for (int i = 0; i < players.Length; i++)
         {
-            _playerScoreTexts[i] = _playerScoreUi[i].GetComponentInChildren<Text>();
-            _playerScoreUi[i].SetActive(true);
+            _playerScoreUi[i].SetColor(players[i].PlayerColor);
+            _playerScoreUi[i].gameObject.SetActive(true);
         }
     }
 
 
     public void UpdateScore(int playerId, int score)
     {
-        _playerScoreTexts[playerId].text = score.ToString();
+        _playerScoreUi[playerId].SetScore(score);
     }
 }

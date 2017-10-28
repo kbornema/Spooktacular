@@ -206,7 +206,6 @@ public class Squad : MonoBehaviour {
     {
         if (coll.gameObject.tag == "Door")
         {
-            Debug.Log("GOT A DOOR!");
             GameObject newFoundDoor = coll.gameObject;
 
             // Group is not at max loot

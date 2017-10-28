@@ -1,83 +1,41 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class LootController : MonoBehaviour {
 
-    public GameObject House;
+    public HouseProperties house;
 
    // [Range(0, 1)]
     private float fCurrentLoot;
 
     public Sprite[] CandyAnimation;
 
-
+    [SerializeField]
     private SpriteRenderer SpRender;
-    private float fLastLoot, fHouseLoot;
-    private Sprite actualSprite;
-    
-
-    private bool switchLoot = false;
-	// Use this for initialization
-	void Start ()
-    {
-        SpRender = gameObject.GetComponent<SpriteRenderer>();
-        // fHouseLoot = House.GetComponent <???>.fCurrentLoot;
-	}
+    private int lastLoot = -1;
+   
 	
 	// Update is called once per frame
 	void Update ()
     {
-        generateLoot(); // nur für Testzwecke
 
+        int curLoot = house.CurrentLoot;
         // fCurrentLoot = House.fCurrentloot;
-        if (fLastLoot != fCurrentLoot)
-            UpdateLoot();
+        if (lastLoot != fCurrentLoot)
+            UpdateLoot(curLoot);
 	
 	}
 
-    private void generateLoot()
-    {
-        if (!switchLoot && fCurrentLoot > 0.95f)
-            switchLoot = true;
-
-        if (switchLoot && fCurrentLoot < 0.01f)
-            switchLoot = false;
-
-        if (!switchLoot && fCurrentLoot < 0.95f)
-            fCurrentLoot += 0.01f;
-        if (switchLoot && fCurrentLoot > 0.01f)
-            fCurrentLoot -= 0.01f;
-    }
-
-    private void UpdateLoot()
+    private void UpdateLoot(int curLoot)
     {
 
-        //if (fCurrentLoot <= 0.01f)
-            // nulll
-        if (fCurrentLoot < 0.1f)
-            actualSprite = CandyAnimation[0];
-        if (fCurrentLoot > 0.1f)
-            actualSprite = CandyAnimation[1];
-        if (fCurrentLoot > 0.2f)
-            actualSprite = CandyAnimation[2];
-        if (fCurrentLoot > 0.3f)
-            actualSprite = CandyAnimation[3];
-        if (fCurrentLoot > 0.4f)
-            actualSprite = CandyAnimation[4];
-        if (fCurrentLoot > 0.5f)
-            actualSprite = CandyAnimation[5];
-        if (fCurrentLoot > 0.6f)
-            actualSprite = CandyAnimation[6];
-        if (fCurrentLoot > 0.7f)
-            actualSprite = CandyAnimation[7];
-        if (fCurrentLoot > 0.8f)
-            actualSprite = CandyAnimation[8];
-        if (fCurrentLoot > 0.9f)
-            actualSprite = CandyAnimation[9];
+        float percent = house.LootPercent;
 
-        fLastLoot = fCurrentLoot;
-        SpRender.sprite = actualSprite;
+        int index = (int)(percent * (CandyAnimation.Length - 1));
+
+        lastLoot = curLoot;
+        SpRender.sprite = CandyAnimation[index];
     }
 }

@@ -133,4 +133,9 @@ public class GameManager : AManager<GameManager>
 
 
 
+
+    public PlayerController[] GetPlayers()
+    {
+        return players;
+    }
 }
