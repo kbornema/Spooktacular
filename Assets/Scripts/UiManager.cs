@@ -4,11 +4,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ScoreManager : MonoBehaviour 
-{   
-    public GameObject[] Player;
+public class UiManager : AManager<UiManager> 
+{
+    [SerializeField]
+    private GameObject[] _playerScoreUi;
     private Text[] _playerScoreTexts;
 
+    [SerializeField]
+    private Text _timer;
+    public Text Timer { get { return _timer; } }
+
+
+    protected override void OnAwake()
+    {
+    }
 
 	// Use this for initialization
 	void Start ()
@@ -18,10 +27,13 @@ public class ScoreManager : MonoBehaviour
 
         _playerScoreTexts = new Text[iPlayerCount];
 
+        for (int i = 0; i < _playerScoreUi.Length; i++)
+            _playerScoreUi[i].SetActive(false);
+
         for (int i = 0; i < iPlayerCount; i++)
         {
-            _playerScoreTexts[i] = Player[i].GetComponentInChildren<Text>();
-            Player[i].SetActive(true);
+            _playerScoreTexts[i] = _playerScoreUi[i].GetComponentInChildren<Text>();
+            _playerScoreUi[i].SetActive(true);
         }
     }
 

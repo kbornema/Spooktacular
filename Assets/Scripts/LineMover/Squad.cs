@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Squad : MonoBehaviour {
-
-
+public class Squad : MonoBehaviour 
+{   
     [Header("Movement")]
     private LinkedList<WayPoint> currentPath;
     [SerializeField]
@@ -45,6 +44,12 @@ public class Squad : MonoBehaviour {
     [SerializeField]
     private int movementSpeed = 5;
     public int MovementSpeed { get { return movementSpeed; } set { movementSpeed = value; } }
+
+    [Header("Debug")]
+
+    [SerializeField, ReadOnly]
+    private PlayerController _player;
+    public PlayerController Player { get { return _player; } }
 
     private IEnumerator LootingRountine()
     {
@@ -197,4 +202,10 @@ public class Squad : MonoBehaviour {
         // set really invulnerable
     }
 
+
+    public void Init(PlayerController player, Color _color)
+    {   
+        _player = player;
+        _flag.SetColor(_color);
+    }
 }

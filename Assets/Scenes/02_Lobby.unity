@@ -312,10 +312,12 @@ MonoBehaviour:
   _destroyMode: 0
   _dontDestroyOnLoad: 1
   gameLength: 600
-  _numPlayers: 1
+  _squadPrefab: {fileID: 114200811897298136, guid: 75c1e786060426d41926d07f7ee9a67b,
+    type: 2}
   _gameIsRunning: 0
   players: []
   remainingTime: 0
+  _playerIds: 
 --- !u!4 &935048789
 Transform:
   m_ObjectHideFlags: 0
