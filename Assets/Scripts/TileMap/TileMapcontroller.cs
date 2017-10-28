@@ -11,10 +11,14 @@ public class TileMapcontroller : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         tileMap = GetComponent<Tilemap>();
+
+        
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
+
+
 }
