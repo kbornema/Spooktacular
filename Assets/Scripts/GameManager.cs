@@ -18,6 +18,9 @@ public class GameManager : AManager<GameManager>
     private Squad _squadPrefab;
     public Squad SquadPrefab { get { return _squadPrefab; } }
     public TileMapcontroller Map;
+
+    [SerializeField]
+    private GameObject _selectionArrowPrefab;
     
     [Header("Debug")]
 
@@ -45,8 +48,7 @@ public class GameManager : AManager<GameManager>
 
         //Only setup the game of the scene is the gameplay scene and there are no players yet:
         if (NumberOfPlayer == 0 && SceneManager.GetActiveScene().name.Equals(playScene))
-        {
-            Debug.Log("B");
+        {   
             SetupGame(_playerIds);
         }
     }
@@ -77,7 +79,7 @@ public class GameManager : AManager<GameManager>
         {
             GameObject playerControllerObj = new GameObject("Player_" + i);
             players[i] = playerControllerObj.AddComponent<PlayerController>();
-            players[i].Setup(i, playerIndices[i]);       
+            players[i].Setup(i, playerIndices[i], _selectionArrowPrefab);       
 
             for (int k = 0; k < players[i].Squads.Length; k++)
             {

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -32,6 +32,19 @@ public class WayPoint : MonoBehaviour {
         }
     }
 
+    private void OnDrawGizmos()
+    {   
+        Gizmos.color = Color.red;
+
+        if(left)
+            Gizmos.DrawLine(transform.position, left.transform.position);
+        if(right)
+            Gizmos.DrawLine(transform.position, right.transform.position);
+        if (top)
+            Gizmos.DrawLine(transform.position, top.transform.position);
+        if (down)
+            Gizmos.DrawLine(transform.position, down.transform.position);
+    }
 
     public DIRECTION getDirection(WayPoint givenWaypoint)
     {
