@@ -5,23 +5,23 @@ using UnityEngine.Tilemaps;
 
 public struct checkabletile
 {
-    public checkabletile(Vector3Int _tilePos, Vector3Int _directionToPrevieousTile)
+    public checkabletile(Vec2i _tilePos, Vec2i _directionToPrevieousTile)
     {
         tilePos = _tilePos;
         directionToPreviousTile = _directionToPrevieousTile;
     }
 
-    public Vector3Int tilePos;
-    public Vector3Int directionToPreviousTile;
+    public Vec2i tilePos;
+    public Vec2i directionToPreviousTile;
 }
 
 public class OpenRoad
 {
-    public Vector3Int origin;
-    public Vector3Int direction;
+    public Vec2i origin;
+    public Vec2i direction;
     public WayPoint lastWayPoint;
 
-    public OpenRoad(Vector3Int _origin, Vector3Int _dir, WayPoint _wp)
+    public OpenRoad(Vec2i _origin, Vec2i _dir, WayPoint _wp)
     {
         origin = _origin;
         direction = _dir;
@@ -32,11 +32,11 @@ public class OpenRoad
 public class OpenWayPoint
 {
     public WayPoint wayPoint;
-    public Vector3Int tilePos;
+    public Vec2i tilePos;
     public int numAdustingRoads;
     public int numCheckedRoads;
     
-    public OpenWayPoint(Vector3Int _tilePos, WayPoint wp, int _adjustingTiles)
+    public OpenWayPoint(Vec2i _tilePos, WayPoint wp, int _adjustingTiles)
     {
         wayPoint = wp;
         tilePos = _tilePos;
@@ -61,7 +61,7 @@ public class TileMapcontroller : MonoBehaviour {
     public GameObject wayPointPrefab;
 
     [SerializeField]
-    private Tilemap tileMap;
+    private PP2DGridLayer tileMap;
 
     public List<WayPoint> WayPoints()
     {
@@ -70,8 +70,7 @@ public class TileMapcontroller : MonoBehaviour {
 
     private void Awake()
     {
-        if (tileMap)
-            tileMap = GetComponent<Tilemap>();
+       
         //GenerateWayPoints();
     }
 
@@ -85,7 +84,7 @@ public class TileMapcontroller : MonoBehaviour {
     [ContextMenu("Generate")]
     public void GenerateWayPoints()
     {
-        Vector3Int startPoint = findWalkableTile();
+        Vec2i startPoint = findWalkableTile();
 
         openWaypoints = new List<OpenWayPoint>();
         openRoads = new List<OpenRoad>();
@@ -99,27 +98,28 @@ public class TileMapcontroller : MonoBehaviour {
         originalWayPoint.transform.localScale = Vector3.one * 2;
 
         int counter = 0;
-        if (IsWalkable(startPoint + new Vector3Int(1, 0, 0)))
+        if (IsWalkable(startPoint + new Vec2i(1, 0)))
         {
             counter++;
-            openRoads.Add(new OpenRoad(startPoint, new Vector3Int(1, 0, 0), originalWayPoint));
+            openRoads.Add(new OpenRoad(startPoint, new Vec2i(1, 0), originalWayPoint));
         }
-        if (IsWalkable(startPoint + new Vector3Int(-1, 0, 0)))
-        {
-            counter++;
-            openRoads.Add(new OpenRoad(startPoint, new Vector3Int(-1, 0, 0), originalWayPoint));
 
-        }
-        if (IsWalkable(startPoint + new Vector3Int(0, 1, 0)))
+        if (IsWalkable(startPoint + new Vec2i(-1, 0)))
         {
             counter++;
-            openRoads.Add(new OpenRoad(startPoint, new Vector3Int(0, 1, 0), originalWayPoint));
+            openRoads.Add(new OpenRoad(startPoint, new Vec2i(-1, 0), originalWayPoint));
+        }
 
-        }
-        if (IsWalkable(startPoint + new Vector3Int(0, -1, 0)))
+        if (IsWalkable(startPoint + new Vec2i(0, 1)))
         {
             counter++;
-            openRoads.Add(new OpenRoad(startPoint, new Vector3Int(0, -1, 0), originalWayPoint));
+            openRoads.Add(new OpenRoad(startPoint, new Vec2i(0, 1), originalWayPoint));
+        }
+
+        if (IsWalkable(startPoint + new Vec2i(0, -1)))
+        {
+            counter++;
+            openRoads.Add(new OpenRoad(startPoint, new Vec2i(0, -1), originalWayPoint));
 
         }
 
@@ -134,40 +134,28 @@ public class TileMapcontroller : MonoBehaviour {
             i++;
         }
 
+
     }
 
-    public int getNumberOfAdjustantWalkableTiles(Vector3Int tilePos)
+    public int getNumberOfAdjustantWalkableTiles(Vec2i tilePos)
     {
         int counter = 0;
-        if(IsWalkable(tilePos + new Vector3Int(1, 0, 0 ))) { counter++; }
-        if (IsWalkable(tilePos + new Vector3Int(-1, 0, 0))) { counter++; }
-        if (IsWalkable(tilePos + new Vector3Int(0, 1, 0))) { counter++; }
-        if (IsWalkable(tilePos + new Vector3Int(0, -1, 0))) { counter++; }
+        if(IsWalkable(tilePos + new Vec2i(1, 0))) { counter++; }
+        if (IsWalkable(tilePos + new Vec2i(-1, 0))) { counter++; }
+        if (IsWalkable(tilePos + new Vec2i(0, 1))) { counter++; }
+        if (IsWalkable(tilePos + new Vec2i(0, -1))) { counter++; }
 
         return counter;
     }
 
-    public Vector3Int findWalkableTile()
-    {
-        for (int curX = tileMap.cellBounds.position.x; curX < tileMap.cellBounds.size.x; curX++)
-        {
-            for (int curY = tileMap.cellBounds.position.y; curY < tileMap.cellBounds.size.y; curY++)
-            {
-                if(tileMap.HasTile(new Vector3Int(curX, curY, 0)))
-                {
-                    RoadTile curTile = tileMap.GetTile(new Vector3Int(curX, curY, 0)) as RoadTile;
-                    if (curTile != null)
-                        return new Vector3Int(curX, curY, 0);
-                }
-            }
-        }
-        Debug.Log("No walkable Tile found on Tilemap!");
-        return new Vector3Int(0,0,0);
+    public Vec2i findWalkableTile()
+    {   
+        return tileMap.GetFirstVector();
     }
 
     public void ProcessRoad(OpenRoad road)
     {
-        Vector3Int currenttile = road.origin + road.direction;
+        Vec2i currenttile = road.origin + road.direction;
 
         while(IsRoad(currenttile, road.direction))
         {
@@ -176,11 +164,11 @@ public class TileMapcontroller : MonoBehaviour {
         ProcessCrossRoad(currenttile, road);
     }
 
-    public bool IsRoad(Vector3Int tilePos, Vector3Int dir)
+    public bool IsRoad(Vec2i tilePos, Vec2i dir)
     {
         bool result = false;
 
-        Vector3Int alternateDir = new Vector3Int(dir.y, dir.x, 0);
+        Vec2i alternateDir = new Vec2i(dir.y, dir.x);
 
         // assumes that previous tile on road is walkable
         if (IsWalkable(tilePos + dir) == true && IsWalkable(tilePos + alternateDir) == false && IsWalkable(tilePos - alternateDir) == false)
@@ -189,37 +177,37 @@ public class TileMapcontroller : MonoBehaviour {
         return result;
     }
 
-    public void ProcessCrossRoad(Vector3Int currentTile, OpenRoad incomingRoad)
+    public void ProcessCrossRoad(Vec2i currentTile, OpenRoad incomingRoad)
     {
         int wpIndex = openWaypoints.FindIndex(wp => wp.tilePos == currentTile);
         if (wpIndex >= 0)
         {
             Debug.Log("Found a Road to an OLD WayPoint");
             // add Incoming road to existing Waypoint
-            if(incomingRoad.direction == new Vector3Int(0, 1, 0))
+            if(incomingRoad.direction == new Vec2i(0, 1))
             {
                 openWaypoints[wpIndex].wayPoint.down = incomingRoad.lastWayPoint;
                 incomingRoad.lastWayPoint.top = openWaypoints[wpIndex].wayPoint;
             }
-            else if(incomingRoad.direction == new Vector3Int(0, -1, 0))
+            else if(incomingRoad.direction == new Vec2i(0, -1))
             {
                 openWaypoints[wpIndex].wayPoint.top = incomingRoad.lastWayPoint;
                 incomingRoad.lastWayPoint.down = openWaypoints[wpIndex].wayPoint;
 
             }
-            else if (incomingRoad.direction == new Vector3Int(1, 0, 0))
+            else if (incomingRoad.direction == new Vec2i(1, 0))
             {
                 openWaypoints[wpIndex].wayPoint.left = incomingRoad.lastWayPoint;
                 incomingRoad.lastWayPoint.right = openWaypoints[wpIndex].wayPoint;
 
             }
-            else if (incomingRoad.direction == new Vector3Int(-1, 0, 0))
+            else if (incomingRoad.direction == new Vec2i(-1, 0))
             {
                 openWaypoints[wpIndex].wayPoint.right = incomingRoad.lastWayPoint;
                 incomingRoad.lastWayPoint.left = openWaypoints[wpIndex].wayPoint;
 
             }
-            int otherRoadIndex = openRoads.FindIndex(r => r.lastWayPoint == openWaypoints[wpIndex].wayPoint && (r.direction + incomingRoad.direction) == Vector3Int.zero);
+            int otherRoadIndex = openRoads.FindIndex(r => r.lastWayPoint == openWaypoints[wpIndex].wayPoint && (r.direction + incomingRoad.direction) == Vec2i.zero);
 
             // remove both Roads from the openRoads
             if (otherRoadIndex >= 0)
@@ -256,55 +244,55 @@ public class TileMapcontroller : MonoBehaviour {
 
             int outgoingRoads = 0;
 
-            if (incomingRoad.direction == new Vector3Int(1, 0, 0))
+            if (incomingRoad.direction == new Vec2i(1, 0))
             {
                 currentWP.left = incomingRoad.lastWayPoint;
             }
             else
             {
-                if(IsWalkable(currentTile + new Vector3Int(1, 0, 0)))
+                if(IsWalkable(currentTile + new Vec2i(1, 0)))
                 {
-                    openRoads.Add(new OpenRoad(currentTile, new Vector3Int(1, 0, 0), currentWP));
+                    openRoads.Add(new OpenRoad(currentTile, new Vec2i(1, 0), currentWP));
                     outgoingRoads++;
                 }
             }
 
-            if(incomingRoad.direction == new Vector3Int(-1, 0, 0))
+            if(incomingRoad.direction == new Vec2i(-1, 0))
             {
                 currentWP.right = incomingRoad.lastWayPoint;
             }
             else
             {
-                if (IsWalkable(currentTile + new Vector3Int(-1, 0, 0)))
+                if (IsWalkable(currentTile + new Vec2i(-1, 0)))
                 {
-                    openRoads.Add(new OpenRoad(currentTile, new Vector3Int(-1, 0, 0), currentWP));
+                    openRoads.Add(new OpenRoad(currentTile, new Vec2i(-1, 0), currentWP));
                     outgoingRoads++;
                 }
             }
 
-            if (incomingRoad.direction == new Vector3Int(0, 1, 0))
+            if (incomingRoad.direction == new Vec2i(0, 1))
             {
                 currentWP.down = incomingRoad.lastWayPoint;
 
             }
             else
             {
-                if (IsWalkable(currentTile + new Vector3Int(0, 1, 0)))
+                if (IsWalkable(currentTile + new Vec2i(0, 1)))
                 {
-                    openRoads.Add(new OpenRoad(currentTile, new Vector3Int(0, 1, 0), currentWP));
+                    openRoads.Add(new OpenRoad(currentTile, new Vec2i(0, 1), currentWP));
                     outgoingRoads++;
                 }
             }
 
-            if (incomingRoad.direction == new Vector3Int(0, -1, 0))
+            if (incomingRoad.direction == new Vec2i(0, -1))
             {
                 currentWP.top = incomingRoad.lastWayPoint;
             }
             else
             {
-                if (IsWalkable(currentTile + new Vector3Int(0, -1, 0)))
+                if (IsWalkable(currentTile + new Vec2i(0, -1)))
                 {
-                    openRoads.Add(new OpenRoad(currentTile, new Vector3Int(0, -1, 0), currentWP));
+                    openRoads.Add(new OpenRoad(currentTile, new Vec2i(0, -1), currentWP));
                     outgoingRoads++;
                 }
             }
@@ -317,13 +305,8 @@ public class TileMapcontroller : MonoBehaviour {
         }
     }
 
-    bool IsWalkable(Vector3Int position)
-    {
-        RoadTile myTile = tileMap.GetTile(new Vector3Int(position.x, position.y, 0)) as RoadTile;
-
-        if (myTile == null)
-            return false;
-        else
-            return true;
+    bool IsWalkable(Vec2i position)
+    {   
+        return tileMap.HasTile(position);
     }
 }

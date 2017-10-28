@@ -1,22 +1,25 @@
 fileFormatVersion: 2
-guid: 5ba3ee467ba5f7b40bb3a22d8f38a152
-timeCreated: 1509217711
+guid: 1b16c3f9b55c7e449bb8792b002378fb
+timeCreated: 1509218352
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: street_sprite1_0
-    21300002: street_sprite1_1
-    21300004: street_sprite1_2
-    21300006: street_sprite1_3
-    21300008: street_sprite1_4
-    21300010: street_sprite1_5
-    21300012: street_sprite1_6
-    21300014: street_sprite1_7
-    21300016: street_sprite1_8
-    21300018: street_sprite1_9
-    21300020: street_sprite1_10
-    21300022: street_sprite1_11
-    21300024: street_sprite1_12
+    21300000: road_0
+    21300002: road_1
+    21300004: road_2
+    21300006: road_3
+    21300008: road_4
+    21300010: road_5
+    21300012: road_6
+    21300014: road_7
+    21300016: road_8
+    21300018: road_9
+    21300020: road_10
+    21300022: road_11
+    21300024: road_12
+    21300026: road_13
+    21300028: road_14
+    21300030: road_15
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -91,11 +94,11 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: street_sprite1_0
+      name: road_0
       rect:
         serializedVersion: 2
-        x: 48
-        y: 192
+        x: 0
+        y: 96
         width: 32
         height: 32
       alignment: 0
@@ -105,11 +108,11 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: street_sprite1_1
+      name: road_1
       rect:
         serializedVersion: 2
-        x: 1
-        y: 199
+        x: 32
+        y: 96
         width: 32
         height: 32
       alignment: 0
@@ -119,11 +122,11 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: street_sprite1_2
+      name: road_2
       rect:
         serializedVersion: 2
-        x: 3
-        y: 153
+        x: 64
+        y: 96
         width: 32
         height: 32
       alignment: 0
@@ -133,11 +136,11 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: street_sprite1_3
+      name: road_3
       rect:
         serializedVersion: 2
-        x: 169
-        y: 190
+        x: 96
+        y: 96
         width: 32
         height: 32
       alignment: 0
@@ -147,11 +150,11 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: street_sprite1_4
+      name: road_4
       rect:
         serializedVersion: 2
-        x: 220
-        y: 190
+        x: 0
+        y: 64
         width: 32
         height: 32
       alignment: 0
@@ -161,11 +164,11 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: street_sprite1_5
+      name: road_5
       rect:
         serializedVersion: 2
-        x: 112
-        y: 144
+        x: 32
+        y: 64
         width: 32
         height: 32
       alignment: 0
@@ -175,11 +178,11 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: street_sprite1_6
+      name: road_6
       rect:
         serializedVersion: 2
-        x: 112
-        y: 112
+        x: 64
+        y: 64
         width: 32
         height: 32
       alignment: 0
@@ -189,11 +192,11 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: street_sprite1_7
+      name: road_7
       rect:
         serializedVersion: 2
-        x: 210
-        y: 106
+        x: 96
+        y: 64
         width: 32
         height: 32
       alignment: 0
@@ -203,11 +206,11 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: street_sprite1_8
+      name: road_8
       rect:
         serializedVersion: 2
-        x: 144
-        y: 112
+        x: 0
+        y: 32
         width: 32
         height: 32
       alignment: 0
@@ -217,11 +220,11 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: street_sprite1_9
+      name: road_9
       rect:
         serializedVersion: 2
-        x: 80
-        y: 112
+        x: 32
+        y: 32
         width: 32
         height: 32
       alignment: 0
@@ -231,11 +234,11 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: street_sprite1_10
+      name: road_10
       rect:
         serializedVersion: 2
-        x: 7
-        y: 100
+        x: 64
+        y: 32
         width: 32
         height: 32
       alignment: 0
@@ -245,11 +248,11 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: street_sprite1_11
+      name: road_11
       rect:
         serializedVersion: 2
-        x: 112
-        y: 80
+        x: 96
+        y: 32
         width: 32
         height: 32
       alignment: 0
@@ -259,11 +262,53 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: street_sprite1_12
+      name: road_12
       rect:
         serializedVersion: 2
-        x: 30
-        y: 36
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: road_13
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: road_14
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: road_15
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
         width: 32
         height: 32
       alignment: 0
