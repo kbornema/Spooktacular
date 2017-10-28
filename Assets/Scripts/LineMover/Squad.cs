@@ -1,13 +1,12 @@
+﻿
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Squad : MonoBehaviour 
-{   
+{
     [Header("Movement")]
-    private LinkedList<WayPoint> currentPath;
-    [SerializeField]
-    private WayPoint currentPoint;
+    private Path current;
 
 
     [Header("Visuals")]
@@ -84,6 +83,11 @@ public class Squad : MonoBehaviour
         //yield break; // beendet Coroutine
     }
 
+    internal Path getPath()
+    {
+        return current;
+    }
+
     private void Awake()
     {
         if(_randomizeChildren)
@@ -132,22 +136,9 @@ public class Squad : MonoBehaviour
         }
     }
 
-    public WayPoint getCurrentPoint()
-    {
-        if(currentPoint == null)
-        {
-            currentPoint = currentPath.First.Value;
-        }
-        return currentPoint;
-    }
     public void setPath( Path newPath )
     {
         current = newPath;
-    }
-
-    public void setPath(LinkedList<WayPoint> newPath)
-    {
-        currentPath = newPath;
     }
 
     void OnCollisionEnter2D(Collision2D coll)
