@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,6 +18,8 @@ public class LineMover : MonoBehaviour
     int currentPlayer = 0;  //for Test
 
     int activeSquadId = 0;
+
+    [SerializeField]
     Squad[] squads = new Squad[1];
 
     [SerializeField]
