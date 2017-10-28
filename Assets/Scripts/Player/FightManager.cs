@@ -12,19 +12,23 @@ public class FightManager : MonoBehaviour {
         if (checkIfFightAlreadyExists(one, two))
             return;
         else
+        {
+            // Add to list. This is to avoid double fights with the same squads
             fightList.Add(new Fight(one, two));
-    }
 
-	// Use this for initialization
-	void Start () {
-		
-	}
+            // Start the coroutine
+            FightingRoutine(new Fight(one, two));
+        }
+            
+    }
 	
 	// Update is called once per frame
 	void Update () {
-        foreach (var item in fightList)
+        for (int i = 0; i < fightList.Count; i++)
         {
-
+            if (fightList[i].fightIsDone)
+                fightList.RemoveAt(i);
+            break;
         }
 	}
 
@@ -41,6 +45,8 @@ public class FightManager : MonoBehaviour {
         // startClap
         if (clapWon)
             likelihood += 10;
+        else
+            likelihood -= 10;
         int differenceInLoot = currentFight.secondPlayer.CurrentGroupLoot - currentFight.firstPlayer.CurrentGroupLoot;
         // The greater the difference in loot, the higher the winning chance
         if (differenceInLoot > 4)
@@ -54,6 +60,19 @@ public class FightManager : MonoBehaviour {
         if (differenceInLoot > 18)
         {
             likelihood += 5;
+        }
+
+        if (differenceInLoot < -4)
+        {
+            likelihood -= 5;
+        }
+        if (differenceInLoot < -12)
+        {
+            likelihood -= 5;
+        }
+        if (differenceInLoot < -18)
+        {
+            likelihood -= 5;
         }
 
         int haveWeWon = Random.Range(1, 101);
@@ -70,7 +89,9 @@ public class FightManager : MonoBehaviour {
             currentFight.secondPlayer.wonFight();
             currentFight.firstPlayer.lostFight();
         }
-            
+
+        // end fight
+        currentFight.fightIsDone = true;    
 
         yield break; // beendet Coroutine
     }
