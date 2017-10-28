@@ -8,70 +8,70 @@ public class EventPanel : MonoBehaviour {
     public int playerID;
     public GameObject B, X, Y;
 
-    private List<GameObject> BattleList;
+    private List<Fight> BattleList;
     private GameObject parent;
-    private bool isB, isX, isY;
 
     private void Awake()
     {
         if (transform.parent.gameObject != null)
             parent = transform.parent.gameObject;
-
     }
 
     // Use this for initialization
     void Start ()
     {
-        parent.SetActive(false);
-        BattleList = new List<GameObject>(); 
+        parent.SetActive(false);         
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-        //BattleList = Alle Battles mit payerindex
-        foreach (GameObject G in BattleList)
+        if (BattleList.Count == 0)
+            parent.SetActive(false);
+        else
+            parent.SetActive(true);
+
+        //Delete Fight, which aren't acitve any more
+        foreach (Fight F in BattleList)
         {
-            if ((int)Time.time % 10 == 0)
+            if (GameManager.Instance.FightList.IndexOf(F) == -1)
             {
-                Debug.LogWarning("Deactivate");
-                X.SetActive(false);
-                Y.SetActive(false);
-                B.SetActive(false);
+                HandleLabels(F,false);
+                BattleList.Remove(F);
             }
-            
-            HandleFights(G);
         }
 
+        //Add new Fights do Routine
+        foreach (Fight f in GameManager.Instance.FightList)
+        {
+            if (f.firstPlayer.playerID == playerID
+                || f.firstPlayer.playerID == playerID)
+            {
+                if (BattleList.IndexOf(f) == -1)
+                    BattleList.Add(f);
+            }            
+        }
+
+        //activate button
+        foreach (Fight ff in BattleList)
+        {
+            HandleLabels(ff, true);
+        }
     }
 
-    private void HandleFights(GameObject fight)
+    private void HandleLabels(Fight F, bool b)
     {
-        parent.SetActive(true);
-        int mode = 1; //lies mode des Fights (Fightklasse bruacht property "mode" (X,Y, oder B => 1,2,3)
-        switch (mode)
+        switch (F.FightMode)
         {
             case 0:
-                X.SetActive(true);
+                X.SetActive(b);
                 break;
             case 1:
-                B.SetActive(true);
+                B.SetActive(b);
                 break;
             case 2:
-                Y.SetActive(true);
+                Y.SetActive(b);
                 break;
-        }
-    }
-
-    private GameObject ChoseActionButton()
-    {
-        int k = UnityEngine.Random.Range(0, 3);
-        switch (k)
-        {
-            case 0: return X;
-            case 1: return Y;
-            case 2: return B;
-            default: return X;
         }
     }
 }

@@ -21,7 +21,10 @@ public class FightManager : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
+        GameManager.Instance.FightList = fightList;
+
         foreach (var item in fightList)
         {
 

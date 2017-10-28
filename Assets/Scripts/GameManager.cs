@@ -42,9 +42,12 @@ public class GameManager : AManager<GameManager>
 
     public int NumberOfPlayer { get { return players.Length; } }
 
+    public List<Fight> FightList;
+
     protected override void OnAwake()
     {
         remainingTime = gameLength;
+        FightList = new List<Fight>();
 
         //Only setup the game of the scene is the gameplay scene and there are no players yet:
         if (NumberOfPlayer == 0 && SceneManager.GetActiveScene().name.Equals(playScene))
