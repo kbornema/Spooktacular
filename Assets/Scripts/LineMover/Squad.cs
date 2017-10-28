@@ -28,9 +28,7 @@ public class Squad : MonoBehaviour {
         if(_randomizeChildren)
         {
             for (int i = 0; i < _childrenSpriteReplacer.Length; i++)
-            {
                 _childrenSpriteReplacer[i].SetLookup(_skins[Random.Range(0, _skins.Count)]);
-            }
         }
     }
 
