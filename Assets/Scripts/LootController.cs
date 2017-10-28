@@ -7,9 +7,6 @@ public class LootController : MonoBehaviour {
 
     public HouseProperties house;
 
-   // [Range(0, 1)]
-    private float fCurrentLoot;
-
     public Sprite[] CandyAnimation;
 
     [SerializeField]
@@ -18,23 +15,19 @@ public class LootController : MonoBehaviour {
    
 	
 	// Update is called once per frame
-	void Update ()
+	private void Update ()
     {
-
         int curLoot = house.CurrentLoot;
-        // fCurrentLoot = House.fCurrentloot;
-        if (lastLoot != fCurrentLoot)
+
+        if (lastLoot != curLoot)
             UpdateLoot(curLoot);
-	
 	}
 
     private void UpdateLoot(int curLoot)
-    {
-
+    {   
         float percent = house.LootPercent;
 
         int index = (int)(percent * (CandyAnimation.Length - 1));
-
         lastLoot = curLoot;
         SpRender.sprite = CandyAnimation[index];
     }

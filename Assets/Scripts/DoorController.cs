@@ -5,8 +5,14 @@ using UnityEngine;
 public class DoorController : MonoBehaviour {
 
     [SerializeField]
+    private float _doorCooldown = 10.0f;
+
+    [SerializeField]
     private HouseProperties _house;
     public HouseProperties House { get { return _house; } }
+
+    [SerializeField]
+    private SpriteRenderer _houseLight;
 
     public bool doorIsClosed = false;
 
@@ -23,8 +29,10 @@ public class DoorController : MonoBehaviour {
             if(doorIsClosed)
             {
                 gameObject.GetComponent<Collider2D>().enabled = false;
-                yield return new WaitForSeconds(10.0f);
+                _houseLight.enabled = false;
+                yield return new WaitForSeconds(_doorCooldown);
                 gameObject.GetComponent<Collider2D>().enabled = true;
+                _houseLight.enabled = true;
                 doorIsClosed = false;
             }
             else
@@ -35,10 +43,7 @@ public class DoorController : MonoBehaviour {
         //yield break; // beendet Coroutine
     }
 
-    // Update is called once per frame
-    void Update () {
-		
-	}
+
 
 
 }
