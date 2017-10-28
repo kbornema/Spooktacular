@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class LineMover : MonoBehaviour
 {
-    //    //Waypoint Image
-    //    //Waypoint Track Image
-    //    //
-    //    GameObject Waypoint;
-    //    GameObject WaypointActive;
-    //    GameObject Track;
-
     [Range(0,0.5f)]
     [SerializeField]
     float directionSwitchThreshhold = 0;
@@ -20,18 +13,19 @@ public class LineMover : MonoBehaviour
     float interpolationRate = 0.3f;
 
     [SerializeField]
-    private int currentPlayerId = 0;  //for Test
+    GameObject TrackPrefab;
+
+    int currentPlayer = 0;  //for Test
 
     int activeSquadId = 0;
 
     [SerializeField]
     Squad[] squads = new Squad[1];
 
-    LinkedList<WayPoint> currentList = new LinkedList<WayPoint>();
-
     [SerializeField]
     InputController controller;
     private bool lineDrawing;
+    private Path currentPath;
 
     private void Start()
     {
@@ -39,16 +33,7 @@ public class LineMover : MonoBehaviour
         //TODO: get Player
         //TODO: who generates Squads ?
         //TODO: switch Squads 
-        //squads[0] = gameObject.AddComponent<Squad>(); //Test 
-        LinkedList<WayPoint> list = new LinkedList<WayPoint>();
-
-        var first = GameObject.FindGameObjectWithTag("WayPoint");
-
-        if(first)
-        {
-            list.AddFirst(first.GetComponent<WayPoint>());
-            squads[0].setPath(list);
-        }
+        squads[0] = gameObject.AddComponent<Squad>(); //Test 
     }
 
     public void switchSquad( int changeByUnits )
@@ -61,13 +46,14 @@ public class LineMover : MonoBehaviour
         lineDrawing = true;
 
         Squad activeSquad = squads[activeSquadId];
-        WayPoint currentPoint = (currentList.Count == 0) ? activeSquad.getCurrentPoint() : currentList.Last.Value;
 
-        if (currentPoint != null)
-        {
-            Debug.Log("adding " + currentPoint);
-            currentList.AddLast(currentPoint);
-        }
+        //Create Path for Squad
+        currentPath = gameObject.AddComponent<Path>(); //
+        //TODO how to get current Waypoint
+        currentPath.setTrackPrefab(TrackPrefab);
+        currentPath.addWayPoint(GameObject.FindGameObjectWithTag("WayPoint").GetComponent<WayPoint>()); 
+
+        activeSquad.setPath(currentPath);
     }
 
 
@@ -77,39 +63,55 @@ public class LineMover : MonoBehaviour
         if (!lineDrawing)
         {
             //Start drawing
-            if (controller.GetPlayerButtonInput("Button1", currentPlayerId))
+            if (controller.GetPlayerButtonInput("Button1", currentPlayer))
             {
                 StartLine();
-                Debug.Log("im Starting to draw a line!!");
             }
             return;
         }
 
         //Finish Drawing ???
 
-        DIRECTION playerdir = controller.GetPlayerDirection(currentPlayerId);
+        DIRECTION playerdir = controller.GetPlayerDirection(currentPlayer);
         Squad activeSquad = squads[activeSquadId];
 
         // Move from current Waypoint into direction if waypoint is available
-        WayPoint currentPoint = (currentList.Count == 0) ? activeSquad.getCurrentPoint() : currentList.Last.Value;
+        WayPoint currentPoint = currentPath.getCurrentPoint();
 
         //get current direction and interpolation
-        DIRECTION currentDirection = currentPoint.getCurrentDirection();
-        float currentInterpolation = currentPoint.getCurrentInterpolation();
+        DIRECTION currentDirection = activeSquad.getPath().getCurrentDirection();
+        float currentInterpolation = activeSquad.getPath().getCurrentInterpolation();
 
         if (currentDirection == DIRECTION.NONE && playerdir != DIRECTION.NONE)
         {
-            currentPoint.updateWaypoint(playerdir);
-            currentDirection = currentPoint.getCurrentDirection();
+            // Update to next Target
+            activeSquad.getPath().setNewTarget(playerdir);
+            currentDirection = activeSquad.getPath().getCurrentDirection();
+            currentInterpolation = 0f;
+
             //Debug.Log(currentDirection + " curr dir  + player dir " + playerdir);
         }
 
         //add/remove from interpolation
         float interpolationUpdate = interpolationRate * Time.deltaTime;
         float newInterpolation = currentInterpolation; //will be changed below
+
         if(playerdir != DIRECTION.NONE)
         {
-            if (playerdir.Equals(currentDirection))
+            if (currentPath.getCount() > 1 && newInterpolation <= 0f + directionSwitchThreshhold)
+            {
+                WayPoint prevWaypoint = currentPath.getPreviousPoint();
+                var prevDir = currentPoint.getDirection(prevWaypoint);
+                if (playerdir.Equals(prevDir))//Oposing directions
+                {
+                    newInterpolation -= interpolationUpdate;
+                    newInterpolation = RemoveWaypoint(newInterpolation);
+                    activeSquad.getPath().setCurrentInterploation(newInterpolation);
+                    return; //Abort any further changes otherwise also check normal behaviour
+                }
+            }
+
+            if (playerdir.Equals(currentDirection)) // move to new waypoint or reverse to prev
             {
                 //Debug.Log("Forward Movement");
                 newInterpolation += interpolationUpdate;
@@ -118,42 +120,31 @@ public class LineMover : MonoBehaviour
             else if (playerdir.areOpposingSides(currentDirection))//Oposing directions
             {
                 newInterpolation -= interpolationUpdate;
-                //newInterpolation = RemoveWaypoint(newInterpolation);
-            }
-            //currentInterpolation <= directionSwitchThreshhold && !playerdir.Equals(DIRECTION.NONE)) //fallback for orthogonal directions 
-            else if(currentList.Count > 1 && newInterpolation <= 0f + directionSwitchThreshhold)
-            {
-                WayPoint prevWaypoint = currentList.Last.Previous.Value;
-                var prevDir = currentPoint.getDirection(prevWaypoint);
-                if (playerdir.Equals(prevDir))//Oposing directions
-                {
-                    newInterpolation -= interpolationUpdate;
-                    newInterpolation = RemoveWaypoint(newInterpolation);
-                }
             }
             //remove waypoints instead of double
-            currentPoint.setCurrentInterploation(newInterpolation);
+            activeSquad.getPath().setCurrentInterploation(newInterpolation);
         }
-
-        ////Switch waypoints
-        //if(newInterpolation != currentInterpolation)
-        //{
-        //    newInterpolation = AddWaypoint(playerdir, currentPoint, newInterpolation);
-        //    newInterpolation = RemoveWaypoint(newInterpolation);
-        //    //adjust interpolation if switching 
-        //    currentPoint.setCurrentInterploation(newInterpolation);
-        //}
     }
+
+    //Current Order
+    // calc interpolate
+    // add new Point
+    // use Interpolate
+    // No reSize
+
+        //Correct order
+        // Calc interploate
+        // use Interploate
+        // add new oiyy
 
     private float RemoveWaypoint(float newInterpolation)
     {
         //switch to previous Waypoint
         if (newInterpolation <= 0f + directionSwitchThreshhold) //is clamped
         {
-            if (currentList.Count > 0)
+            if (currentPath.getCount()> 0)
             {
-                Debug.Log("Removing " + currentList.Last.Value);
-                currentList.RemoveLast();
+                currentPath.removeLast();
                 newInterpolation = 0f;
             }
         }
@@ -169,7 +160,7 @@ public class LineMover : MonoBehaviour
             if (newWaypoint != null)
             {
                 Debug.Log("adding " + newWaypoint);
-                currentList.AddLast(newWaypoint);
+                currentPath.addWayPoint(newWaypoint);
                 newInterpolation = 1f;
             }
         }
