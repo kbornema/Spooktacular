@@ -1,14 +1,9 @@
 fileFormatVersion: 2
-guid: 3825dcfb48286dd45a5d28c5a9f67e8b
-timeCreated: 1509180107
+guid: 1299afa395b3b7748a269719a8d7d141
+timeCreated: 1509194585
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: Flags_0
-    21300002: Flags_1
-    21300004: Flags_2
-    21300006: Flags_3
-    21300008: Flags_4
+  fileIDToRecycleName: {}
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -45,13 +40,13 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
-  spriteMeshType: 0
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 32
+  spritePixelsToUnits: 20
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -81,52 +76,10 @@ TextureImporter:
     overridden: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: Flags_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 82
-        width: 31
-        height: 46
-      alignment: 9
-      pivot: {x: 0.5, y: 0.2}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Flags_1
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 96
-        width: 31
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Flags_2
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 96
-        width: 31
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
+    sprites: []
     outline: []
     physicsShape: []
-  spritePackingTag: a
+  spritePackingTag: 
   userData: 
   assetBundleName: 
   assetBundleVariant: 
