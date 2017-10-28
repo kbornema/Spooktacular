@@ -24,7 +24,7 @@ public class Squad : MonoBehaviour {
     [SerializeField]
     private AnimatedSpriteReplacer[] _childrenSpriteReplacer;
     [SerializeField]
-    private SpriteRenderer _squadRing;
+    private SpriteRenderer[] _coloredSprites;
 
     [Header("Interaction")]
     public GameObject CurrentDoor = null;
@@ -265,6 +265,8 @@ public class Squad : MonoBehaviour {
     {   
         _player = player;
         _flag.SetColor(_color);
-        _squadRing.color = _color;
+
+        for (int i = 0; i < _coloredSprites.Length; i++)
+            _coloredSprites[i].color = _color;
     }
 }
