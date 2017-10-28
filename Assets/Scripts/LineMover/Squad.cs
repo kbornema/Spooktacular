@@ -28,12 +28,16 @@ public class Squad : MonoBehaviour {
 
     [Header("Interaction")]
     public DoorController CurrentDoor = null;
+    public Squad CurrentOpponent = null;
 
     // Group gets invulnerable at spawn and after a lost fight for a short time
     public bool isInvulnerable = false;
 
     // Group is looting right now
     public bool isLooting = false;
+
+    // Group is already in a fight
+    public bool isFighting = false;
 
     [SerializeField]
     private float _normalMoveSpeed = 5.0f;
@@ -94,9 +98,10 @@ public class Squad : MonoBehaviour {
 
             if (isInvulnerable)
             {
+                isFighting = true;
                 yield return new WaitForSeconds(8.0f);
                 isInvulnerable = false;
-                // TODO set invulnerable logic on and off
+                isFighting = false;
             }
             else
                 yield return new WaitForEndOfFrame();
@@ -123,8 +128,14 @@ public class Squad : MonoBehaviour {
         StartCoroutine(LootingRountine());
         StartCoroutine(InvulnerableRountine());
 
+        gameManager = GameObject.Find("GameManager");
+        fightManager = gameManager.GetComponent<FightManager>();
+
+
         PathWalking = GameObject.Find("Path"); // TAKEOUT
     }
+    GameObject gameManager;
+    FightManager fightManager;
 
     // TAKEOUT
     GameObject PathWalking;
@@ -214,8 +225,61 @@ public class Squad : MonoBehaviour {
                 
 
         }
+        // Check if colliding objects is an opponent
+        else if(coll.gameObject.transform.parent.GetComponent<PlayerController>() != gameObject.GetComponent<PlayerController>() && isFighting == false)
+        {
+            CurrentOpponent = coll.gameObject.GetComponent<Squad>();
+            CurrentOpponent.startFight();
+            startFight();
+
+            //TODO is already fighting
+        }
             //coll.gameObject.SendMessage("ApplyDamage", 10);
             
+
+    }
+
+    public void startFight()
+    {
+        isFighting = true;
+        // Stop gathering
+        if(isLooting)
+        {
+            isLooting = false;
+
+            CurrentDoor.doorIsClosed = true;
+        }
+
+        // Set speed to 0
+        curMoveSpeed = 0.0f;
+        fightManager.newFight(this, CurrentOpponent);
+    }
+
+    public void lostFight()
+    {
+
+        // Set speed to normal
+        curMoveSpeed = _normalMoveSpeed;
+
+        // set invulnerable
+        isInvulnerable = true;
+
+        // Lose candycorn
+        CurrentGroupLoot -= 5;
+    }
+
+
+
+    public void wonFight()
+    {
+        // not fighting anymore
+        isFighting = false;
+
+        // Set speed to normal
+        curMoveSpeed = _normalMoveSpeed;
+
+        // Win candycorn
+        CurrentGroupLoot += 5;
 
     }
 
@@ -233,7 +297,7 @@ public class Squad : MonoBehaviour {
         isLooting = true;
     }
 
-    void endDoorLoot()
+    public void endDoorLoot()
     {
         // Stop gathering
         isLooting = false;
@@ -242,15 +306,6 @@ public class Squad : MonoBehaviour {
         curMoveSpeed = _normalMoveSpeed;
 
         CurrentDoor.doorIsClosed = true;
-    }
-
-    void setInvulnerable()
-    {
-        // TODO
-        // at spawn
-        // after a lost fight
-        isInvulnerable = true;
-        // set really invulnerable
     }
 
 

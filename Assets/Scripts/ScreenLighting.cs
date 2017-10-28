@@ -10,6 +10,16 @@ public class ScreenLighting : AScreenEffect
     private RenderTexture _lightTexture;
 
     [SerializeField]
+    private AnimationCurve _backgroundCurve;
+    [SerializeField]
+    private Gradient _daylightGradient;
+    [SerializeField]
+    private float _fullNightCircleTime = 60.0f;
+
+    [SerializeField]
+    private Gradient _ambientGradient;
+
+    [SerializeField]
     private Color _backgroundColor;
     [SerializeField]
     private Color _ambientColor;
@@ -18,6 +28,8 @@ public class ScreenLighting : AScreenEffect
 
     [SerializeField]
     private bool _autoUpdate;
+
+    private float _curTime = 0.0f;
 
     public void SetBackgroundColor(Color color)
     {
@@ -70,6 +82,17 @@ public class ScreenLighting : AScreenEffect
     {
         _lightTexture = _lightCam.targetTexture;
         _usedMaterial.SetTexture("_MultTex", _lightTexture);
+    }
+
+    private void Update()
+    {
+        _curTime += Time.deltaTime;
+        float t = _curTime / _fullNightCircleTime;
+
+        float tRead = _backgroundCurve.Evaluate(t);
+
+        SetBackgroundColor(_daylightGradient.Evaluate(tRead));
+        SetAmbientColor(_ambientGradient.Evaluate(tRead));
     }
 
     protected override void BeforeRenderImage()
