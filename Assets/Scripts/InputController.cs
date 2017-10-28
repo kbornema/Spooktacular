@@ -51,7 +51,7 @@ public class InputController : MonoBehaviour {
         Vector2 inputVector = GetControllerVector("" + playerIndex);
         if(inputVector.magnitude < minimumAxisInput)
         {
-            
+            return DIRECTION.NONE;
         }
 
         inputVector.Normalize();
