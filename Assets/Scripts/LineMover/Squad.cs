@@ -74,7 +74,10 @@ public class Squad : MonoBehaviour {
                 yield return new WaitForSeconds(1.0f);
                 CurrentGroupLoot += 3;
                 allowed_candy--;
+
             }
+
+            yield return new WaitForEndOfFrame();
             
         }
         //yield break; // beendet Coroutine
@@ -89,7 +92,9 @@ public class Squad : MonoBehaviour {
                 yield return new WaitForSeconds(8.0f);
                 isInvulnerable = false;
             }
-            
+
+
+            yield return new WaitForEndOfFrame();
         }
         //yield break; // beendet Coroutine
     }
