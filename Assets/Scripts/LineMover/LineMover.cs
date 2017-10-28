@@ -74,6 +74,7 @@ public class LineMover : MonoBehaviour
             if (controller.GetPlayerButtonInput("Button1", currentPlayerId))
             {
                 StartLine();
+                Debug.Log("im Starting to draw a line!!");
             }
             return;
         }
