@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,9 +19,12 @@ public class LineMover : MonoBehaviour
     [SerializeField]
     float interpolationRate = 0.3f;
 
-    int currentPlayer = 0;  //for Test
+    [SerializeField]
+    private int currentPlayerId = 0;  //for Test
 
     int activeSquadId = 0;
+
+    [SerializeField]
     Squad[] squads = new Squad[1];
 
     LinkedList<WayPoint> currentList = new LinkedList<WayPoint>();
@@ -36,7 +39,7 @@ public class LineMover : MonoBehaviour
         //TODO: get Player
         //TODO: who generates Squads ?
         //TODO: switch Squads 
-        squads[0] = gameObject.AddComponent<Squad>(); //Test 
+        //squads[0] = gameObject.AddComponent<Squad>(); //Test 
         LinkedList<WayPoint> list = new LinkedList<WayPoint>();
         list.AddFirst(GameObject.FindGameObjectWithTag("WayPoint").GetComponent<WayPoint>());
         squads[0].setPath(list);
@@ -68,7 +71,7 @@ public class LineMover : MonoBehaviour
         if (!lineDrawing)
         {
             //Start drawing
-            if (controller.GetPlayerButtonInput("Button1", currentPlayer))
+            if (controller.GetPlayerButtonInput("Button1", currentPlayerId))
             {
                 StartLine();
             }
@@ -77,7 +80,7 @@ public class LineMover : MonoBehaviour
 
         //Finish Drawing ???
 
-        DIRECTION playerdir = controller.GetPlayerDirection(currentPlayer);
+        DIRECTION playerdir = controller.GetPlayerDirection(currentPlayerId);
         Squad activeSquad = squads[activeSquadId];
 
         // Move from current Waypoint into direction if waypoint is available
