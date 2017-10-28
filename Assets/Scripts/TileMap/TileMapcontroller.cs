@@ -54,6 +54,7 @@ public class TileMapcontroller : MonoBehaviour {
     List<OpenWayPoint> openWaypoints;
     List<OpenRoad> openRoads;
 
+    [SerializeField]
     List<WayPoint> finishedWayPointList;
 
     [SerializeField]
@@ -62,12 +63,22 @@ public class TileMapcontroller : MonoBehaviour {
     [SerializeField]
     private Tilemap tileMap;
 
-	// Use this for initialization
-	void Start () {
+    public List<WayPoint> WayPoints()
+    {
+        return finishedWayPointList;
+    }
 
-        if(tileMap)
+    private void Awake()
+    {
+        if (tileMap)
             tileMap = GetComponent<Tilemap>();
+        //GenerateWayPoints();
+    }
 
+    // Use this for initialization
+    void Start () {
+
+        
 	}
 	
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : AManager<GameManager> 
 {
-    private const string GAME_SCENE_NAME = "03_Master";
+    [SerializeField]
+    private string playScene = "03_Master";
 
     [Header("Common")]
 
@@ -15,6 +17,7 @@ public class GameManager : AManager<GameManager>
     [SerializeField]
     private Squad _squadPrefab;
     public Squad SquadPrefab { get { return _squadPrefab; } }
+    public TileMapcontroller Map;
     
     [Header("Debug")]
 
@@ -41,7 +44,7 @@ public class GameManager : AManager<GameManager>
         remainingTime = gameLength;
 
         //Only setup the game of the scene is the gameplay scene and there are no players yet:
-        if (NumberOfPlayer == 0 && SceneManager.GetActiveScene().name.Equals(GAME_SCENE_NAME))
+        if (NumberOfPlayer == 0 && SceneManager.GetActiveScene().name.Equals(playScene))
         {
             Debug.Log("B");
             SetupGame(_playerIds);
@@ -64,19 +67,45 @@ public class GameManager : AManager<GameManager>
             Destroy(players[i].gameObject);
 
         players = new PlayerController[playerIndices.Count];
+        List<WayPoint> WPList = new List<WayPoint>();
+        foreach (WayPoint wp in Map.GetComponentsInChildren<WayPoint>())
+        {
+            WPList.Add(wp);
+        }
 
         for (int i = 0; i < players.Length; i++)
         {
             GameObject playerControllerObj = new GameObject("Player_" + i);
             players[i] = playerControllerObj.AddComponent<PlayerController>();
-            players[i].Setup(i, playerIndices[i]);
-        }
+            players[i].Setup(i, playerIndices[i]);       
 
+            for (int k = 0; k < players[i].Squads.Length; k++)
+            {
+                if (WPList.Count > 0)
+                {
+                    var a = ChooseWayPoint(WPList).position;
+                    players[i].Squads[k].transform.position = a;
+                    //Debug.LogWarning("SquadPos"+k + "= " + a);
+                }                    
+                else
+                    Debug.LogError("Your waypoint list is empty, stupid cunt!");
+            }            
+        }
         remainingTime = gameLength;
     }
-	
-	// Update is called once per frame
-	private void Update () 
+
+    private Transform ChooseWayPoint(List<WayPoint> wPList)
+    {
+        int var = UnityEngine.Random.Range(0, wPList.Count);
+        //Debug.Log("Random:"+ var  +" = "+ wPList[var].transform.position);
+        Transform result = wPList[var].transform;
+        wPList.Remove(wPList[var]);
+
+        return result;
+    }
+
+    // Update is called once per frame
+    private void Update () 
     {   
         if (_gameIsRunning)
         {
