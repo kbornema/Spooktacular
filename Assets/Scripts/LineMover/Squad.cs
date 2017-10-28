@@ -18,7 +18,7 @@ public class Squad : MonoBehaviour {
     [SerializeField]
     private List<SpriteLookup> _skins;
     [SerializeField]
-    private bool _randomizeChildren;
+    private bool _randomizeChildren = false;
 
     [SerializeField]
     private AnimatedSpriteReplacer[] _childrenSpriteReplacer;
@@ -65,7 +65,7 @@ public class Squad : MonoBehaviour {
         }
     }
 
-    private IEnumerator HousLootingRoutine()
+    private IEnumerator LootingRountine()
     {
         while (true)
         {
@@ -74,25 +74,24 @@ public class Squad : MonoBehaviour {
                 yield return new WaitForSeconds(1.0f);
                 CurrentGroupLoot += 3;
                 allowed_candy--;
-
             }
 
             yield return new WaitForEndOfFrame();
-            
         }
         //yield break; // beendet Coroutine
     }
 
-    private IEnumerator InvulnerableRoutine()
+    private IEnumerator InvulnerableRountine()
     {
         while (true)
         {
-            if(isInvulnerable)
+
+            if (isInvulnerable)
             {
                 yield return new WaitForSeconds(8.0f);
                 isInvulnerable = false;
+                // TODO set invulnerable logic on and off
             }
-
 
             yield return new WaitForEndOfFrame();
         }
@@ -104,11 +103,19 @@ public class Squad : MonoBehaviour {
         if(_randomizeChildren)
         {
             for (int i = 0; i < _childrenSpriteReplacer.Length; i++)
+            {
                 _childrenSpriteReplacer[i].SetLookup(_skins[Random.Range(0, _skins.Count)]);
+            }
         }
 
-        StartCoroutine(HousLootingRoutine());
-        StartCoroutine(InvulnerableRoutine());
+        
+    }
+
+    // Use this for initialization
+    void Start()
+    {
+        StartCoroutine(LootingRountine());
+        StartCoroutine(InvulnerableRountine());
     }
 
     // Update is called once per frame
@@ -151,6 +158,15 @@ public class Squad : MonoBehaviour {
     public void setPath(LinkedList<WayPoint> newPath)
     {
         currentPath = newPath;
+    }
+
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        Debug.Log("GOT A DOOR!");
+        if (coll.gameObject.tag == "Door")
+            //coll.gameObject.SendMessage("ApplyDamage", 10);
+            Debug.Log("GOT A DOOR!");
+
     }
 
     // When at a door
