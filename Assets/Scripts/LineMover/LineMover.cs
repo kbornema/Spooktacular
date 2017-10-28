@@ -18,11 +18,14 @@ public class LineMover : MonoBehaviour
     [SerializeField]
     float interpolationRate = 0.3f;
 
-    int currentPlayer = 0;  
+    int currentPlayer = 0;  //for Test
 
     int activeSquadId = 0;
-    Squad[] squads;
+    Squad[] squads = new Squad[1];
 
+    LinkedList<WayPoint> currentList = new LinkedList<WayPoint>();
+
+    [SerializeField]
     InputController controller;
 
     private void Start()
@@ -31,6 +34,10 @@ public class LineMover : MonoBehaviour
         //TODO: get Player
         //TODO: who generates Squads ?
         //TODO: switch Squads 
+        squads[0] = gameObject.AddComponent<Squad>(); //Test 
+        LinkedList<WayPoint> list = new LinkedList<WayPoint>();
+        list.AddFirst(GameObject.FindGameObjectWithTag("WayPoint").GetComponent<WayPoint>());
+        squads[0].setPath(list);
     }
 
     public void switchSquad( int changeByUnits )
@@ -46,34 +53,47 @@ public class LineMover : MonoBehaviour
         Squad activeSquad = squads[activeSquadId];
 
         // Move from current Waypoint into direction if waypoint is available
-        WayPoint currentPoint = activeSquad.getCurrentPoint();
+        WayPoint currentPoint = (currentList.Count == 0) ? activeSquad.getCurrentPoint() : currentList.Last.Value;
 
         //get current direction and interpolation
         DIRECTION currentDirection = currentPoint.getCurrentDirection();
         float currentInterpolation = currentPoint.getCurrentInterpolation();
 
+        if (currentDirection == DIRECTION.NONE && playerdir != DIRECTION.NONE)
+        {
+            currentPoint.updateWaypoint(playerdir);
+            currentDirection = playerdir;
+        }
+            Debug.Log(currentDirection + " curr dir  + player dir " + playerdir);
+
         //add/remove from interpolation
         float interpolationUpdate = interpolationRate * Time.deltaTime;
         float newInterpolation = currentInterpolation; //will be changed below
-
-        if (playerdir.Equals(currentDirection))
+        if(playerdir != DIRECTION.NONE)
         {
-            newInterpolation += interpolationUpdate;
+            if (playerdir.Equals(currentDirection))
+            {
+                newInterpolation += interpolationUpdate;
+            }
+            else if (playerdir.areOpposingSides(currentDirection) || //Oposing directions
+                currentInterpolation <= directionSwitchThreshhold) //fallback for orthogonal directions 
+            {
+                newInterpolation -= interpolationUpdate;
+            }
         }
-        else if (playerdir.areOpposingSides(currentDirection) || //Oposing directions
-            currentInterpolation <= directionSwitchThreshhold) //fallback for orthogonal directions 
+
+        //Switch waypoints
+        currentPoint.setCurrentInterploation(newInterpolation);
+        if(currentPoint.getCurrentInterpolation() == 1f) //is clamped
         {
-            newInterpolation -= interpolationUpdate;
+            WayPoint newWaypoint = currentPoint.getWayPoint(playerdir);
+            if(newWaypoint!=null)
+                currentList.AddLast(newWaypoint);
         }
-      
-
-        //
-
-        WayPoint newWaypoint = currentPoint.getWayPoint(playerdir);
-
-
-
-        //Check for Backwards way
-
+        //switch to previous Waypoint
+        if (currentPoint.getCurrentInterpolation() == 0f) //is clamped
+        {
+            currentList.RemoveLast();
+        }
 	}
 }

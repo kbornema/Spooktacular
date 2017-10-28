@@ -33,8 +33,6 @@ public class InputController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        DIRECTION test = DIRECTION.NORTH;
-        Debug.Log(test.areOpposingSides(DIRECTION.SOUTH));
 	}
 	
 	// Update is called once per frame
@@ -46,6 +44,7 @@ public class InputController : MonoBehaviour {
         return Input.GetButtonDown(buttonName + "_" + playerIndex);
     }
 
+    //TODO add Deadzone
     public DIRECTION GetPlayerDirection(int playerIndex)
     {
         Vector2 inputVector = GetControllerVector("" + playerIndex);
