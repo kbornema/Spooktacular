@@ -24,15 +24,47 @@ public class PlayerController : MonoBehaviour
     private Color _color;
     public Color PlayerColor { get { return _color; } }
 
-    public void Setup(int playerId, int playerInputId)
+    public GameObject SelectionArrowInstance;
+
+    [SerializeField]
+    private int _selectedSquadId = -1;
+
+    public void Setup(int playerId, int playerInputId, GameObject selectionArrowPrefab)
     {
         this._playerId = playerId;
         this._playerInputId = playerInputId;
         _color = GetColor(playerId);
         stats = new PlayerStats();
         stats.Reset();
+
+        if(SelectionArrowInstance)
+        {
+            Destroy(SelectionArrowInstance);
+            SelectionArrowInstance = null;
+        }
+
+        SelectionArrowInstance = Instantiate(selectionArrowPrefab);
+        SelectionArrowInstance.SetActive(false);
         
         CreateSquads(3);
+    }
+
+    public void SelectSquad(int i)
+    {
+        if(i < 0 || i >= squads.Length)
+        {   
+            _selectedSquadId = -1;
+            SelectionArrowInstance.SetActive(false);
+        }
+
+        else
+        {
+            _selectedSquadId = i;
+            SelectionArrowInstance.SetActive(true);
+            SelectionArrowInstance.transform.SetParent(squads[i].transform);
+
+            SelectionArrowInstance.transform.localPosition = new Vector3(0.0f, 1.0f, 0.0f);
+        }
     }
 
     public void CreateSquads(int num)
