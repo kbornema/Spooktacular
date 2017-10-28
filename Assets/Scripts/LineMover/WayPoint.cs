@@ -13,7 +13,7 @@ public class WayPoint : MonoBehaviour {
     [SerializeField]
     WayPoint down;
     [SerializeField]
-    WayPoint Left;
+    WayPoint left;
 
     [SerializeField]
     GameObject TrackPrefab;
@@ -30,12 +30,20 @@ public class WayPoint : MonoBehaviour {
     // Use this for initialization
     void Start () { 
 
+    }
+
+    public void updateWaypoint( DIRECTION newWaypoint)
+    {
+        WayPoint temp = getWayPoint(newWaypoint);
+        if (temp == null) return;
+
+        activeWaypoint = temp; //onyl set if temp is non Null
         Vector3 origin = transform.position;
         Vector3 target = activeWaypoint.gameObject.transform.position;
         float distance = Vector3.Distance(origin, target);
         Debug.Log(distance+1);
 
-        //Create Track object
+        //Create Track object //TODO Still in Need for more Tracks
         track = Instantiate(TrackPrefab, origin, Quaternion.identity, transform);
         var trackObj = track.gameObject.transform;
 
@@ -46,12 +54,6 @@ public class WayPoint : MonoBehaviour {
 
         //Rescale Track
         trackObj.transform.localScale = new Vector3(0, 0, 1);
-
-    }
-
-    public void updateWaypoint( DIRECTION newWaypoint)
-    {
-        activeWaypoint = getWayPoint(newWaypoint);
     }
 
     public WayPoint getWayPoint(DIRECTION newWaypoint)
@@ -65,7 +67,7 @@ public class WayPoint : MonoBehaviour {
             case DIRECTION.SOUTH:
                 return down;
             case DIRECTION.WEST:
-                return Left;
+                return left;
             default:
                 return null;
         }
@@ -73,13 +75,16 @@ public class WayPoint : MonoBehaviour {
 
     public DIRECTION getCurrentDirection()
     {
+        if (activeWaypoint == null)
+            return DIRECTION.NONE;
+
         if (activeWaypoint == top)
             return DIRECTION.NORTH;
         if (activeWaypoint == right)
             return DIRECTION.EAST;
         if (activeWaypoint == down)
             return DIRECTION.SOUTH;
-        if (activeWaypoint == Left)
+        if (activeWaypoint == left)
             return DIRECTION.WEST;
 
         return DIRECTION.NONE;
