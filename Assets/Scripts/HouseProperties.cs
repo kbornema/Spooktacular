@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class HouseProperties : MonoBehaviour {
 
-    private int maxLootStorage = 25;
+    public int maxLootStorage = 25;
+
+    [SerializeField]
+    List<Collider2D> doorList;
 
     [SerializeField]
     private int currentLoot = 0;
