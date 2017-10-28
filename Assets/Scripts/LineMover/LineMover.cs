@@ -56,16 +56,16 @@ public class LineMover : MonoBehaviour
         float interpolationUpdate = interpolationRate * Time.deltaTime;
         float newInterpolation = currentInterpolation; //will be changed below
 
-        if(playerdir.Equals(currentDirection))
-            newInterpolation += interpolationUpdate;
-        else 
-        
-
-        if(currentInterpolation <= directionSwitchThreshhold)
+        if (playerdir.Equals(currentDirection))
         {
-            //switch is allowed
-            //what now?
+            newInterpolation += interpolationUpdate;
         }
+        else if (playerdir.areOpposingSides(currentDirection) || //Oposing directions
+            currentInterpolation <= directionSwitchThreshhold) //fallback for orthogonal directions 
+        {
+            newInterpolation -= interpolationUpdate;
+        }
+      
 
         //
 
