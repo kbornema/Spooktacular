@@ -41,8 +41,14 @@ public class LineMover : MonoBehaviour
         //TODO: switch Squads 
         //squads[0] = gameObject.AddComponent<Squad>(); //Test 
         LinkedList<WayPoint> list = new LinkedList<WayPoint>();
-        list.AddFirst(GameObject.FindGameObjectWithTag("WayPoint").GetComponent<WayPoint>());
-        squads[0].setPath(list);
+
+        var first = GameObject.FindGameObjectWithTag("WayPoint");
+
+        if(first)
+        {
+            list.AddFirst(first.GetComponent<WayPoint>());
+            squads[0].setPath(list);
+        }
     }
 
     public void switchSquad( int changeByUnits )
