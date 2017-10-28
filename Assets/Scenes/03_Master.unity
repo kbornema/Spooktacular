@@ -224,9 +224,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _destroyMode: 0
   _dontDestroyOnLoad: 1
+  playScene: 03_Master
   gameLength: 60
   _squadPrefab: {fileID: 114200811897298136, guid: 75c1e786060426d41926d07f7ee9a67b,
     type: 2}
+  Map: {fileID: 1481153501}
   _gameIsRunning: 0
   players: []
   remainingTime: 0
@@ -432,6 +434,12 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3e70fe23141a40e40b1d14586594d487, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &1481153501 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114829531416006742, guid: 3e70fe23141a40e40b1d14586594d487,
+    type: 2}
+  m_PrefabInternal: {fileID: 1396808852}
+  m_Script: {fileID: 11500000, guid: 15bcaff792b7de249bfd4fbaaee0c766, type: 3}
 --- !u!1001 &1746333962
 Prefab:
   m_ObjectHideFlags: 0

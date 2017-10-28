@@ -228,6 +228,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3d6289251344ea488d2fc946b3c1a8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _house: {fileID: 114686903489572056}
   doorIsClosed: 0
 --- !u!114 &114589512737763936
 MonoBehaviour:
@@ -253,9 +254,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 674a293c1170fbc428dc2fdfcb245709, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxLootStorage: 100
-  minStart: 100
-  maxStart: 100
+  maxLootStorage: 30
+  minStart: 10
+  maxStart: 25
   _regenerateTime: 1
   doorList:
   - {fileID: 61891249761071392}
@@ -272,6 +273,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3d6289251344ea488d2fc946b3c1a8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _house: {fileID: 114686903489572056}
   doorIsClosed: 0
 --- !u!114 &114879821606634826
 MonoBehaviour:

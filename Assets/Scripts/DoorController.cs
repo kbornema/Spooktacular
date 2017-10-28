@@ -1,8 +1,12 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class DoorController : MonoBehaviour {
+
+    [SerializeField]
+    private HouseProperties _house;
+    public HouseProperties House { get { return _house; } }
 
     public bool doorIsClosed = false;
 

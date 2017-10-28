@@ -27,7 +27,7 @@ public class Squad : MonoBehaviour {
     private SpriteRenderer[] _coloredSprites;
 
     [Header("Interaction")]
-    public GameObject CurrentDoor = null;
+    public DoorController CurrentDoor = null;
 
     // Group gets invulnerable at spawn and after a lost fight for a short time
     public bool isInvulnerable = false;
@@ -35,44 +35,35 @@ public class Squad : MonoBehaviour {
     // Group is looting right now
     public bool isLooting = false;
 
+    [SerializeField]
+    private float _normalMoveSpeed = 5.0f;
+
+    [SerializeField]
+    private float curMoveSpeed = 5.0f;
+    public float CurMoveSpeed { get { return curMoveSpeed; } set { curMoveSpeed = value; } }
+    
+    [Header("LootParams")]
+    [SerializeField]
+    private float _lootDelay = 1.0f;
+
+    [SerializeField]
+    private int _lootPerLoot = 3;
+
     // Limit of loot a group can carry
+    [SerializeField]
     private int maxGroupLootLimit = 25;
 
-    // Current allowed (rolled) candy
-    int allowed_candy = 3;
-
     // Current gathered loot
-    [SerializeField]
+    [SerializeField, ReadOnly]
     private int currentGroupLoot = 0;
-    public int CurrentGroupLoot
-    {
-        get
-        {
-            return currentGroupLoot;
-        }
-        set
-        {
-            currentGroupLoot = value;
-        }
-    }
+    public int CurrentGroupLoot { get { return currentGroupLoot; } set { currentGroupLoot = value; } }
 
-    // Current movement speed of the group
-    [SerializeField]
-    private int movementSpeed = 5;
-    public int MovementSpeed
-    {
-        get
-        {
-            return movementSpeed;
-        }
-        set
-        {
-            movementSpeed = value;
-        }
-    }
-
+    [Header("Other")]
     [SerializeField, ReadOnly]
     private PlayerController _player;
+
+    // Current allowed (rolled) candy
+    private int allowed_candy = 3;
 
     private IEnumerator LootingRountine()
     {
@@ -80,12 +71,12 @@ public class Squad : MonoBehaviour {
         {
             if(isLooting)
             {
-                if (CurrentDoor.transform.parent.GetComponent<HouseProperties>().CurrentLoot > 0)
+                if (CurrentDoor.House.CurrentLoot > 0)
                 {
-                    yield return new WaitForSeconds(1.0f);
-                    CurrentGroupLoot += 3;
+                    yield return new WaitForSeconds(_lootDelay);
+                    CurrentGroupLoot += _lootPerLoot;
                     allowed_candy--;
-                    CurrentDoor.transform.parent.GetComponent<HouseProperties>().CurrentLoot-=3;
+                    CurrentDoor.House.CurrentLoot -= _lootPerLoot;
                 }
                 else
                     endDoorLoot();
@@ -161,7 +152,7 @@ public class Squad : MonoBehaviour {
         }
 
         Vector2 dir = targetPathNode.position - this.transform.localPosition;
-        float distThisFrame = movementSpeed * Time.deltaTime;
+        float distThisFrame = curMoveSpeed * Time.deltaTime;
         if (dir.magnitude <= distThisFrame)
             targetPathNode = null;
         else
@@ -186,6 +177,9 @@ public class Squad : MonoBehaviour {
                     endDoorLoot();
             }
         }
+
+
+        _flag.FillAmount = (float)currentGroupLoot / (float)maxGroupLootLimit;
     }
 
     public WayPoint getCurrentPoint()
@@ -206,13 +200,13 @@ public class Squad : MonoBehaviour {
     {
         if (coll.gameObject.tag == "Door")
         {
-            GameObject newFoundDoor = coll.gameObject;
+            var newFoundDoor = coll.gameObject.GetComponent<DoorController>();
 
             // Group is not at max loot
             if (CurrentGroupLoot < maxGroupLootLimit)
 
                 // There is more then zero loot in the house
-                if (newFoundDoor.transform.parent.GetComponent<HouseProperties>().CurrentLoot > 0)
+                if (newFoundDoor.House.CurrentLoot > 0)
                 {
                     CurrentDoor = newFoundDoor;
                     startDoorLoot();
@@ -233,7 +227,7 @@ public class Squad : MonoBehaviour {
         allowed_candy = Random.Range(2, 4);
 
         // Set speed to 0
-        MovementSpeed = 0;
+        curMoveSpeed = 0.0f;
 
         // Per seconds are gathered 3 candycorns
         isLooting = true;
@@ -245,9 +239,9 @@ public class Squad : MonoBehaviour {
         isLooting = false;
 
         // Set speed to normal
-        MovementSpeed = 5;
+        curMoveSpeed = _normalMoveSpeed;
 
-        CurrentDoor.GetComponent<DoorController>().doorIsClosed = true;
+        CurrentDoor.doorIsClosed = true;
     }
 
     void setInvulnerable()
