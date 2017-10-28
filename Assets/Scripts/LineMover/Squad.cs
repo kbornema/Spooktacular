@@ -1,28 +1,27 @@
+﻿
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Squad : MonoBehaviour {
-
-    [SerializeField]
-    LinkedList<WayPoint> currentPath;
-    [SerializeField]
-    WayPoint currentPoint;
+public class Squad : MonoBehaviour 
+{
+    [Header("Movement")]
+    private Path current;
 
 
+    [Header("Visuals")]
     [SerializeField]
     private SquadFlag _flag;
     public SquadFlag Flag { get { return _flag; } }
-
-
     [SerializeField]
     private List<SpriteLookup> _skins;
     [SerializeField]
-    private bool _randomizeChildren;
-
+    private bool _randomizeChildren = false;
     [SerializeField]
     private AnimatedSpriteReplacer[] _childrenSpriteReplacer;
 
+
+    [Header("Interaction")]
     // Group gets invulnerable at spawn and after a lost fight for a short time
     public bool isInvulnerable = false;
 
@@ -38,34 +37,20 @@ public class Squad : MonoBehaviour {
     // Current gathered loot
     [SerializeField]
     private int currentGroupLoot = 0;
-    public int CurrentGroupLoot
-    {
-        get
-        {
-            return currentGroupLoot;
-        }
-        set
-        {
-            currentGroupLoot = value;
-        }
-    }
+    public int CurrentGroupLoot { get { return currentGroupLoot; } set { currentGroupLoot = value; } }
 
     // Current movement speed of the group
     [SerializeField]
     private int movementSpeed = 5;
-    public int MovementSpeed
-    {
-        get
-        {
-            return movementSpeed;
-        }
-        set
-        {
-            movementSpeed = value;
-        }
-    }
+    public int MovementSpeed { get { return movementSpeed; } set { movementSpeed = value; } }
 
-    private IEnumerator HousLootingRoutine()
+    [Header("Debug")]
+
+    [SerializeField, ReadOnly]
+    private PlayerController _player;
+    public PlayerController Player { get { return _player; } }
+
+    private IEnumerator LootingRountine()
     {
         while (true)
         {
@@ -75,23 +60,32 @@ public class Squad : MonoBehaviour {
                 CurrentGroupLoot += 3;
                 allowed_candy--;
             }
-            
+
+            yield return new WaitForEndOfFrame();
         }
         //yield break; // beendet Coroutine
     }
 
-    private IEnumerator InvulnerableRoutine()
+    private IEnumerator InvulnerableRountine()
     {
         while (true)
         {
-            if(isInvulnerable)
+
+            if (isInvulnerable)
             {
                 yield return new WaitForSeconds(8.0f);
                 isInvulnerable = false;
+                // TODO set invulnerable logic on and off
             }
-            
+
+            yield return new WaitForEndOfFrame();
         }
         //yield break; // beendet Coroutine
+    }
+
+    internal Path getPath()
+    {
+        return current;
     }
 
     private void Awake()
@@ -104,8 +98,14 @@ public class Squad : MonoBehaviour {
             }
         }
 
-        StartCoroutine(HousLootingRoutine());
-        StartCoroutine(InvulnerableRoutine());
+        
+    }
+
+    // Use this for initialization
+    void Start()
+    {
+        StartCoroutine(LootingRountine());
+        StartCoroutine(InvulnerableRountine());
     }
 
     // Update is called once per frame
@@ -136,18 +136,18 @@ public class Squad : MonoBehaviour {
         }
     }
 
-    public WayPoint getCurrentPoint()
+    public void setPath( Path newPath )
     {
-        if(currentPoint == null)
-        {
-            currentPoint = currentPath.First.Value;
-        }
-        return currentPoint;
+        current = newPath;
     }
 
-    public void setPath(LinkedList<WayPoint> newPath)
+    void OnCollisionEnter2D(Collision2D coll)
     {
-        currentPath = newPath;
+        Debug.Log("GOT A DOOR!");
+        if (coll.gameObject.tag == "Door")
+            //coll.gameObject.SendMessage("ApplyDamage", 10);
+            Debug.Log("GOT A DOOR!");
+
     }
 
     // When at a door
@@ -197,4 +197,10 @@ public class Squad : MonoBehaviour {
         // set really invulnerable
     }
 
+
+    public void Init(PlayerController player, Color _color)
+    {   
+        _player = player;
+        _flag.SetColor(_color);
+    }
 }

@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 4946994822253904}
   - component: {fileID: 114200811897298136}
   m_Layer: 0
-  m_Name: TestSquad
+  m_Name: MasterSquad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -401,6 +401,11 @@ MonoBehaviour:
   - {fileID: 114645376252694400}
   - {fileID: 114059808853814326}
   - {fileID: 114395841244007268}
+  isInvulnerable: 0
+  isLooting: 0
+  currentGroupLoot: 0
+  movementSpeed: 5
+  _player: {fileID: 0}
 --- !u!114 &114365478248843514
 MonoBehaviour:
   m_ObjectHideFlags: 1

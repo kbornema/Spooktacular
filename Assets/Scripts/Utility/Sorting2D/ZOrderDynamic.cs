@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Rendering;
 
 [ExecuteInEditMode]
 public class ZOrderDynamic : MonoBehaviour 
@@ -9,6 +10,9 @@ public class ZOrderDynamic : MonoBehaviour
     private GameObject _myPivot;
     [SerializeField]
     private float _sortOffset = 0.0f;
+
+    [SerializeField]
+    private SortingGroup _group;
 
     private Renderer[] _renderers;
     private int _oldOrder = int.MaxValue;
@@ -47,9 +51,17 @@ public class ZOrderDynamic : MonoBehaviour
 
         if (curOrder != _oldOrder)
         {
-            for (int i = 0; i < _renderers.Length; i++)
-                _renderers[i].sortingOrder = curOrder;
-          
+
+            if (_group)
+            {
+                _group.sortingOrder = curOrder;
+            }
+
+            else
+            {
+                for (int i = 0; i < _renderers.Length; i++)
+                    _renderers[i].sortingOrder = curOrder;
+            }
             _oldOrder = curOrder;
         }
     }
