@@ -4,25 +4,26 @@ using UnityEngine;
 
 public class Squad : MonoBehaviour {
 
+
+    [Header("Movement")]
+    private LinkedList<WayPoint> currentPath;
     [SerializeField]
-    LinkedList<WayPoint> currentPath;
-    [SerializeField]
-    WayPoint currentPoint;
+    private WayPoint currentPoint;
 
 
+    [Header("Visuals")]
     [SerializeField]
     private SquadFlag _flag;
     public SquadFlag Flag { get { return _flag; } }
-
-
     [SerializeField]
     private List<SpriteLookup> _skins;
     [SerializeField]
     private bool _randomizeChildren = false;
-
     [SerializeField]
     private AnimatedSpriteReplacer[] _childrenSpriteReplacer;
 
+
+    [Header("Interaction")]
     // Group gets invulnerable at spawn and after a lost fight for a short time
     public bool isInvulnerable = false;
 
@@ -38,32 +39,12 @@ public class Squad : MonoBehaviour {
     // Current gathered loot
     [SerializeField]
     private int currentGroupLoot = 0;
-    public int CurrentGroupLoot
-    {
-        get
-        {
-            return currentGroupLoot;
-        }
-        set
-        {
-            currentGroupLoot = value;
-        }
-    }
+    public int CurrentGroupLoot { get { return currentGroupLoot; } set { currentGroupLoot = value; } }
 
     // Current movement speed of the group
     [SerializeField]
     private int movementSpeed = 5;
-    public int MovementSpeed
-    {
-        get
-        {
-            return movementSpeed;
-        }
-        set
-        {
-            movementSpeed = value;
-        }
-    }
+    public int MovementSpeed { get { return movementSpeed; } set { movementSpeed = value; } }
 
     private IEnumerator LootingRountine()
     {
