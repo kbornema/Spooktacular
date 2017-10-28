@@ -118,8 +118,6 @@ public class Squad : MonoBehaviour {
                 _childrenSpriteReplacer[i].SetLookup(_skins[Random.Range(0, _skins.Count)]);
             }
         }
-
-        
     }
 
     // Use this for initialization
@@ -128,13 +126,10 @@ public class Squad : MonoBehaviour {
         StartCoroutine(LootingRountine());
         StartCoroutine(InvulnerableRountine());
 
-        gameManager = GameObject.Find("GameManager");
-        fightManager = gameManager.GetComponent<FightManager>();
-
-
+        fightManager = GameManager.Instance.GetComponent<FightManager>();
         PathWalking = GameObject.Find("Path"); // TAKEOUT
     }
-    GameObject gameManager;
+
     FightManager fightManager;
 
     // TAKEOUT
@@ -229,13 +224,10 @@ public class Squad : MonoBehaviour {
         var otherSquad = coll.GetComponent<Squad>();
         
         // Check if colliding objects is an opponent
-        if (otherSquad && otherSquad._player != _player && isFighting == false)
+        if (otherSquad && otherSquad._player != _player && isFighting == false && otherSquad.isFighting == false)
         {
             CurrentOpponent = otherSquad;
-            CurrentOpponent.startFight();
-            startFight();
-
-            //TODO is already fighting
+            fightManager.newFight(this, CurrentOpponent);
         }
             //coll.gameObject.SendMessage("ApplyDamage", 10);
             
@@ -249,13 +241,11 @@ public class Squad : MonoBehaviour {
         if(isLooting)
         {
             isLooting = false;
-
             CurrentDoor.doorIsClosed = true;
         }
 
         // Set speed to 0
         curMoveSpeed = 0.0f;
-        fightManager.newFight(this, CurrentOpponent);
     }
 
     public void lostFight()
@@ -320,4 +310,6 @@ public class Squad : MonoBehaviour {
         for (int i = 0; i < _coloredSprites.Length; i++)
             _coloredSprites[i].color = _color;
     }
+
+    public PlayerController Player { get { return _player; } }
 }

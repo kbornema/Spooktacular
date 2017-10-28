@@ -156,8 +156,9 @@ public class GameManager : AManager<GameManager>
 
     private void EndGame()
     {
-        int winnerIndex = FindPlayerWithHighestScore();
-        Debug.Log("Player " + winnerIndex + " won with " + players[winnerIndex].Stats.Score + " points! Congrats!");
+        //TODO:
+        //int winnerIndex = FindPlayerWithHighestScore();
+        //Debug.Log("Player " + winnerIndex + " won with " + players[winnerIndex].Stats.Score + " points! Congrats!");
     }
 
     // returns index of Best Player

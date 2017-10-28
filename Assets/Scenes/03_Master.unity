@@ -419,7 +419,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: d748f4f3981040b47ad01b3b21169924, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -9650,6 +9650,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36c14f99018bf7c4d997976a7a51e706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fightList: []
 --- !u!1001 &635643696
 Prefab:
   m_ObjectHideFlags: 0

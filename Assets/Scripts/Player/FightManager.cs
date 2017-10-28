@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,26 +14,31 @@ public class FightManager : MonoBehaviour {
         else
         {
             // Add to list. This is to avoid double fights with the same squads
-            fightList.Add(new Fight(one, two));
+            Fight f = new Fight(one, two);
+            fightList.Add(f);
 
             // Start the coroutine
-            FightingRoutine(new Fight(one, two));
+            StartCoroutine(FightingRoutine(f));
         }
             
     }
 	
 	// Update is called once per frame
 	void Update () {
-        for (int i = 0; i < fightList.Count; i++)
+        for (int i = fightList.Count - 1; i >= 0; i--)
         {
             if (fightList[i].fightIsDone)
                 fightList.RemoveAt(i);
-            break;
+           
         }
 	}
 
     private IEnumerator FightingRoutine(Fight currentFight)
     {
+        currentFight.firstPlayer.startFight();
+        currentFight.secondPlayer.startFight();
+
+        print("start fight" + currentFight.firstPlayer.Player.name + " vs "+  currentFight.secondPlayer.Player.name);
         bool teamOneWins = false;
         // TODO startClap
         yield return new WaitForSeconds(4.5f);
@@ -48,15 +53,18 @@ public class FightManager : MonoBehaviour {
         else
             likelihood -= 10;
         int differenceInLoot = currentFight.secondPlayer.CurrentGroupLoot - currentFight.firstPlayer.CurrentGroupLoot;
+        
         // The greater the difference in loot, the higher the winning chance
         if (differenceInLoot > 4)
         {
             likelihood += 5;
         }
+
         if (differenceInLoot > 12)
         {
             likelihood += 5;
         }
+
         if (differenceInLoot > 18)
         {
             likelihood += 5;
@@ -98,11 +106,15 @@ public class FightManager : MonoBehaviour {
 
     bool checkIfFightAlreadyExists(Squad one, Squad two)
     {
+        Debug.Assert(one != null);
+        Debug.Assert(two != null);
+
         foreach (var item in fightList)
         {
             if (item.firstPlayer == one)
                 if (item.secondPlayer == two)
                     return true;
+
             if (item.secondPlayer == one)
                 if (item.firstPlayer == two)
                     return true;
