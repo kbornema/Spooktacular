@@ -1,11 +1,14 @@
 fileFormatVersion: 2
 guid: cac5258aa65725a40bab41725cbf7701
-timeCreated: 1509152490
+timeCreated: 1509153277
 licenseType: Free
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - m_Sprite: {fileID: 21300000, guid: 58c12765f5f683a409bacdcbbe2f0a7a, type: 3}
+  - m_InstancedGameObject: {instanceID: 0}
+  - m_Preview: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
