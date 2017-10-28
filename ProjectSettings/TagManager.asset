@@ -48,3 +48,6 @@ TagManager:
   - name: Dynamic
     uniqueID: 2100120115
     locked: 0
+  - name: Light
+    uniqueID: 2154483931
+    locked: 0
