@@ -9,9 +9,9 @@ public class Squad : MonoBehaviour {
     [SerializeField]
     WayPoint currentPoint;
 
-    public WayPoint getCurrentPoint ()
+    public WayPoint getCurrentPoint()
     {
-        return currentPath;
+        return currentPoint;
     }
 
 	// Use this for initialization
