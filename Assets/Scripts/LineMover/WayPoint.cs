@@ -38,6 +38,7 @@ public class WayPoint : MonoBehaviour {
         if (temp == null) return;
 
         activeWaypoint = temp; //onyl set if temp is non Null
+        Debug.Log("new Direction: " + newWaypoint);
         Vector3 origin = transform.position;
         Vector3 target = activeWaypoint.gameObject.transform.position;
         float distance = Vector3.Distance(origin, target);
@@ -75,16 +76,21 @@ public class WayPoint : MonoBehaviour {
 
     public DIRECTION getCurrentDirection()
     {
-        if (activeWaypoint == null)
+        return getDirection( activeWaypoint );
+    }
+
+    public DIRECTION getDirection(WayPoint givenWaypoint)
+    {
+        if (givenWaypoint == null)
             return DIRECTION.NONE;
 
-        if (activeWaypoint == top)
+        if (givenWaypoint == top)
             return DIRECTION.NORTH;
-        if (activeWaypoint == right)
+        if (givenWaypoint == right)
             return DIRECTION.EAST;
-        if (activeWaypoint == down)
+        if (givenWaypoint == down)
             return DIRECTION.SOUTH;
-        if (activeWaypoint == left)
+        if (givenWaypoint == left)
             return DIRECTION.WEST;
 
         return DIRECTION.NONE;
@@ -116,7 +122,7 @@ public class WayPoint : MonoBehaviour {
             Vector3 target = targetObj.position;
             float distance = Vector3.Distance(origin, target);
             var scale = (distance + waypointScale *2) * positionInbetween; 
-            Debug.Log(scale);
+            //Debug.Log(scale);
             trackObj.localScale = new Vector3( scale,1,1);
             //trackObj.localPosition = new Vector3(scale, 0);//TODO both axis 
             
