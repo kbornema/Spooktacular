@@ -1,27 +1,34 @@
-﻿
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Squad : MonoBehaviour 
-{
-    [Header("Movement")]
-    private Path current;
+public class Squad : MonoBehaviour {
+
+    [SerializeField]
+    LinkedList<WayPoint> currentPath;
+    [SerializeField]
+    WayPoint currentPoint;
 
 
     [Header("Visuals")]
     [SerializeField]
     private SquadFlag _flag;
     public SquadFlag Flag { get { return _flag; } }
+
+
     [SerializeField]
     private List<SpriteLookup> _skins;
     [SerializeField]
     private bool _randomizeChildren = false;
+
     [SerializeField]
     private AnimatedSpriteReplacer[] _childrenSpriteReplacer;
-
+    [SerializeField]
+    private SpriteRenderer[] _coloredSprites;
 
     [Header("Interaction")]
+    public GameObject CurrentDoor = null;
+
     // Group gets invulnerable at spawn and after a lost fight for a short time
     public bool isInvulnerable = false;
 
@@ -37,18 +44,35 @@ public class Squad : MonoBehaviour
     // Current gathered loot
     [SerializeField]
     private int currentGroupLoot = 0;
-    public int CurrentGroupLoot { get { return currentGroupLoot; } set { currentGroupLoot = value; } }
+    public int CurrentGroupLoot
+    {
+        get
+        {
+            return currentGroupLoot;
+        }
+        set
+        {
+            currentGroupLoot = value;
+        }
+    }
 
     // Current movement speed of the group
     [SerializeField]
     private int movementSpeed = 5;
-    public int MovementSpeed { get { return movementSpeed; } set { movementSpeed = value; } }
-
-    [Header("Debug")]
+    public int MovementSpeed
+    {
+        get
+        {
+            return movementSpeed;
+        }
+        set
+        {
+            movementSpeed = value;
+        }
+    }
 
     [SerializeField, ReadOnly]
     private PlayerController _player;
-    public PlayerController Player { get { return _player; } }
 
     private IEnumerator LootingRountine()
     {
@@ -56,12 +80,18 @@ public class Squad : MonoBehaviour
         {
             if(isLooting)
             {
-                yield return new WaitForSeconds(1.0f);
-                CurrentGroupLoot += 3;
-                allowed_candy--;
+                if (CurrentDoor.transform.parent.GetComponent<HouseProperties>().CurrentLoot > 0)
+                {
+                    yield return new WaitForSeconds(1.0f);
+                    CurrentGroupLoot += 3;
+                    allowed_candy--;
+                    CurrentDoor.transform.parent.GetComponent<HouseProperties>().CurrentLoot-=3;
+                }
+                else
+                    endDoorLoot();
             }
-
-            yield return new WaitForEndOfFrame();
+            else
+                yield return new WaitForEndOfFrame();
         }
         //yield break; // beendet Coroutine
     }
@@ -77,15 +107,10 @@ public class Squad : MonoBehaviour
                 isInvulnerable = false;
                 // TODO set invulnerable logic on and off
             }
-
-            yield return new WaitForEndOfFrame();
+            else
+                yield return new WaitForEndOfFrame();
         }
         //yield break; // beendet Coroutine
-    }
-
-    internal Path getPath()
-    {
-        return current;
     }
 
     private void Awake()
@@ -106,13 +131,44 @@ public class Squad : MonoBehaviour
     {
         StartCoroutine(LootingRountine());
         StartCoroutine(InvulnerableRountine());
+
+        PathWalking = GameObject.Find("Path"); // TAKEOUT
+    }
+
+    // TAKEOUT
+    GameObject PathWalking;
+    Transform targetPathNode;
+    int pathNodeIndex = 0;
+
+
+    // TAKEOUT
+    void getNextNode()
+    {
+        targetPathNode = PathWalking.transform.GetChild(pathNodeIndex);
+        pathNodeIndex++;
     }
 
     // Update is called once per frame
     void Update()
     {
-        // if door found // TODO
-        // atDoor();
+        if (targetPathNode == null)
+        {
+            getNextNode();
+            if (targetPathNode == null)
+            {
+                Destroy(gameObject);
+            }
+        }
+
+        Vector2 dir = targetPathNode.position - this.transform.localPosition;
+        float distThisFrame = movementSpeed * Time.deltaTime;
+        if (dir.magnitude <= distThisFrame)
+            targetPathNode = null;
+        else
+        {
+            transform.Translate(dir.normalized * distThisFrame);
+
+        }
 
         // Check if we can and want to loot further
         if (isLooting)
@@ -129,37 +185,45 @@ public class Squad : MonoBehaviour
                 if (CurrentGroupLoot > maxGroupLootLimit - 1)
                     endDoorLoot();
             }
-
-
-            // If house.currentcandy < 1 TODO
-            // endDoorLoot();
         }
     }
 
-    public void setPath( Path newPath )
+    public WayPoint getCurrentPoint()
     {
-        current = newPath;
+        if(currentPoint == null)
+        {
+            currentPoint = currentPath.First.Value;
+        }
+        return currentPoint;
     }
 
-    void OnCollisionEnter2D(Collision2D coll)
+    public void setPath(LinkedList<WayPoint> newPath)
     {
-        Debug.Log("GOT A DOOR!");
+        currentPath = newPath;
+    }
+
+    void OnTriggerEnter2D(Collider2D coll)
+    {
         if (coll.gameObject.tag == "Door")
-            //coll.gameObject.SendMessage("ApplyDamage", 10);
+        {
             Debug.Log("GOT A DOOR!");
+            GameObject newFoundDoor = coll.gameObject;
 
-    }
+            // Group is not at max loot
+            if (CurrentGroupLoot < maxGroupLootLimit)
 
-    // When at a door
-    // TODO needs house gameobjects
-    void atDoor()
-    {
-        // Group is not at max loot
-        if (CurrentGroupLoot < maxGroupLootLimit)
+                // There is more then zero loot in the house
+                if (newFoundDoor.transform.parent.GetComponent<HouseProperties>().CurrentLoot > 0)
+                {
+                    CurrentDoor = newFoundDoor;
+                    startDoorLoot();
+                }
+                
 
-            // There is more then zero loot in the house
-            // if house.currentLoot > 0
-            startDoorLoot();
+        }
+            //coll.gameObject.SendMessage("ApplyDamage", 10);
+            
+
     }
 
     void startDoorLoot()
@@ -167,7 +231,7 @@ public class Squad : MonoBehaviour
         // TODO was passiert im kampf???
 
         // Random count for rolling how much candy we are allowed to get at this door
-        allowed_candy = Random.Range(3, 6);
+        allowed_candy = Random.Range(2, 4);
 
         // Set speed to 0
         MovementSpeed = 0;
@@ -184,8 +248,7 @@ public class Squad : MonoBehaviour
         // Set speed to normal
         MovementSpeed = 5;
 
-        // Close door for 10 seconds
-        // TODO
+        CurrentDoor.GetComponent<DoorController>().doorIsClosed = true;
     }
 
     void setInvulnerable()
@@ -202,5 +265,8 @@ public class Squad : MonoBehaviour
     {   
         _player = player;
         _flag.SetColor(_color);
+
+        for (int i = 0; i < _coloredSprites.Length; i++)
+            _coloredSprites[i].color = _color;
     }
 }

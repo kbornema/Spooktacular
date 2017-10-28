@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Camera))]
+[RequireComponent(typeof(Camera)), ExecuteInEditMode]
 public class KeepCamSize : MonoBehaviour 
 {
     [SerializeField]
@@ -11,14 +11,14 @@ public class KeepCamSize : MonoBehaviour
     [SerializeField]
     private Camera trackedCam;
 
-    void Start()
+    private void Start()
     {
         if (!myCam)
             myCam = GetComponent<Camera>();
     }
 
 	// Update is called once per frame
-	void LateUpdate () 
+    private void LateUpdate() 
     {
         if (myCam.orthographicSize != trackedCam.orthographicSize)
             myCam.orthographicSize = trackedCam.orthographicSize;

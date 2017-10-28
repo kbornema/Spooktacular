@@ -42,6 +42,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Floor
+    uniqueID: 925960645
+    locked: 0
   - name: Dynamic
     uniqueID: 2100120115
+    locked: 0
+  - name: Light
+    uniqueID: 2154483931
     locked: 0

@@ -30,16 +30,6 @@ public class Test_MovePlayer : MonoBehaviour {
     void Start()
     {
         PathWalking = GameObject.Find("Path");
-        StartCoroutine(MyRoutine());
-    }
-
-    private IEnumerator MyRoutine()
-    {
-        yield return new WaitForSeconds(1.0f);
-        Debug.Log("Hi");
-        
-
-        yield break; // beendet Coroutine
     }
 
     // Update is called once per frame
