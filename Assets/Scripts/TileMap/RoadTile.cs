@@ -13,7 +13,7 @@ public class RoadTile : MyTile
 
     public override bool IsWalkable()
     {
-        return base.IsWalkable();
+        return true;
     }
 
     // This refreshes itself and other RoadTiles that are orthogonally and diagonally adjacent
