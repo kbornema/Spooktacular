@@ -36,8 +36,8 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - LightAndWorld
+  - Light
   m_SortingLayers:
   - name: Default
     uniqueID: 0
