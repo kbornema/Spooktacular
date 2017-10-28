@@ -1,27 +1,75 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour 
+{
     [SerializeField]
-    public int playerIndex;
+    private int _playerId;
+    public int PlayerId { get { return _playerId; } }
 
     [SerializeField]
-    public GameController gameController;
+    private int _playerInputId;
+    public int PlayerInputId { get { return _playerInputId; } }
 
     [SerializeField]
-    public PlayerStats stats;
+    private PlayerStats stats;
+    public PlayerStats Stats { get { return stats; } }
+    
+    [SerializeField]
+    private Squad[] squads;
+    public Squad[] Squads { get { return squads; } }
 
     [SerializeField]
-    public Squad[] squads;
+    private Color _color;
+    public Color PlayerColor { get { return _color; } }
 
-	// Use this for initialization
-	void Start () {
+    public void Setup(int playerId, int playerInputId)
+    {
+        this._playerId = playerId;
+        this._playerInputId = playerInputId;
+        _color = GetColor(playerId);
         stats = new PlayerStats();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+        stats.Reset();
+
+
+        CreateSquads(3);
+    }
+
+    public void CreateSquads(int num)
+    {
+        if(squads != null)
+        {
+            for (int i = 0; i < squads.Length; i++)
+                Destroy(squads[i].gameObject);
+        }
+
+        
+        squads = new Squad[num];
+
+        for (int i = 0; i < squads.Length; i++)
+        {
+            var squad = Instantiate(GameManager.Instance.SquadPrefab);
+            squad.Init(this, _color);
+
+            squads[i] = squad;
+        }
+    }
+
+    private static Color GetColor(int playerId)
+    {
+        if (playerId == 0)
+            return Color.red;
+
+        if (playerId == 1)
+            return Color.green;
+
+        if (playerId == 2)
+            return Color.blue;
+
+        if (playerId == 3)
+            return Color.yellow;
+
+        return Color.magenta;
+    }
 }

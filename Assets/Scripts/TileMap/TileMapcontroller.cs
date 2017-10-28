@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -59,19 +59,19 @@ public class TileMapcontroller : MonoBehaviour {
     [SerializeField]
     public GameObject wayPointPrefab;
 
-    Tilemap tileMap;
+    [SerializeField]
+    private Tilemap tileMap;
 
 	// Use this for initialization
 	void Start () {
-        tileMap = GetComponent<Tilemap>();
+
+        if(tileMap)
+            tileMap = GetComponent<Tilemap>();
 
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
+    [ContextMenu("Generate")]
     public void GenerateWayPoints()
     {
         Vector3Int startPoint = findWalkableTile();
@@ -82,6 +82,8 @@ public class TileMapcontroller : MonoBehaviour {
 
         WayPoint originalWayPoint = Instantiate(wayPointPrefab).GetComponent<WayPoint>();
         finishedWayPointList.Add(originalWayPoint);
+
+        originalWayPoint.transform.SetParent(transform);
         originalWayPoint.transform.position = tileMap.CellToWorld(startPoint);
         originalWayPoint.transform.localScale = Vector3.one * 2;
 
@@ -234,6 +236,7 @@ public class TileMapcontroller : MonoBehaviour {
 
             WayPoint currentWP = Instantiate(wayPointPrefab).GetComponent<WayPoint>();
 
+            currentWP.transform.SetParent(transform);
             currentWP.gameObject.transform.position = tileMap.CellToWorld(currentTile);
 
             finishedWayPointList.Add(currentWP);

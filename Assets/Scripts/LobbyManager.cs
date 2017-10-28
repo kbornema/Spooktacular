@@ -1,9 +1,14 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class LobbyManager : MonoBehaviour {
+public class LobbyManager : MonoBehaviour 
+{
+    private const int MAX_INPUT_DEVICES = 5;
+    private const int MAX_PLAYERS = 4;
+    private const int MIN_PLAYERS = 1;
 
     public int CountDown = 10;
     public Text cd;
@@ -13,16 +18,20 @@ public class LobbyManager : MonoBehaviour {
 
     private int playerCount;
     private int MaxCount;
-    private bool p1, p2, p3, p4;
     private float t0;
     private int time;
+    private bool[] playerJoined;
+
+    private bool _started = false;
+
 	// Use this for initialization
 	void Start ()
     {
         info.text = "";
         t0 = Time.time;
         MaxCount = CountDown;
-        
+
+        playerJoined = new bool[MAX_INPUT_DEVICES];
 	}
 	
 	// Update is called once per frame
@@ -32,21 +41,22 @@ public class LobbyManager : MonoBehaviour {
         CountDown = Mathf.Max( 0, MaxCount - time);
         cd.text = CountDown.ToString();
 
-        if (CountDown > 0 && playerCount < 4)
+        if (CountDown > 0 && playerCount < MAX_PLAYERS)
         {
             UpdatePlayers();
         }
 
-        if (playerCount < 2)
+        if (playerCount < MIN_PLAYERS)
         {
-            info.text = "must be at least 2 players";
+            info.text = "must be at least " + MIN_PLAYERS + " players";
         }
 
-        if (playerCount >= 2 && CountDown <= 0)
+        if (playerCount >= MIN_PLAYERS && CountDown <= 0 && !_started)
         {
+            _started = true;
             CountDown = 0;
-            Brain.Instance.NumberOfPlayer = playerCount;
-            //StartGame
+            GameManager.Instance.SetupGame(playerJoined);
+            SceneManager.LoadScene("03_Master");
         }
         
 
@@ -54,44 +64,18 @@ public class LobbyManager : MonoBehaviour {
 
     private void UpdatePlayers()
     {
-        if (!p1 && Input.GetButtonDown("Start_0"))
+        for (int i = 0; i < MAX_INPUT_DEVICES; i++)
         {
-            GameObject clone = Instantiate(AvatarPrefeb);
-            clone.transform.parent = Container.transform;
-            clone.GetComponent<Image>().color = Color.green;
-            clone.GetComponentInChildren<Text>().text = "Player 1";
-            playerCount++;
-            p1 = true;
-        }
-
-        if (!p2 && Input.GetButtonDown("Start_1"))
-        {
-            GameObject clone = Instantiate(AvatarPrefeb);
-            clone.transform.parent = Container.transform;
-            clone.GetComponent<Image>().color = Color.red;
-            clone.GetComponentInChildren<Text>().text = "Player 2";
-            playerCount++;
-            p2 = true;
-        }
-
-        if (!p3 && Input.GetButtonDown("Start_2"))
-        {
-            GameObject clone = Instantiate(AvatarPrefeb);
-            clone.transform.parent = Container.transform;
-            clone.GetComponent<Image>().color = Color.yellow;
-            clone.GetComponentInChildren<Text>().text = "Player 3";
-            playerCount++;
-            p3 = true;
-        }
-
-        if (!p4 && Input.GetButtonDown("Start_3"))
-        {
-            GameObject clone = Instantiate(AvatarPrefeb);
-            clone.transform.parent = Container.transform;
-            clone.GetComponent<Image>().color = Color.blue;
-            clone.GetComponentInChildren<Text>().text = "Player 4";
-            playerCount++;
-            p4 = true;
+            if(!playerJoined[i] && Input.GetButton("Start_" + i))
+            {
+                GameObject clone = Instantiate(AvatarPrefeb);
+                clone.transform.parent = Container.transform;
+                //TODO: different colors:
+                clone.GetComponent<Image>().color = Color.green;
+                clone.GetComponentInChildren<Text>().text = "Player " + (i + 1);
+                playerJoined[i] = true;
+                playerCount++;
+            }
         }
     }
 }
