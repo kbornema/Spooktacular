@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -50,21 +51,38 @@ public class WayPoint : MonoBehaviour {
 
     public void updateWaypoint( DIRECTION newWaypoint)
     {
-        switch( newWaypoint)
+        activeWaypoint = getWayPoint(newWaypoint);
+    }
+
+    public WayPoint getWayPoint(DIRECTION newWaypoint)
+    {
+        switch (newWaypoint)
         {
             case DIRECTION.NORTH:
-                activeWaypoint = top;
-                break;
+                return top;
             case DIRECTION.EAST:
-                activeWaypoint = right;
-                break;
+                return right;
             case DIRECTION.SOUTH:
-                activeWaypoint = down;
-                break;
+                return down;
             case DIRECTION.WEST:
-                activeWaypoint = Left;
-                break;
+                return Left;
+            default:
+                return null;
         }
+    }
+
+    public DIRECTION getCurrentDirection()
+    {
+        if (activeWaypoint == top)
+            return DIRECTION.NORTH;
+        if (activeWaypoint == right)
+            return DIRECTION.EAST;
+        if (activeWaypoint == down)
+            return DIRECTION.SOUTH;
+        if (activeWaypoint == Left)
+            return DIRECTION.WEST;
+
+        return DIRECTION.NONE;
     }
 
     public float getCurrentInterpolation()
@@ -81,6 +99,8 @@ public class WayPoint : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        // create new Track for each go-through
+         
         if(oldPosition != positionInbetween && activeWaypoint != null)
         {
             var targetObj = activeWaypoint.gameObject.transform;
