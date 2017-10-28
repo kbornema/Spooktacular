@@ -7,13 +7,13 @@ using UnityEngine;
 public class WayPoint : MonoBehaviour {
 
     [SerializeField]
-    WayPoint top;
+    public WayPoint top;
     [SerializeField]
-    WayPoint right;
+    public WayPoint right;
     [SerializeField]
-    WayPoint down;
+    public WayPoint down;
     [SerializeField]
-    WayPoint Left;
+    public WayPoint left;
 
     [SerializeField]
     GameObject TrackPrefab;
@@ -30,12 +30,21 @@ public class WayPoint : MonoBehaviour {
     // Use this for initialization
     void Start () { 
 
+    }
+
+    public void updateWaypoint( DIRECTION newWaypoint)
+    {
+        WayPoint temp = getWayPoint(newWaypoint);
+        if (temp == null) return;
+
+        activeWaypoint = temp; //onyl set if temp is non Null
+        Debug.Log("new Direction: " + newWaypoint);
         Vector3 origin = transform.position;
         Vector3 target = activeWaypoint.gameObject.transform.position;
         float distance = Vector3.Distance(origin, target);
         Debug.Log(distance+1);
 
-        //Create Track object
+        //Create Track object //TODO Still in Need for more Tracks
         track = Instantiate(TrackPrefab, origin, Quaternion.identity, transform);
         var trackObj = track.gameObject.transform;
 
@@ -46,12 +55,6 @@ public class WayPoint : MonoBehaviour {
 
         //Rescale Track
         trackObj.transform.localScale = new Vector3(0, 0, 1);
-
-    }
-
-    public void updateWaypoint( DIRECTION newWaypoint)
-    {
-        activeWaypoint = getWayPoint(newWaypoint);
     }
 
     public WayPoint getWayPoint(DIRECTION newWaypoint)
@@ -65,7 +68,7 @@ public class WayPoint : MonoBehaviour {
             case DIRECTION.SOUTH:
                 return down;
             case DIRECTION.WEST:
-                return Left;
+                return left;
             default:
                 return null;
         }
@@ -73,13 +76,21 @@ public class WayPoint : MonoBehaviour {
 
     public DIRECTION getCurrentDirection()
     {
-        if (activeWaypoint == top)
+        return getDirection( activeWaypoint );
+    }
+
+    public DIRECTION getDirection(WayPoint givenWaypoint)
+    {
+        if (givenWaypoint == null)
+            return DIRECTION.NONE;
+
+        if (givenWaypoint == top)
             return DIRECTION.NORTH;
-        if (activeWaypoint == right)
+        if (givenWaypoint == right)
             return DIRECTION.EAST;
-        if (activeWaypoint == down)
+        if (givenWaypoint == down)
             return DIRECTION.SOUTH;
-        if (activeWaypoint == Left)
+        if (givenWaypoint == left)
             return DIRECTION.WEST;
 
         return DIRECTION.NONE;
@@ -111,7 +122,7 @@ public class WayPoint : MonoBehaviour {
             Vector3 target = targetObj.position;
             float distance = Vector3.Distance(origin, target);
             var scale = (distance + waypointScale *2) * positionInbetween; 
-            Debug.Log(scale);
+            //Debug.Log(scale);
             trackObj.localScale = new Vector3( scale,1,1);
             //trackObj.localPosition = new Vector3(scale, 0);//TODO both axis 
             

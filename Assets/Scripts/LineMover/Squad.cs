@@ -5,22 +5,21 @@ using UnityEngine;
 public class Squad : MonoBehaviour {
 
     [SerializeField]
-    List<WayPoint> currentPath;
+    LinkedList<WayPoint> currentPath;
     [SerializeField]
     WayPoint currentPoint;
 
     public WayPoint getCurrentPoint()
     {
+        if(currentPoint == null)
+        {
+            currentPoint = currentPath.First.Value;
+        }
         return currentPoint;
     }
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public void setPath(LinkedList<WayPoint> newPath)
+    {
+        currentPath = newPath;
+    }
 }

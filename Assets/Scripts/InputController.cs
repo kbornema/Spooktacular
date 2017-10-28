@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -29,31 +30,35 @@ public class InputController : MonoBehaviour {
     [SerializeField]
     float minimumAxisInput;
 
+    [SerializeField]
+    private bool controllerActivated;
+
     Vector2 defaultVector = new Vector2(-1, 1).normalized;
 
-	// Use this for initialization
-	void Start () {
-        DIRECTION test = DIRECTION.NORTH;
-        Debug.Log(test.areOpposingSides(DIRECTION.SOUTH));
+    // Use this for initialization
+    void Start () {
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	}
 
-    bool GetPlayerButtonInput(string buttonName,int playerIndex)
+    public bool GetPlayerButtonInput(string buttonName,int playerIndex)
     {
         return Input.GetButtonDown(buttonName + "_" + playerIndex);
     }
 
+    //TODO add Deadzone
     public DIRECTION GetPlayerDirection(int playerIndex)
     {
-        Vector2 inputVector = GetControllerVector("" + playerIndex);
-        if(inputVector.magnitude < minimumAxisInput)
+        Vector2 inputVector = controllerActivated ? GetControllerVector("" + playerIndex) : getKeyboardVector();
+        //Vector2 inputVector = GetControllerVector("" + playerIndex);
+        //Debug.Log(inputVector.magnitude);
+        if (inputVector.magnitude < minimumAxisInput)
         {
             return DIRECTION.NONE;
         }
-
+        
         inputVector.Normalize();
 
         float angleToDefaultVector = Mathf.Atan2(inputVector.y, inputVector.x) * Mathf.Rad2Deg + 180;
@@ -66,6 +71,15 @@ public class InputController : MonoBehaviour {
             return DIRECTION.EAST;
         else
             return DIRECTION.SOUTH;
+    }
+
+    private Vector2 getKeyboardVector()
+    {
+        Vector2 result = Vector2.zero;
+
+        result = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+
+        return result;
     }
 
     Vector2 GetControllerVector(string controllerName)

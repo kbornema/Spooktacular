@@ -5,10 +5,17 @@ using UnityEngine.Tilemaps;
 using UnityEditor;
 #endif
 
-public class RoadTile : Tile
+[CreateAssetMenu(fileName = "RoadTile", menuName = "OwnTiles/RoadTile")]
+public class RoadTile : MyTile
 {
     public Sprite[] m_Sprites;
     public Sprite m_Preview;
+
+    public override bool IsWalkable()
+    {
+        return base.IsWalkable();
+    }
+
     // This refreshes itself and other RoadTiles that are orthogonally and diagonally adjacent
     public override void RefreshTile(Vector3Int location, ITilemap tilemap)
     {

@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 696145327}
   m_Layer: 0
   m_Name: Waypoint
-  m_TagString: Untagged
+  m_TagString: WayPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -143,11 +143,11 @@ MonoBehaviour:
   top: {fileID: 0}
   right: {fileID: 865133711}
   down: {fileID: 0}
-  Left: {fileID: 0}
+  left: {fileID: 0}
   TrackPrefab: {fileID: 1860995761081324, guid: 4519b834bc1a4d74fbbf0a582a6979cd,
     type: 2}
   positionInbetween: 0
-  activeWaypoint: {fileID: 865133711}
+  activeWaypoint: {fileID: 0}
 --- !u!212 &696145328
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -233,14 +233,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a41faf1186b1fc41b13ca6d1dbc7b63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  top: {fileID: 0}
+  top: {fileID: 911241129}
   right: {fileID: 0}
-  down: {fileID: 911241129}
-  Left: {fileID: 696145327}
+  down: {fileID: 0}
+  left: {fileID: 696145327}
   TrackPrefab: {fileID: 1860995761081324, guid: 4519b834bc1a4d74fbbf0a582a6979cd,
     type: 2}
   positionInbetween: 0
-  activeWaypoint: {fileID: 911241129}
+  activeWaypoint: {fileID: 0}
 --- !u!212 &865133712
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -328,8 +328,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   top: {fileID: 0}
   right: {fileID: 0}
-  down: {fileID: 0}
-  Left: {fileID: 0}
+  down: {fileID: 865133711}
+  left: {fileID: 0}
   TrackPrefab: {fileID: 1860995761081324, guid: 4519b834bc1a4d74fbbf0a582a6979cd,
     type: 2}
   positionInbetween: 0
@@ -471,3 +471,61 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2070794238
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 2070794240}
+  - component: {fileID: 2070794239}
+  - component: {fileID: 2070794241}
+  m_Layer: 0
+  m_Name: Input
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2070794239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2070794238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bddcff80e5f6bf94ab61fb3ac25af276, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonString: 
+  minimumAxisInput: 0.6
+  controllerActivated: 1
+--- !u!4 &2070794240
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2070794238}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.5964347, y: 0.016816124, z: -0.010896765}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2070794241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2070794238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a16c244bad8c8549b01477f1710d616, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  directionSwitchThreshhold: 0.05
+  interpolationRate: 1.11
+  controller: {fileID: 2070794239}
