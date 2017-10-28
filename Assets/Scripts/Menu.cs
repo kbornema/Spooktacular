@@ -1,24 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
+using UnityEngine.SceneManagement;
 
+public class Menu : MonoBehaviour {
 
-public class TileMapcontroller : MonoBehaviour {
-
-    Tilemap tileMap;
+    public void StartNewGame()
+    {
+        SceneManager.LoadScene("Lobby");
+    }
 
 	// Use this for initialization
 	void Start () {
-        tileMap = GetComponent<Tilemap>();
-
-        
+		
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
-
-
 }

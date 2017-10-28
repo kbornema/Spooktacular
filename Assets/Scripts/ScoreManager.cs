@@ -10,7 +10,7 @@ public class ScoreManager : MonoBehaviour {
 
     private Text Score1, Score2, Score3, Score4;
 
-    public int iPlayerCount = 2;
+    private int iPlayerCount;
 
     private int ilastKing,inewKing;
     // Playerscore
@@ -19,6 +19,9 @@ public class ScoreManager : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
+        iPlayerCount = Brain.Instance.NumberOfPlayer;
+        Debug.Log(iPlayerCount+" Players joined the game.");
+
         Score1 = Player[0].GetComponentInChildren<Text>();
         Score2 = Player[1].GetComponentInChildren<Text>();
         Score3 = Player[2].GetComponentInChildren<Text>();
