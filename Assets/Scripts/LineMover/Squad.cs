@@ -5,21 +5,31 @@ using UnityEngine;
 public class Squad : MonoBehaviour {
 
     [SerializeField]
-    LinkedList<WayPoint> currentPath;
-    [SerializeField]
-    WayPoint currentPoint;
+    Path current;
 
-    public WayPoint getCurrentPoint()
+    public void setPath( Path newPath )
     {
-        if(currentPoint == null)
-        {
-            currentPoint = currentPath.First.Value;
-        }
-        return currentPoint;
+        current = newPath;
     }
 
-    public void setPath(LinkedList<WayPoint> newPath)
+    public Path getPath()
     {
-        currentPath = newPath;
-    }
+        return current;
+    }   
+
+    //TODO generate waypoint for Current Position
+
+    //public WayPoint getCurrentPoint()
+    //{
+    //    if(currentPoint == null)
+    //    {
+    //        currentPoint = currentPath.First.Value;
+    //    }
+    //    return currentPoint;
+    //}
+
+    //public void setPath(LinkedList<WayPoint> newPath)
+    //{
+    //    currentPath = newPath;
+    //}
 }

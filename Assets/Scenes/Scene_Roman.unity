@@ -144,10 +144,6 @@ MonoBehaviour:
   right: {fileID: 865133711}
   down: {fileID: 0}
   left: {fileID: 0}
-  TrackPrefab: {fileID: 1860995761081324, guid: 4519b834bc1a4d74fbbf0a582a6979cd,
-    type: 2}
-  positionInbetween: 0
-  activeWaypoint: {fileID: 0}
 --- !u!212 &696145328
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -237,10 +233,6 @@ MonoBehaviour:
   right: {fileID: 0}
   down: {fileID: 0}
   left: {fileID: 696145327}
-  TrackPrefab: {fileID: 1860995761081324, guid: 4519b834bc1a4d74fbbf0a582a6979cd,
-    type: 2}
-  positionInbetween: 0
-  activeWaypoint: {fileID: 0}
 --- !u!212 &865133712
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -330,10 +322,6 @@ MonoBehaviour:
   right: {fileID: 0}
   down: {fileID: 865133711}
   left: {fileID: 0}
-  TrackPrefab: {fileID: 1860995761081324, guid: 4519b834bc1a4d74fbbf0a582a6979cd,
-    type: 2}
-  positionInbetween: 0
-  activeWaypoint: {fileID: 0}
 --- !u!212 &911241130
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -509,7 +497,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2070794238}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.5964347, y: 0.016816124, z: -0.010896765}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -528,4 +516,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   directionSwitchThreshhold: 0.05
   interpolationRate: 1.11
+  TrackPrefab: {fileID: 1860995761081324, guid: 4519b834bc1a4d74fbbf0a582a6979cd,
+    type: 2}
   controller: {fileID: 2070794239}
