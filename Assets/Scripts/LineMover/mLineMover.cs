@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -75,14 +75,14 @@ public class mLineMover : MonoBehaviour {
 
     void MoveLine()
     {
-        DIRECTION inputDirection = controller.GetPlayerDirection(playerController.PlayerId);
+        DIRECTION inputDirection = controller.GetPlayerDirection(playerController);
         // We are in Range of the next Checkpoint or slightly ahead of it
         // change of direction is still possible!
         if ((currentPosition - nextWayPoint.transform.position).magnitude < directionSwitchThreshhold)
         {
             if (currentDir != inputDirection)
             {
-                currentDir = controller.GetPlayerDirection(playerController.PlayerId);
+                currentDir = controller.GetPlayerDirection(playerController);
                 currentPosition = nextWayPoint.transform.position;
             }
             else

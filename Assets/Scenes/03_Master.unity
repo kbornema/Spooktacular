@@ -5995,7 +5995,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &398982029
 Prefab:
@@ -8144,7 +8144,7 @@ Transform:
   - {fileID: 270666799}
   - {fileID: 349040566}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &538159094
 Prefab:
@@ -9582,6 +9582,7 @@ GameObject:
   - component: {fileID: 632394861}
   - component: {fileID: 632394863}
   - component: {fileID: 632394864}
+  - component: {fileID: 632394865}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -9607,12 +9608,15 @@ MonoBehaviour:
   _squadPrefab: {fileID: 114200811897298136, guid: 75c1e786060426d41926d07f7ee9a67b,
     type: 2}
   Map: {fileID: 397690381}
+  inputController: {fileID: 632394865}
+  fightManager: {fileID: 632394864}
   _selectionArrowPrefab: {fileID: 1246538774323216, guid: 2989cbbf4719d1b4f9ae77488274e36b,
     type: 2}
   _gameIsRunning: 0
   players: []
   remainingTime: 0
   _playerIds: 0100000001
+  FightList: []
 --- !u!4 &632394862
 Transform:
   m_ObjectHideFlags: 0
@@ -9651,6 +9655,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fightList: []
+--- !u!114 &632394865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 632394860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bddcff80e5f6bf94ab61fb3ac25af276, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minimumAxisInput: 0.6
 --- !u!1001 &635643696
 Prefab:
   m_ObjectHideFlags: 0
@@ -20421,7 +20437,7 @@ Transform:
   - {fileID: 445196501}
   - {fileID: 206308398}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1285542037
 Prefab:
@@ -24417,7 +24433,7 @@ Transform:
   - {fileID: 1025217077}
   - {fileID: 1265100627}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1436677001
 Prefab:
@@ -29326,7 +29342,7 @@ Transform:
   - {fileID: 1353327950}
   - {fileID: 1811561867}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1784940380
 MonoBehaviour:
@@ -32878,61 +32894,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dc6cf24d72d5e4442879c5dfedfb31d8, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &2040468185
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 2040468188}
-  - component: {fileID: 2040468187}
-  - component: {fileID: 2040468186}
-  m_Layer: 0
-  m_Name: LineMover
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2040468186
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2040468185}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bddcff80e5f6bf94ab61fb3ac25af276, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  buttonString: 
-  minimumAxisInput: 0.6
-  controllerActivated: 0
---- !u!114 &2040468187
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2040468185}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a16c244bad8c8549b01477f1710d616, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &2040468188
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2040468185}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2042279978 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1165339995118576, guid: dc6cf24d72d5e4442879c5dfedfb31d8,

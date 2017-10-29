@@ -46,7 +46,7 @@ public class FightManager : MonoBehaviour {
 
     private void HandleFight(int mode)
     {
-        //TODO: Zähle Buttonmashes von Player 1 und 2 
+        //TODO: Zï¿½hle Buttonmashes von Player 1 und 2 
         if (Input.GetButtonDown("Button" + (mode) + "_" + ID0))
         {
             Score[0]++;

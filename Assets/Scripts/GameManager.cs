@@ -20,6 +20,8 @@ public class GameManager : AManager<GameManager>
     public TileMapcontroller Map;
     public InputController inputController;
 
+    public FightManager fightManager;
+
     [SerializeField]
     private GameObject _selectionArrowPrefab;
     
@@ -54,11 +56,13 @@ public class GameManager : AManager<GameManager>
         FightList = new List<Fight>();
 
         //Only setup the game of the scene is the gameplay scene and there are no players yet:
-        if (NumberOfPlayer == 0 && SceneManager.GetActiveScene().name.Equals(playScene))
+        if (NumberOfPlayer == 0 )
         {
-            Debug.Log("Stuff happens hopefully");
 
-            SetupGame(_playerIds);
+            if(SceneManager.GetActiveScene().name.Equals(playScene))
+                SetupGame(_playerIds);
+            else
+                Debug.LogWarning("Could not automatically start game. Did you setup playScene in GameManager?", this);
         }
 
         Score = new int[players.Length];
@@ -91,7 +95,10 @@ public class GameManager : AManager<GameManager>
         {
             GameObject playerControllerObj = new GameObject("Player_" + i);
             players[i] = playerControllerObj.AddComponent<PlayerController>();
-            players[i].Setup(i, playerIndices[i], _selectionArrowPrefab, inputController);                  
+
+            players[i].Setup(i, playerIndices[i], _selectionArrowPrefab, inputController);
+
+            //mLineMover lineMover = playerControllerObj.AddComponent<mLineMover>();
         }
 
         remainingTime = gameLength;
@@ -116,9 +123,10 @@ public class GameManager : AManager<GameManager>
             {
                 var a = ChooseWayPoint(WPList);
                 players[i].Squads[j].transform.position = a.transform.position;
-                players[i].Squads[j].currentPath = new mPath();
-                players[i].Squads[j].currentPath.AddNewWaypoint(a);
+                players[i].Squads[j].SetFirstWaypoint(a);
             }
+
+            players[i].InitSquads();
         }
     }
 

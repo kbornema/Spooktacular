@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -60,14 +60,13 @@ public class Squad : MonoBehaviour
     [SerializeField, ReadOnly]
     private PlayerController _player;
     public PlayerController Player { get { return _player; } }
-
-
     */
 
-    [Header("Movement")]
     public mPath currentPath;
+
+    [Header("Movement")]
     [SerializeField]
-    WayPoint currentPoint;
+    public WayPoint currentPoint;
 
     [SerializeField]
     float snappingDistance;
@@ -186,8 +185,6 @@ public class Squad : MonoBehaviour
         StartCoroutine(InvulnerableRountine());
     }
 
-    FightManager fightManager;
-
     // Update is called once per frame
     void Update()
     {
@@ -211,6 +208,10 @@ public class Squad : MonoBehaviour
         }
         else
         {
+            //TODO:
+            if (currentPath == null)
+                return;
+
             Vector3 vecToTarget = currentPath.GetFirstPoint().transform.position - transform.position;
             if (vecToTarget.magnitude < snappingDistance)
             {
@@ -231,11 +232,12 @@ public class Squad : MonoBehaviour
     {
         if (currentPoint == null)
             Debug.Log("There Should always be a current point");
+
         return currentPoint;
     }
 
     public void setPath(mPath newPath)
-    {
+    {   
         currentPath = newPath;
     }
 
@@ -295,7 +297,8 @@ public class Squad : MonoBehaviour
         if (otherSquad && otherSquad._player != _player && isFighting == false && otherSquad.isFighting == false)
         {
             CurrentOpponent = otherSquad;
-            fightManager.newFight(this, CurrentOpponent);
+
+            GameManager.Instance.fightManager.newFight(this, CurrentOpponent);
         }
         //coll.gameObject.SendMessage("ApplyDamage", 10);
 
@@ -371,7 +374,7 @@ public class Squad : MonoBehaviour
 
 
     public void Init(PlayerController player, Color _color)
-    {
+    {   
         _player = player;
         _flag.SetColor(_color);
 
@@ -379,9 +382,29 @@ public class Squad : MonoBehaviour
             _coloredSprites[i].color = _color;
 
         playerID = _player.PlayerId;
-        Debug.Log("ID: " + playerID);
     }
 
     public PlayerController Player { get { return _player; } }
+
+    public void AddNewWaypoint(WayPoint a)
+    {   
+        Debug.Assert(currentPath != null);
+        currentPath.AddNewWaypoint(a);
+    }
+
+    public void ClearPathUpToFirstElement()
+    {
+        if (currentPath == null)
+            return;
+
+        currentPath.ClearPathUpToFirstElement();
+    }
+
+    public void SetFirstWaypoint(WayPoint a)
+    {
+        currentPath = new mPath();
+        currentPath.AddNewWaypoint(a);
+        currentPoint = a;
+    }
 }
 
