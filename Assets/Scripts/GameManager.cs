@@ -12,7 +12,7 @@ public class GameManager : AManager<GameManager>
     [Header("Common")]
 
     [SerializeField]
-    private float gameLength = 600.0f;
+    private float gameLength = 1800.0f;
 
     [SerializeField]
     private WorldText worldTextPrefab;
