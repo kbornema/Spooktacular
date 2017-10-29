@@ -11,7 +11,7 @@ public class JoystickManagerEditor : Editor
     {
         base.OnInspectorGUI();
 
-        if(GUILayout.Button("Update"))
+        if (GUILayout.Button("Update"))
         {
             (target as JoystickCreator).Init();
         }

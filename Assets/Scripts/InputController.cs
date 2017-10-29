@@ -22,46 +22,45 @@ public static class EnumExtension
     }
 }
 
-public class InputController : MonoBehaviour {
-
-    [SerializeField]
-    string buttonString;
+public class InputController : MonoBehaviour 
+{
 
     [SerializeField]
     float minimumAxisInput;
 
-    [SerializeField]
-    private bool controllerActivated;
-
     Vector2 defaultVector = new Vector2(-1, 1).normalized;
 
-    // Use this for initialization
-    void Start () {
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	}
-
-    public bool GetPlayerButtonInput(string buttonName,int playerIndex)
+    public bool GetPlayerButtonInput(string buttonName,int playerInputIndex)
     {
-        return Input.GetButtonDown(buttonName + "_" + playerIndex);
+        return Input.GetButtonDown(buttonName + "_" + playerInputIndex);
     }
 
-    //TODO add Deadzone
-    public DIRECTION GetPlayerDirection(int playerIndex)
+    public Vector2 GetMoveVector(PlayerController player)
     {
-        Vector2 inputVector = controllerActivated ? GetControllerVector("" + playerIndex) : getKeyboardVector();
+        int playerInputIndex = player.PlayerInputId;
+        bool keyboard = playerInputIndex == 4;
+
+        Vector2 inputVector = keyboard ? getKeyboardVector() : GetControllerVector("" + playerInputIndex);
         //Vector2 inputVector = GetControllerVector("" + playerIndex);
         //Debug.Log(inputVector.magnitude);
         if (inputVector.magnitude < minimumAxisInput)
         {
-            return DIRECTION.NONE;
+            return Vector2.zero;
         }
-        
-        inputVector.Normalize();
 
-        float angleToDefaultVector = Mathf.Atan2(inputVector.y, inputVector.x) * Mathf.Rad2Deg + 180;
+        inputVector.Normalize();
+        return inputVector;
+    }
+
+    //TODO add Deadzone
+    public DIRECTION GetPlayerDirection(PlayerController playerController)
+    {
+        var inputVector = GetMoveVector(playerController);
+
+        if (inputVector == Vector2.zero)
+            return DIRECTION.NONE;
+
+        float angleToDefaultVector = Mathf.Atan2(inputVector.y, inputVector.x) * Mathf.Rad2Deg;
 
         if (angleToDefaultVector < 45 || angleToDefaultVector > 315)
             return DIRECTION.WEST;

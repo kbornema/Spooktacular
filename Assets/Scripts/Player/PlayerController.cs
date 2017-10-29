@@ -73,18 +73,24 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (inputController.GetPlayerButtonInput("Button3", _playerId))
+        if (inputController.GetPlayerButtonInput("LB", _playerInputId))
         {
-            _selectedSquadId = ((_selectedSquadId + 1) > 2) ? 0 : _selectedSquadId + 1;
+            _selectedSquadId = (_selectedSquadId - 1 + squads.Length) % squads.Length;
             SelectSquad(_selectedSquadId);
-            Debug.Log("switched to Next Squad!");
         }
-        if (inputController.GetPlayerButtonInput("Button4", _playerId))
+        if (inputController.GetPlayerButtonInput("RB", _playerInputId))
         {
-            _selectedSquadId = ((_selectedSquadId - 1) < 0) ? 2 : _selectedSquadId - 1;
+            _selectedSquadId = (_selectedSquadId + 1) % squads.Length;
             SelectSquad(_selectedSquadId);
-            Debug.Log("switched to previous Squad!");
         }
+
+
+        Vector2 move =  inputController.GetMoveVector(this);
+
+        Vector2 newPos = GetActiveSquad().transform.position;
+        newPos += move * Time.deltaTime * GetActiveSquad().CurMoveSpeed;
+
+        GetActiveSquad().transform.position = newPos;
     }
 
     public void CreateSquads(int num)
@@ -100,12 +106,16 @@ public class PlayerController : MonoBehaviour
         for (int i = 0; i < squads.Length; i++)
         {
             var squad = Instantiate(GameManager.Instance.SquadPrefab);
-            squad.Init(this, _color);
-
             squads[i] = squad;
         }
 
         SelectSquad(0);
+    }
+
+    public void InitSquads()
+    {
+        for (int i = 0; i < squads.Length; i++)
+            squads[i].Init(this, _color);
     }
 
     private static Color GetColor(int playerId)
@@ -123,5 +133,13 @@ public class PlayerController : MonoBehaviour
             return Color.yellow;
 
         return Color.magenta;
+    }
+
+    public Squad GetActiveSquad()
+    {
+        if (_selectedSquadId == -1)
+            SelectSquad(0);
+
+        return squads[_selectedSquadId];
     }
 }
