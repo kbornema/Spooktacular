@@ -116,9 +116,11 @@ public class GameManager : AManager<GameManager>
     {
         List<WayPoint> WPList = Map.GetWaypointList();
 
+      
+
         for (int i = 0; i < players.Length; i++)
         {
-            players[i].CreateSquads(3);
+            players[i].CreateSquads(GetNumberOfSquads());
 
             for (int j = 0; j < players[i].Squads.Length; j++)
             {
@@ -128,6 +130,23 @@ public class GameManager : AManager<GameManager>
             }
 
             players[i].InitSquads();
+        }
+    }
+
+    private int GetNumberOfSquads()
+    {
+        int numPlayer = NumberOfPlayer;
+
+        if (numPlayer == 2 || numPlayer == 3)
+            return 3;
+
+        else if(numPlayer == 4)
+            return 2;
+
+        else
+        {
+            Debug.LogWarning("Not enough player! Or unknown number of players!");
+            return 1;
         }
     }
 

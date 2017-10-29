@@ -166,6 +166,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3d6289251344ea488d2fc946b3c1a8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _doorCooldown: 10
+  _house: {fileID: 0}
+  _houseLight: {fileID: 0}
   doorIsClosed: 0
 --- !u!114 &114642711898685696
 MonoBehaviour:
@@ -179,6 +182,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxLootStorage: 25
+  minStart: 12
+  maxStart: 21
+  _regenerateTime: 1
   doorList:
   - {fileID: 61964040625940896}
   - {fileID: 0}
@@ -194,6 +200,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3d6289251344ea488d2fc946b3c1a8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _doorCooldown: 10
+  _house: {fileID: 0}
+  _houseLight: {fileID: 0}
   doorIsClosed: 0
 --- !u!212 &212143900776383472
 SpriteRenderer:
