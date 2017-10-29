@@ -175,7 +175,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 256985180}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -65, z: 0}
+  m_LocalPosition: {x: 0, y: -376, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 830142190}
@@ -268,7 +268,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 830142186}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 407, y: 229, z: 0}
+  m_LocalPosition: {x: 960, y: 540, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1125009164}
@@ -291,6 +291,8 @@ GameObject:
   m_Component:
   - component: {fileID: 935048789}
   - component: {fileID: 935048788}
+  - component: {fileID: 935048791}
+  - component: {fileID: 935048790}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -311,13 +313,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _destroyMode: 0
   _dontDestroyOnLoad: 1
+  playScene: 03_Master
   gameLength: 600
+  worldTextPrefab: {fileID: 114013854967977948, guid: daa27b85e904d714b91897de0b40fde9,
+    type: 2}
   _squadPrefab: {fileID: 114200811897298136, guid: 75c1e786060426d41926d07f7ee9a67b,
+    type: 2}
+  Map: {fileID: 0}
+  inputController: {fileID: 935048791}
+  fightManager: {fileID: 935048790}
+  _selectionArrowPrefab: {fileID: 1246538774323216, guid: 2989cbbf4719d1b4f9ae77488274e36b,
     type: 2}
   _gameIsRunning: 0
   players: []
   remainingTime: 0
   _playerIds: 
+  FightList: []
 --- !u!4 &935048789
 Transform:
   m_ObjectHideFlags: 0
@@ -331,6 +342,30 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &935048790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 935048787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c14f99018bf7c4d997976a7a51e706, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fightList: []
+--- !u!114 &935048791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 935048787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bddcff80e5f6bf94ab61fb3ac25af276, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minimumAxisInput: 0.6
 --- !u!1 &1125009163
 GameObject:
   m_ObjectHideFlags: 0
@@ -355,7 +390,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1125009163}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 170.15002, z: 0}
+  m_LocalPosition: {x: 0, y: 481.15002, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 830142190}
@@ -618,7 +653,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2096780209}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.8378067, z: 0}
+  m_LocalPosition: {x: 0, y: 1.9755859, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 830142190}

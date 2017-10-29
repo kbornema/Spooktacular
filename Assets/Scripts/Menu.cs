@@ -7,6 +7,6 @@ public class Menu : MonoBehaviour
 {   
     public void StartNewGame()
     {
-        SceneManager.LoadScene("Lobby");
+        SceneManager.LoadScene("02_Lobby");
     }
 }
