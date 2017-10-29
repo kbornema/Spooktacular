@@ -388,7 +388,7 @@ public class Squad : MonoBehaviour
         curMoveSpeed = 0.0f;
     }
 
-    public void lostFight()
+    public void lostFight(int pay)
     {
 
         // Set speed to normal
@@ -398,12 +398,12 @@ public class Squad : MonoBehaviour
         isInvulnerable = true;
 
         // Lose candycorn
-        CurrentGroupLoot -= 5;
+        CurrentGroupLoot -= pay;
     }
 
 
 
-    public void wonFight()
+    public void wonFight(int pay)
     {
         // not fighting anymore
         isFighting = false;
@@ -412,7 +412,7 @@ public class Squad : MonoBehaviour
         curMoveSpeed = _normalMoveSpeed;
 
         // Win candycorn
-        CurrentGroupLoot += 5;
+        CurrentGroupLoot += pay;
 
     }
 
