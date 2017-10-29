@@ -1216,6 +1216,71 @@ MonoBehaviour:
   _materialPrefab: {fileID: 2100000, guid: 0d8b20722530f344d9c63f850f4ba733, type: 2}
   _effectedCam: {fileID: 1109995727}
   _lightCam: {fileID: 486701553}
+  _backgroundCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _daylightGradient:
+    serializedVersion: 2
+    key0: {r: 1, g: 1, b: 1, a: 1}
+    key1: {r: 1, g: 1, b: 1, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  _fullNightCircleTime: 60
+  _ambientGradient:
+    serializedVersion: 2
+    key0: {r: 1, g: 1, b: 1, a: 1}
+    key1: {r: 1, g: 1, b: 1, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
   _backgroundColor: {r: 0.02745098, g: 0, b: 0.05490196, a: 1}
   _ambientColor: {r: 0.007843138, g: 0, b: 0.03137255, a: 1}
   _saturation: 1.1
@@ -1455,14 +1520,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c50210957a596f240a2de3863f0d0c8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GroundLight:
-  - {fileID: 1335289694}
-  - {fileID: 1602146560}
-  - {fileID: 2147168534}
-  - {fileID: 1766781243}
-  - {fileID: 2014832834}
+  blackoutGroups: []
+  MainCamera: {fileID: 0}
   Frequency: 2
   LightBackTime: 1
+  NightCurve: 0
+  _blackOutAudio: {fileID: 0}
 --- !u!4 &1597283954
 Transform:
   m_ObjectHideFlags: 0
@@ -1811,11 +1874,6 @@ Transform:
   m_Father: {fileID: 1597283954}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2014832834 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1617007439143364, guid: 4a97b62f26d3dd44b92464e9bcd4ae4a,
-    type: 2}
-  m_PrefabInternal: {fileID: 879921394}
 --- !u!4 &2014832836 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4388335188184630, guid: 4a97b62f26d3dd44b92464e9bcd4ae4a,

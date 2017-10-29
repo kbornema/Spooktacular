@@ -51,14 +51,13 @@ public class FightManager : MonoBehaviour {
         if (Input.GetButtonDown("Button" + (mode) + "_" + ID0))
         {
             Score[0]++;
-        }
-            
+        }            
 
         if (Input.GetButtonDown("Button" + (mode) + "_" + ID1))
         {
-            Score[0]++;
-        }
             Score[1]++;
+        }
+
     }
 
     private IEnumerator FightingRoutine(Fight currentFight)
