@@ -9,6 +9,8 @@ public class UiPlayerScore : MonoBehaviour
     private Image _image;
     [SerializeField]
     private Text _text;
+    [SerializeField]
+    public ButtonMashing[] mashings;
 
 
     public void SetColor(Color c)

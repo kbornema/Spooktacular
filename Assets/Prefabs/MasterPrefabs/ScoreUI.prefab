@@ -517,6 +517,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7f36177565fd2e489619f514ce22fe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInputId: 0
   Button: 3
   Up: {fileID: 21300000, guid: 14506a761955a4e4daf02c113b57ea3c, type: 3}
   Down: {fileID: 21300002, guid: 14506a761955a4e4daf02c113b57ea3c, type: 3}
@@ -558,6 +559,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7f36177565fd2e489619f514ce22fe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInputId: 0
   Button: 4
   Up: {fileID: 21300000, guid: b94407dd2d011e94899c1ce58a264399, type: 3}
   Down: {fileID: 21300002, guid: b94407dd2d011e94899c1ce58a264399, type: 3}
@@ -717,6 +719,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7f36177565fd2e489619f514ce22fe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInputId: 0
   Button: 3
   Up: {fileID: 21300000, guid: 14506a761955a4e4daf02c113b57ea3c, type: 3}
   Down: {fileID: 21300002, guid: 14506a761955a4e4daf02c113b57ea3c, type: 3}
@@ -733,6 +736,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _image: {fileID: 114987200666327052}
   _text: {fileID: 114214636468739730}
+  mashings:
+  - {fileID: 114181644160293822}
+  - {fileID: 114015944753638864}
+  - {fileID: 114496582129117360}
 --- !u!114 &114160281014636460
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -744,6 +751,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7f36177565fd2e489619f514ce22fe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInputId: 0
   Button: 3
   Up: {fileID: 21300000, guid: 14506a761955a4e4daf02c113b57ea3c, type: 3}
   Down: {fileID: 21300002, guid: 14506a761955a4e4daf02c113b57ea3c, type: 3}
@@ -758,6 +766,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7f36177565fd2e489619f514ce22fe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInputId: 0
   Button: 2
   Up: {fileID: 21300000, guid: 08462e0d1c60b3b49b387149fbaeae47, type: 3}
   Down: {fileID: 21300002, guid: 08462e0d1c60b3b49b387149fbaeae47, type: 3}
@@ -799,6 +808,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7f36177565fd2e489619f514ce22fe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInputId: 0
   Button: 4
   Up: {fileID: 21300000, guid: b94407dd2d011e94899c1ce58a264399, type: 3}
   Down: {fileID: 21300002, guid: b94407dd2d011e94899c1ce58a264399, type: 3}
@@ -932,6 +942,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _image: {fileID: 114385364915865850}
   _text: {fileID: 114523509068294406}
+  mashings:
+  - {fileID: 114425032665967292}
+  - {fileID: 114994086324678276}
+  - {fileID: 114707993899454412}
 --- !u!114 &114326518330608460
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1107,6 +1121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7f36177565fd2e489619f514ce22fe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInputId: 0
   Button: 2
   Up: {fileID: 21300000, guid: 08462e0d1c60b3b49b387149fbaeae47, type: 3}
   Down: {fileID: 21300002, guid: 08462e0d1c60b3b49b387149fbaeae47, type: 3}
@@ -1213,6 +1228,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7f36177565fd2e489619f514ce22fe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInputId: 0
   Button: 4
   Up: {fileID: 21300000, guid: b94407dd2d011e94899c1ce58a264399, type: 3}
   Down: {fileID: 21300002, guid: b94407dd2d011e94899c1ce58a264399, type: 3}
@@ -1337,6 +1353,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7f36177565fd2e489619f514ce22fe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInputId: 0
   Button: 2
   Up: {fileID: 21300000, guid: 08462e0d1c60b3b49b387149fbaeae47, type: 3}
   Down: {fileID: 21300002, guid: 08462e0d1c60b3b49b387149fbaeae47, type: 3}
@@ -1372,6 +1389,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _image: {fileID: 114139928634007352}
   _text: {fileID: 114897945698390104}
+  mashings:
+  - {fileID: 114593008098367430}
+  - {fileID: 114160281014636460}
+  - {fileID: 114209751157619434}
 --- !u!114 &114707993899454412
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1383,6 +1404,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7f36177565fd2e489619f514ce22fe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInputId: 0
   Button: 4
   Up: {fileID: 21300000, guid: b94407dd2d011e94899c1ce58a264399, type: 3}
   Down: {fileID: 21300002, guid: b94407dd2d011e94899c1ce58a264399, type: 3}
@@ -1495,6 +1517,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7f36177565fd2e489619f514ce22fe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInputId: 0
   Button: 2
   Up: {fileID: 21300000, guid: 08462e0d1c60b3b49b387149fbaeae47, type: 3}
   Down: {fileID: 21300002, guid: 08462e0d1c60b3b49b387149fbaeae47, type: 3}
@@ -1571,6 +1594,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _image: {fileID: 114101352108094360}
   _text: {fileID: 114848212753073326}
+  mashings:
+  - {fileID: 114878143431577976}
+  - {fileID: 114140028787336422}
+  - {fileID: 114057800850144470}
 --- !u!114 &114987200666327052
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1609,6 +1636,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7f36177565fd2e489619f514ce22fe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInputId: 0
   Button: 3
   Up: {fileID: 21300000, guid: 14506a761955a4e4daf02c113b57ea3c, type: 3}
   Down: {fileID: 21300002, guid: 14506a761955a4e4daf02c113b57ea3c, type: 3}

@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EventPanel : MonoBehaviour {
-
+public class EventPanel : MonoBehaviour 
+{   
     public int playerID;
     public GameObject B, X, Y;
 

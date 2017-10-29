@@ -36,6 +36,10 @@ public class UiManager : AManager<UiManager>
         {
             _playerScoreUi[i].SetColor(players[i].PlayerColor);
             _playerScoreUi[i].gameObject.SetActive(true);
+
+            for (int j = 0; j < _playerScoreUi[i].mashings.Length; j++)
+                _playerScoreUi[i].mashings[j].playerInputId = players[i].PlayerInputId;
+
             UpdateScore(i, 0);
         }
     }
