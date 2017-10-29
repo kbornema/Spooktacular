@@ -13,6 +13,8 @@ public class Blackout : MonoBehaviour {
 
     private BlackOutTargets[] currentBlackedOut;
 
+    private AudioClip _blackOutAudio;
+
 	// Use this for initialization
 	void Start ()
     {
