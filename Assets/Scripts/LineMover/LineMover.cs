@@ -53,13 +53,15 @@ public class LineMover : MonoBehaviour
         currentPath.setTrackPrefab(TrackPrefab);
         currentPath.addWayPoint(GameObject.FindGameObjectWithTag("WayPoint").GetComponent<WayPoint>()); 
 
-        activeSquad.setPath(currentPath);
+        //Reinsert
+        //activeSquad.setPath(currentPath);
     }
 
 
     // Update is called once per frame
     void Update ()
     {
+        /*
         if (!lineDrawing)
         {
             //Start drawing
@@ -79,8 +81,8 @@ public class LineMover : MonoBehaviour
         WayPoint currentPoint = currentPath.getCurrentPoint();
 
         //get current direction and interpolation
-        DIRECTION currentDirection = activeSquad.getPath().getCurrentDirection();
-        float currentInterpolation = activeSquad.getPath().getCurrentInterpolation();
+        //DIRECTION currentDirection = activeSquad.getPath().getCurrentDirection();
+        //float currentInterpolation = activeSquad.getPath().getCurrentInterpolation();
 
         if (currentDirection == DIRECTION.NONE && playerdir != DIRECTION.NONE)
         {
@@ -166,5 +168,6 @@ public class LineMover : MonoBehaviour
         }
 
         return newInterpolation;
+        */
     }
 }

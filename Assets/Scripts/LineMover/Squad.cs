@@ -1,12 +1,21 @@
-﻿
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Squad : MonoBehaviour 
-{
+{   
     [Header("Movement")]
-    private Path current;
+    public  mPath currentPath;
+    [SerializeField]
+    public WayPoint currentPoint;
+
+    public DIRECTION direction;
+
+
+    public float interpolation;
+
+    [SerializeField]
+    private float snappingDistance;
 
 
     [Header("Visuals")]
@@ -83,11 +92,6 @@ public class Squad : MonoBehaviour
         //yield break; // beendet Coroutine
     }
 
-    internal Path getPath()
-    {
-        return current;
-    }
-
     private void Awake()
     {
         if(_randomizeChildren)
@@ -111,8 +115,6 @@ public class Squad : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // if door found // TODO
-        // atDoor();
 
         // Check if we can and want to loot further
         if (isLooting)
@@ -130,15 +132,35 @@ public class Squad : MonoBehaviour
                     endDoorLoot();
             }
 
-
-            // If house.currentcandy < 1 TODO
-            // endDoorLoot();
+        }
+        else
+        {
+            Vector3 vecToTarget = currentPath.GetFirstPoint().transform.position - transform.position;
+            if (vecToTarget.magnitude < snappingDistance)
+            {
+                transform.position = currentPath.GetFirstPoint().transform.position;
+                if (currentPath.NumberOfWayPointsInPath() > 1)
+                {
+                    currentPath.RemoveFirstPoint();
+                }
+                else
+                {
+                    
+                }
+            }
         }
     }
 
-    public void setPath( Path newPath )
+    public WayPoint getCurrentPoint()
     {
-        current = newPath;
+        if (currentPoint == null)
+            Debug.Log("There Should always be a current point");
+        return currentPoint;
+    }
+
+    public void setPath(mPath newPath)
+    {
+        currentPath = newPath;
     }
 
     void OnCollisionEnter2D(Collision2D coll)

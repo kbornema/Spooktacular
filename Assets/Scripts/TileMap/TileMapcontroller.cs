@@ -116,7 +116,7 @@ public class TileMapcontroller : MonoBehaviour {
         openWaypoints.Add(originalOpenWayPoint);
 
         int i = 0;
-        while (openRoads.Count > 0 && i < 100) 
+        while (openRoads.Count > 0 && i < 500) 
         {
             Debug.Log(openRoads.Count);
             ProcessRoad(openRoads[0]);
@@ -128,7 +128,7 @@ public class TileMapcontroller : MonoBehaviour {
     public int getNumberOfAdjustantWalkableTiles(Vector3Int tilePos)
     {
         int counter = 0;
-        if(IsWalkable(tilePos + new Vector3Int(1, 0, 0 ))) { counter++; }
+        if (IsWalkable(tilePos + new Vector3Int(1, 0, 0 ))) { counter++; }
         if (IsWalkable(tilePos + new Vector3Int(-1, 0, 0))) { counter++; }
         if (IsWalkable(tilePos + new Vector3Int(0, 1, 0))) { counter++; }
         if (IsWalkable(tilePos + new Vector3Int(0, -1, 0))) { counter++; }
@@ -208,21 +208,25 @@ public class TileMapcontroller : MonoBehaviour {
                 incomingRoad.lastWayPoint.left = openWaypoints[wpIndex].wayPoint;
 
             }
-            int otherRoadIndex = openRoads.FindIndex(r => r.lastWayPoint == openWaypoints[wpIndex].wayPoint && (r.direction + incomingRoad.direction) == Vector3Int.zero);
+            int otherRoadIndex = openRoads.FindIndex(r => r.lastWayPoint == openWaypoints[wpIndex].wayPoint && (r.direction + incomingRoad.direction).magnitude <= 0.01f);
+
+            //int otherRoadIndex = openRoads.FindIndex(r => r.lastWayPoint == openWaypoints[wpIndex].wayPoint);
 
             // remove both Roads from the openRoads
             if (otherRoadIndex >= 0)
             {
                 openRoads.RemoveAt(otherRoadIndex);
-                if (++openWaypoints[wpIndex].numCheckedRoads >= openWaypoints[wpIndex].numAdustingRoads)
+                Debug.Log("Removed OtherRoad");
+                if ((++openWaypoints[wpIndex].numCheckedRoads) >= openWaypoints[wpIndex].numAdustingRoads)
                     openWaypoints.RemoveAt(wpIndex);
                 
             }
             openRoads.Remove(incomingRoad);
+            Debug.Log("Removed IncomingRoad");
             OpenWayPoint otherOpenWayPoint = openWaypoints.Find(wp => wp.wayPoint == incomingRoad.lastWayPoint);
 
             // TODO check why this can be null?!
-            if (otherOpenWayPoint != null && ++otherOpenWayPoint.numCheckedRoads >= otherOpenWayPoint.numAdustingRoads)
+            if (otherOpenWayPoint != null && (++otherOpenWayPoint.numCheckedRoads) >= otherOpenWayPoint.numAdustingRoads)
             {
                 openWaypoints.Remove(otherOpenWayPoint);
             }
@@ -248,12 +252,13 @@ public class TileMapcontroller : MonoBehaviour {
             if (incomingRoad.direction == new Vector3Int(1, 0, 0))
             {
                 currentWP.left = incomingRoad.lastWayPoint;
+                incomingRoad.lastWayPoint.right = currentWP;
             }
             else
             {
-                if(IsWalkable(currentTile + new Vector3Int(1, 0, 0)))
+                if(IsWalkable(currentTile + new Vector3Int(-1, 0, 0)))
                 {
-                    openRoads.Add(new OpenRoad(currentTile, new Vector3Int(1, 0, 0), currentWP));
+                    openRoads.Add(new OpenRoad(currentTile, new Vector3Int(-1, 0, 0), currentWP));
                     outgoingRoads++;
                 }
             }
@@ -261,12 +266,13 @@ public class TileMapcontroller : MonoBehaviour {
             if(incomingRoad.direction == new Vector3Int(-1, 0, 0))
             {
                 currentWP.right = incomingRoad.lastWayPoint;
+                incomingRoad.lastWayPoint.left = currentWP;
             }
             else
             {
-                if (IsWalkable(currentTile + new Vector3Int(-1, 0, 0)))
+                if (IsWalkable(currentTile + new Vector3Int(1, 0, 0)))
                 {
-                    openRoads.Add(new OpenRoad(currentTile, new Vector3Int(-1, 0, 0), currentWP));
+                    openRoads.Add(new OpenRoad(currentTile, new Vector3Int(1, 0, 0), currentWP));
                     outgoingRoads++;
                 }
             }
@@ -274,20 +280,7 @@ public class TileMapcontroller : MonoBehaviour {
             if (incomingRoad.direction == new Vector3Int(0, 1, 0))
             {
                 currentWP.down = incomingRoad.lastWayPoint;
-
-            }
-            else
-            {
-                if (IsWalkable(currentTile + new Vector3Int(0, 1, 0)))
-                {
-                    openRoads.Add(new OpenRoad(currentTile, new Vector3Int(0, 1, 0), currentWP));
-                    outgoingRoads++;
-                }
-            }
-
-            if (incomingRoad.direction == new Vector3Int(0, -1, 0))
-            {
-                currentWP.top = incomingRoad.lastWayPoint;
+                incomingRoad.lastWayPoint.top = currentWP;
             }
             else
             {
@@ -298,11 +291,30 @@ public class TileMapcontroller : MonoBehaviour {
                 }
             }
 
+            if (incomingRoad.direction == new Vector3Int(0, -1, 0))
+            {
+                currentWP.top = incomingRoad.lastWayPoint;
+                incomingRoad.lastWayPoint.down = currentWP;
+            }
+            else
+            {
+                if (IsWalkable(currentTile + new Vector3Int(0, 1, 0)))
+                {
+                    openRoads.Add(new OpenRoad(currentTile, new Vector3Int(0, 1, 0), currentWP));
+                    outgoingRoads++;
+                }
+            }
+
             OpenWayPoint openWp = new OpenWayPoint(currentTile, currentWP, outgoingRoads);
             openWaypoints.Add(openWp);
-            openWp.numCheckedRoads = 1;
+            openWp.numCheckedRoads = 0;
 
+            OpenWayPoint otherWaypoint = openWaypoints.Find(wp => wp.wayPoint == incomingRoad.lastWayPoint);
             openRoads.Remove(incomingRoad);
+            if(++(otherWaypoint.numCheckedRoads) >= otherWaypoint.numAdustingRoads)
+            {
+                openWaypoints.Remove(otherWaypoint);
+            }
         }
     }
 
