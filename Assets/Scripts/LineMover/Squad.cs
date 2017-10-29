@@ -130,9 +130,12 @@ public class Squad : MonoBehaviour
 
     public int playerID;
 
+
+    private bool unloading = false;
+
     // Current allowed (rolled) candy
     private int allowed_candy = 3;
-    private IEnumerator LootingRountine()
+    private IEnumerator LootingRoutine()
     {
         while (true)
         {
@@ -148,7 +151,29 @@ public class Squad : MonoBehaviour
         //yield break; // beendet Coroutine
     }
 
-    private IEnumerator InvulnerableRountine()
+    private IEnumerator UnloadLootRoutine()
+    {
+        while (true)
+        {
+            if (unloading)
+            {
+                yield return new WaitForSeconds(0.25f);
+                CurrentGroupLoot -= 1;
+                if (currentGroupLoot <= 0)
+                {
+                    unloading = false;
+                    curMoveSpeed = _normalMoveSpeed;
+                }
+                    
+                else
+                    GameManager.Instance.AddToScore(playerID,1);
+            }
+            yield return new WaitForEndOfFrame();
+        }
+        //yield break; // beendet Coroutine
+    }
+
+    private IEnumerator InvulnerableRoutine()
     {
         while (true)
         {
@@ -181,8 +206,9 @@ public class Squad : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        StartCoroutine(LootingRountine());
-        StartCoroutine(InvulnerableRountine());
+        StartCoroutine(LootingRoutine());
+        StartCoroutine(InvulnerableRoutine());
+        StartCoroutine(UnloadLootRoutine());
     }
 
     public void SetMoving(Vector2 moveDir)
@@ -215,17 +241,17 @@ public class Squad : MonoBehaviour
         {
             // If new route comes in TODO
             // endDoorLoot();
-
             // Allowed candysize reached
             if (allowed_candy < 1)
             {
                 endDoorLoot();
-
                 // Max loot limit of group reached
                 if (CurrentGroupLoot > maxGroupLootLimit - 1)
                     endDoorLoot();
             }
 
+            if (CurrentGroupLoot > maxGroupLootLimit - 1)
+                endDoorLoot();
         }
         else
         {
@@ -308,8 +334,6 @@ public class Squad : MonoBehaviour
                     CurrentDoor = newFoundDoor;
                     startDoorLoot();
                 }
-
-
         }
 
         var otherSquad = coll.GetComponent<Squad>();
@@ -323,6 +347,10 @@ public class Squad : MonoBehaviour
         }
         //coll.gameObject.SendMessage("ApplyDamage", 10);
 
+        if (coll.gameObject.tag == "Cauldron")
+        {
+            UnloadLoot();
+        }
 
     }
 
@@ -334,6 +362,11 @@ public class Squad : MonoBehaviour
         {
             isLooting = false;
             CurrentDoor.doorIsClosed = true;
+        }
+
+        if (unloading)
+        {
+            unloading = false;
         }
 
         // Set speed to 0
@@ -373,7 +406,7 @@ public class Squad : MonoBehaviour
         // TODO was passiert im kampf???
 
         // Random count for rolling how much candy we are allowed to get at this door
-        allowed_candy = Random.Range(2, 4);
+        allowed_candy = UnityEngine.Random.Range(2, 4);
 
         // Set speed to 0
         curMoveSpeed = 0.0f;
@@ -393,6 +426,12 @@ public class Squad : MonoBehaviour
         CurrentDoor.doorIsClosed = true;
     }
 
+    private void UnloadLoot()
+    {
+        // Loot leeren
+        unloading = true;
+        curMoveSpeed = 0.0f;
+    }
 
     public void Init(PlayerController player, Color _color)
     {   
