@@ -204,7 +204,12 @@ public class GameManager : AManager<GameManager>
         {
             Time.timeScale = 0.0f;
 
-            UiManager.Instance.GameOver(winnerIndex, players);
+            int score = 0;
+
+            if(winnerIndex != -1)
+                score = Score[winnerIndex];
+
+            UiManager.Instance.GameOver(winnerIndex, players, score);
         }
         
     }
@@ -214,11 +219,11 @@ public class GameManager : AManager<GameManager>
     {
         int index = -1;
         int currentScore = 0;
-        for(int i = 0; i < players.Length; i++)
+        for(int i = 0; i < Score.Length; i++)
         {
-            if (currentScore <= players[i].Stats.Score)
+            if (currentScore <= Score[i])
             {
-                currentScore = players[i].Stats.Score;
+                currentScore = Score[i];
                 index = i;
             }
         }

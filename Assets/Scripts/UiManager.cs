@@ -55,7 +55,7 @@ public class UiManager : AManager<UiManager>
         _playerScoreUi[playerId].SetScore(score);
     }
 
-    public void GameOver(int winnerIndex, PlayerController[] players)
+    public void GameOver(int winnerIndex, PlayerController[] players, int score)
     {
         if(winnerIndex == -1)
         {
@@ -64,7 +64,7 @@ public class UiManager : AManager<UiManager>
 
         else
         {
-            winnerText.text = "Player " + (players[winnerIndex].PlayerId + 1) + " won with " + players[winnerIndex].Stats.Score + " points!";
+            winnerText.text = "Player " + (players[winnerIndex].PlayerId + 1) + " won with " + score + " points!";
         }
 
         _gameOverRoot.SetActive(true);
