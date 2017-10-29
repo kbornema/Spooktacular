@@ -122,7 +122,8 @@ public class FightManager : MonoBehaviour {
 
         if (teamOneWins)
         {
-            int possiblePayout = currentFight.secondPlayer.CurrentGroupLoot - 5;
+            int possiblePayout = currentFight.secondPlayer.CurrentGroupLoot;
+            possiblePayout = UnityEngine.Random.Range(possiblePayout/2, possiblePayout+1);
             if (possiblePayout < 0)
                 possiblePayout = 0;
             currentFight.firstPlayer.wonFight(possiblePayout);
@@ -131,7 +132,8 @@ public class FightManager : MonoBehaviour {
         }
         else
         {
-            int possiblePayout = currentFight.secondPlayer.CurrentGroupLoot - 5;
+            int possiblePayout = currentFight.firstPlayer.CurrentGroupLoot;
+            possiblePayout = UnityEngine.Random.Range(possiblePayout / 2, possiblePayout + 1);
             if (possiblePayout < 0)
                 possiblePayout = 0;
             currentFight.secondPlayer.wonFight(possiblePayout);
