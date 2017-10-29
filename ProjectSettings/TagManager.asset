@@ -6,6 +6,7 @@ TagManager:
   tags:
   - WayPoint
   - Door
+  - ActionPanel
   layers:
   - Default
   - TransparentFX

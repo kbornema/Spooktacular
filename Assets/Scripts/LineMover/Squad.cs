@@ -66,6 +66,8 @@ public class Squad : MonoBehaviour {
     [SerializeField, ReadOnly]
     private PlayerController _player;
 
+    public int playerID;
+
     // Current allowed (rolled) candy
     private int allowed_candy = 3;
 
@@ -309,6 +311,9 @@ public class Squad : MonoBehaviour {
 
         for (int i = 0; i < _coloredSprites.Length; i++)
             _coloredSprites[i].color = _color;
+
+        playerID = _player.PlayerId;
+        Debug.Log("ID: " + playerID);
     }
 
     public PlayerController Player { get { return _player; } }

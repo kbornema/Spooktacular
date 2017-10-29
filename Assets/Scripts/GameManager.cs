@@ -42,15 +42,23 @@ public class GameManager : AManager<GameManager>
 
     public int NumberOfPlayer { get { return players.Length; } }
 
+    public List<Fight> FightList;
+
+    private int[] Score;
+    public int[] _Score { get { return Score; } }
+
     protected override void OnAwake()
     {
         remainingTime = gameLength;
+        FightList = new List<Fight>();
 
         //Only setup the game of the scene is the gameplay scene and there are no players yet:
         if (NumberOfPlayer == 0 && SceneManager.GetActiveScene().name.Equals(playScene))
         {   
             SetupGame(_playerIds);
         }
+
+        Score = new int[players.Length];
     }
 
     private void Start()
@@ -84,6 +92,7 @@ public class GameManager : AManager<GameManager>
         }
 
         remainingTime = gameLength;
+
     }
 
     public void StartGame()
@@ -173,6 +182,12 @@ public class GameManager : AManager<GameManager>
         }
 
         return index;
+    }
+
+    public void AddToScore(int playerID, int points)
+    {
+        Score[playerID] += points;
+        UiManager.Instance.UpdateScore(playerID, Score[playerID]);
     }
 
 

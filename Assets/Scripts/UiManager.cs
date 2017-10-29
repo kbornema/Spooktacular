@@ -34,6 +34,11 @@ public class UiManager : AManager<UiManager>
         }
     }
 
+    void Update()
+    {
+
+    }
+
 
     public void UpdateScore(int playerId, int score)
     {

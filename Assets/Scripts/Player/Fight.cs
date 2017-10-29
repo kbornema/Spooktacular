@@ -7,6 +7,7 @@ public class Fight
 {
     public Squad firstPlayer;
     public Squad secondPlayer;
+    public int FightMode;
 
     public bool fightIsDone = false;
 
@@ -14,6 +15,12 @@ public class Fight
     {
         firstPlayer = _firstPlayer;
         secondPlayer = _secondPlayer;
+        FightMode = ChoseActionButton();
+    }
+
+    private int ChoseActionButton()
+    {
+        return Random.Range(0, 3);
     }
 
 
