@@ -28,6 +28,10 @@ public class LootController : MonoBehaviour {
         float percent = house.LootPercent;
 
         int index = (int)(percent * (CandyAnimation.Length - 1));
+
+        if (index < 0 || index >= CandyAnimation.Length)
+            return;
+
         lastLoot = curLoot;
         SpRender.sprite = CandyAnimation[index];
     }

@@ -116,8 +116,7 @@ public class GameManager : AManager<GameManager>
     {
         List<WayPoint> WPList = Map.GetWaypointList();
 
-      
-
+        
         for (int i = 0; i < players.Length; i++)
         {
             players[i].CreateSquads(GetNumberOfSquads());
