@@ -28,7 +28,7 @@ public class FightManager : MonoBehaviour {
             fightList.Add(f);
 
             // Start music
-            SoundManager.Instance.playAndDestroy(fightMusic, 0.5f, 4.5f);
+            SoundManager.Instance.playAndDestroy(fightMusic, 1.0f, 4.5f);
 
             // Start the coroutine
             StartCoroutine(FightingRoutine(f));

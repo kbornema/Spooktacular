@@ -8,6 +8,7 @@ public class Blackout : MonoBehaviour {
     public GameObject MainCamera;
     public float Frequency = 12;
     public float LightBackTime = 15;
+    public float volume = 0.5f;
 
     private float t0;
     private bool islighton;
@@ -42,7 +43,7 @@ public class Blackout : MonoBehaviour {
             islighton = false;
 
             if(_blackOutAudio)
-                SoundManager.Instance.playAndDestroy(_blackOutAudio, 0.5f);
+                SoundManager.Instance.playAndDestroy(_blackOutAudio, volume);
         }
 
         if (!islighton && Time.time - t0 > LightBackTime)

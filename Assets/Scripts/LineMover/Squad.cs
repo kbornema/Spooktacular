@@ -133,7 +133,7 @@ public class Squad : MonoBehaviour
                 }
                     
                 else
-                    GameManager.Instance.AddToScore(playerID,1);
+                    GameManager.Instance.AddToScore(playerID, 1);
             }
             yield return new WaitForEndOfFrame();
         }
@@ -399,6 +399,9 @@ public class Squad : MonoBehaviour
 
     private void UnloadLoot()
     {
+        if (currentGroupLoot <= 0)
+            return;
+
         GameManager.Instance.SpawnText(transform.position + new Vector3(0, WRLD_TEXT_OFFSET, 0), "Save Loot!", _player.PlayerColor, 0.66f);
 
         // Loot leeren
