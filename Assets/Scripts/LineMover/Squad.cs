@@ -204,12 +204,13 @@ public class Squad : MonoBehaviour
 
             if (isInvulnerable)
             {
+                isFighting = true;
                 yield return new WaitForSeconds(8.0f);
                 isInvulnerable = false;
-                // TODO set invulnerable logic on and off
+                isFighting = false;
             }
-
-            yield return new WaitForEndOfFrame();
+            else
+                yield return new WaitForEndOfFrame();
         }
         //yield break; // beendet Coroutine
     }
@@ -331,15 +332,6 @@ public class Squad : MonoBehaviour
             // There is more then zero loot in the house
             // if house.currentLoot > 0
             startDoorLoot();
-    }
-
-    void setInvulnerable()
-    {
-        // TODO
-        // at spawn
-        // after a lost fight
-        isInvulnerable = true;
-        // set really invulnerable
     }
 
 
