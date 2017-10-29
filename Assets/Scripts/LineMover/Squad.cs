@@ -197,12 +197,13 @@ public class Squad : MonoBehaviour
 
             if (isInvulnerable)
             {
+                isFighting = true;
                 yield return new WaitForSeconds(8.0f);
                 isInvulnerable = false;
-                // TODO set invulnerable logic on and off
+                isFighting = false;
             }
-
-            yield return new WaitForEndOfFrame();
+            else
+                yield return new WaitForEndOfFrame();
         }
         //yield break; // beendet Coroutine
     }
@@ -326,15 +327,6 @@ public class Squad : MonoBehaviour
             startDoorLoot();
     }
 
-    void setInvulnerable()
-    {
-        // TODO
-        // at spawn
-        // after a lost fight
-        isInvulnerable = true;
-        // set really invulnerable
-    }
-
 
     void OnTriggerEnter2D(Collider2D coll)
     {
@@ -390,7 +382,7 @@ public class Squad : MonoBehaviour
         curMoveSpeed = 0.0f;
     }
 
-    public void lostFight()
+    public void lostFight(int pay)
     {
 
         // Set speed to normal
@@ -400,12 +392,12 @@ public class Squad : MonoBehaviour
         isInvulnerable = true;
 
         // Lose candycorn
-        CurrentGroupLoot -= 5;
+        CurrentGroupLoot -= pay;
     }
 
 
 
-    public void wonFight()
+    public void wonFight(int pay)
     {
         // not fighting anymore
         isFighting = false;
@@ -414,7 +406,7 @@ public class Squad : MonoBehaviour
         curMoveSpeed = _normalMoveSpeed;
 
         // Win candycorn
-        CurrentGroupLoot += 5;
+        CurrentGroupLoot += pay;
 
     }
 
