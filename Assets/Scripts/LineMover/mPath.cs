@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class mPath : MonoBehaviour {
 
-    List<WayPoint> currentPath;
-
-    List<GameObject> PathObjects;
+    List<WayPoint> currentPath = new List<WayPoint>();
 
     [SerializeField]
     float objectSpawnRate;
@@ -57,13 +55,11 @@ public class mPath : MonoBehaviour {
     // Use this for initialization
     void Start () {
         currentPath = new List<WayPoint>();
-        PathObjects = new List<GameObject>();
 	}
 	
     public void ClearPath()
     {
         currentPath.Clear();
-        PathObjects.Clear();
     }
 
 	// Update is called once per frame

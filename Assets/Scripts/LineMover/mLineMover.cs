@@ -41,26 +41,18 @@ public class mLineMover : MonoBehaviour {
     // Use this for initialization
     void Start () {
         activeSquad = playerController.Squads[activeSquadId];
+        drawingPath = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
         if (drawingPath == false)
         {
-            if (controller.GetPlayerButtonInput("Button3", playerController.PlayerId))
-            {
-                activeSquadId = ((activeSquadId - 1) < 0) ? 2 : activeSquadId - 1;
-                SwitchActiveSquad();
-            }
-            if (controller.GetPlayerButtonInput("Button4", playerController.PlayerId))
-            {
-                activeSquadId = ((activeSquadId + 1) > 2) ? 0 : activeSquadId + 1;
-                SwitchActiveSquad();
-            }
             if(controller.GetPlayerButtonInput("Button1", playerController.PlayerId))
             {
                 drawingPath = true;
                 StartDrawing();
+                
             }
         }
         else
@@ -157,7 +149,7 @@ public class mLineMover : MonoBehaviour {
     }
 
     // Delete ??
-    void ChangePathOfActiveSquad()
+   /* void ChangePathOfActiveSquad()
     {
         activeSquad = playerController.Squads[activeSquadId];
         // TODO add other stuff 
@@ -168,6 +160,7 @@ public class mLineMover : MonoBehaviour {
 
         drawingPath = true;
     }
+    */
 
     Vector3 GetDirectionVector(DIRECTION dir)
     {

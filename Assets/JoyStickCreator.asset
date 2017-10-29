@@ -25,11 +25,15 @@ MonoBehaviour:
   - Button2_
   - Button3_
   - Button4_
+  - RB_
+  - LB_
   _keyboardButtons:
   - 1
   - 2
   - 3
   - 4
+  - 5
+  - 6
   _keyHorizontalPos: right
   _keyHorizontalNeg: left
   _keyVerticalPos: up

@@ -69,6 +69,9 @@ public class Squad : MonoBehaviour
     [SerializeField]
     WayPoint currentPoint;
 
+    [SerializeField]
+    float snappingDistance;
+
 
     [Header("Visuals")]
     [SerializeField]

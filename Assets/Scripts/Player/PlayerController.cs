@@ -24,18 +24,22 @@ public class PlayerController : MonoBehaviour
     private Color _color;
     public Color PlayerColor { get { return _color; } }
 
+    public InputController inputController;
+
     public GameObject SelectionArrowInstance;
 
     [SerializeField]
     private int _selectedSquadId = -1;
 
-    public void Setup(int playerId, int playerInputId, GameObject selectionArrowPrefab)
+    public void Setup(int playerId, int playerInputId, GameObject selectionArrowPrefab, InputController _inputController)
     {
         this._playerId = playerId;
         this._playerInputId = playerInputId;
         _color = GetColor(playerId);
         stats = new PlayerStats();
         stats.Reset();
+
+        inputController = _inputController;
 
         if(SelectionArrowInstance)
         {
@@ -67,6 +71,22 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (inputController.GetPlayerButtonInput("Button3", _playerId))
+        {
+            _selectedSquadId = ((_selectedSquadId + 1) > 2) ? 0 : _selectedSquadId + 1;
+            SelectSquad(_selectedSquadId);
+            Debug.Log("switched to Next Squad!");
+        }
+        if (inputController.GetPlayerButtonInput("Button4", _playerId))
+        {
+            _selectedSquadId = ((_selectedSquadId - 1) < 0) ? 2 : _selectedSquadId - 1;
+            SelectSquad(_selectedSquadId);
+            Debug.Log("switched to previous Squad!");
+        }
+    }
+
     public void CreateSquads(int num)
     {
         if(squads != null)
@@ -84,6 +104,8 @@ public class PlayerController : MonoBehaviour
 
             squads[i] = squad;
         }
+
+        SelectSquad(0);
     }
 
     private static Color GetColor(int playerId)
