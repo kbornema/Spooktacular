@@ -501,7 +501,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _lootDelay: 1
-  _lootPerLoot: 3
+  _lootPerLoot: 1
   maxGroupLootLimit: 25
   currentGroupLoot: 0
   _player: {fileID: 0}
