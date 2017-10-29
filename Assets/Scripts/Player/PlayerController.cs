@@ -83,6 +83,14 @@ public class PlayerController : MonoBehaviour
             _selectedSquadId = (_selectedSquadId + 1) % squads.Length;
             SelectSquad(_selectedSquadId);
         }
+
+
+        Vector2 move =  inputController.GetMoveVector(this);
+
+        Vector2 newPos = GetActiveSquad().transform.position;
+        newPos += move * Time.deltaTime * GetActiveSquad().CurMoveSpeed;
+
+        GetActiveSquad().transform.position = newPos;
     }
 
     public void CreateSquads(int num)

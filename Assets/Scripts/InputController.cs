@@ -35,10 +35,9 @@ public class InputController : MonoBehaviour
         return Input.GetButtonDown(buttonName + "_" + playerInputIndex);
     }
 
-    //TODO add Deadzone
-    public DIRECTION GetPlayerDirection(PlayerController playerController)
+    public Vector2 GetMoveVector(PlayerController player)
     {
-        int playerInputIndex = playerController.PlayerInputId;
+        int playerInputIndex = player.PlayerInputId;
         bool keyboard = playerInputIndex == 4;
 
         Vector2 inputVector = keyboard ? getKeyboardVector() : GetControllerVector("" + playerInputIndex);
@@ -46,12 +45,22 @@ public class InputController : MonoBehaviour
         //Debug.Log(inputVector.magnitude);
         if (inputVector.magnitude < minimumAxisInput)
         {
-            return DIRECTION.NONE;
+            return Vector2.zero;
         }
-        
-        inputVector.Normalize();
 
-        float angleToDefaultVector = Mathf.Atan2(inputVector.y, inputVector.x) * Mathf.Rad2Deg + 180;
+        inputVector.Normalize();
+        return inputVector;
+    }
+
+    //TODO add Deadzone
+    public DIRECTION GetPlayerDirection(PlayerController playerController)
+    {
+        var inputVector = GetMoveVector(playerController);
+
+        if (inputVector == Vector2.zero)
+            return DIRECTION.NONE;
+
+        float angleToDefaultVector = Mathf.Atan2(inputVector.y, inputVector.x) * Mathf.Rad2Deg;
 
         if (angleToDefaultVector < 45 || angleToDefaultVector > 315)
             return DIRECTION.WEST;

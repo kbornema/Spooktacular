@@ -37,10 +37,11 @@ public class FightManager : MonoBehaviour {
 
         for (int i = fightList.Count - 1; i >= 0; i--)
         {
+            HandleFight(fightList[i].FightMode + 1);
+          
             if (fightList[i].fightIsDone)
                 fightList.RemoveAt(i);
 
-            HandleFight(fightList[i].FightMode+1);          
         }
 	}
 
