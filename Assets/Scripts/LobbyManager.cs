@@ -55,8 +55,9 @@ public class LobbyManager : MonoBehaviour
         {
             _started = true;
             CountDown = 0;
-            GameManager.Instance.SetupGame(playerJoined);
             SceneManager.LoadScene("03_Master");
+
+            GameManager.Instance.StartGameIn(playerJoined, 2.0f);
         }
     }
 

@@ -21,6 +21,11 @@ public class UiManager : AManager<UiManager>
 	// Use this for initialization
 	void Start ()
     {
+        SetupUi();
+    }
+
+    public void SetupUi()
+    {
         var players = GameManager.Instance.GetPlayers();
         Debug.Log(players.Length + " Players joined the game.");
 
@@ -34,12 +39,6 @@ public class UiManager : AManager<UiManager>
             UpdateScore(i, 0);
         }
     }
-
-    void Update()
-    {
-
-    }
-
 
     public void UpdateScore(int playerId, int score)
     {

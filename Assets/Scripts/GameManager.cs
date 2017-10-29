@@ -225,4 +225,27 @@ public class GameManager : AManager<GameManager>
         this.Map = tileMapcontroller;
         StartGame();
     }
+
+    public void StartGameIn(bool[] players, float time)
+    {
+
+        _playerIds = players;
+        StartCoroutine(StartInRoutine(time));
+    }
+
+    private IEnumerator StartInRoutine(float time)
+    {
+        _gameIsRunning = false;
+
+        yield return new WaitForSeconds(time);
+
+ 
+
+        SetupGame(_playerIds);
+        StartGame();
+
+        UiManager.Instance.SetupUi();
+
+        _gameIsRunning = true;
+    }
 }
