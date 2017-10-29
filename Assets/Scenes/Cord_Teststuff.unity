@@ -9644,17 +9644,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _destroyMode: 0
   _dontDestroyOnLoad: 1
-  playScene: 03_Master
+  playScene: Cord_Teststuff
   gameLength: 60
   _squadPrefab: {fileID: 114200811897298136, guid: 75c1e786060426d41926d07f7ee9a67b,
     type: 2}
   Map: {fileID: 397690381}
+  inputController: {fileID: 114831587035861038, guid: 91aa421b2714f9a4eac2ad5b0e6f2736,
+    type: 2}
   _selectionArrowPrefab: {fileID: 1246538774323216, guid: 2989cbbf4719d1b4f9ae77488274e36b,
     type: 2}
   _gameIsRunning: 0
   players: []
   remainingTime: 0
   _playerIds: 0100000001
+  FightList: []
 --- !u!4 &632394862
 Transform:
   m_ObjectHideFlags: 0
