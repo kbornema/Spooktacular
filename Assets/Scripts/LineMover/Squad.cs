@@ -313,6 +313,7 @@ public class Squad : MonoBehaviour {
             _coloredSprites[i].color = _color;
 
         playerID = _player.PlayerId;
+        Debug.Log("ID: " + playerID);
     }
 
     public PlayerController Player { get { return _player; } }

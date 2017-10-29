@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EventPanel : MonoBehaviour {
 
@@ -9,27 +10,37 @@ public class EventPanel : MonoBehaviour {
     public GameObject B, X, Y;
 
     private List<Fight> BattleList;
-    private GameObject parent;
+    private Image img;
 
     private void Awake()
     {
-        if (transform.parent.gameObject != null)
-            parent = transform.parent.gameObject;
+        img = GetComponent<Image>();
+        ResetLabels();
+    }
+
+    private void ResetLabels()
+    {
+        B.SetActive(false);
+        X.SetActive(false);
+        Y.SetActive(false);
     }
 
     // Use this for initialization
     void Start ()
     {
-        parent.SetActive(false);         
+        img.color = gameObject.transform.parent.GetComponent<Image>().color;
+        img.canvasRenderer.SetAlpha(0);
+        BattleList = new List<Fight>();
+        //Debug.LogWarning("Hello Panel " +playerID); 
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
         if (BattleList.Count == 0)
-            parent.SetActive(false);
+            img.canvasRenderer.SetAlpha(0);
         else
-            parent.SetActive(true);
+            img.canvasRenderer.SetAlpha(1);
 
         //Delete Fight, which aren't acitve any more
         foreach (Fight F in BattleList)
@@ -38,17 +49,21 @@ public class EventPanel : MonoBehaviour {
             {
                 HandleLabels(F,false);
                 BattleList.Remove(F);
+                //Debug.Log("deactivate Button"); 
             }
         }
 
         //Add new Fights do Routine
         foreach (Fight f in GameManager.Instance.FightList)
         {
+            //Debug.Log("Search for fights " + playerID);
             if (f.firstPlayer.playerID == playerID
-                || f.firstPlayer.playerID == playerID)
+                || f.secondPlayer.playerID == playerID)
             {
                 if (BattleList.IndexOf(f) == -1)
                     BattleList.Add(f);
+
+                //Debug.Log("Button active");
             }            
         }
 
@@ -64,10 +79,10 @@ public class EventPanel : MonoBehaviour {
         switch (F.FightMode)
         {
             case 0:
-                X.SetActive(b);
+                B.SetActive(b);
                 break;
             case 1:
-                B.SetActive(b);
+                X.SetActive(b);
                 break;
             case 2:
                 Y.SetActive(b);

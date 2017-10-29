@@ -44,6 +44,9 @@ public class GameManager : AManager<GameManager>
 
     public List<Fight> FightList;
 
+    private int[] Score;
+    public int[] _Score { get { return Score; } }
+
     protected override void OnAwake()
     {
         remainingTime = gameLength;
@@ -54,6 +57,8 @@ public class GameManager : AManager<GameManager>
         {   
             SetupGame(_playerIds);
         }
+
+        Score = new int[players.Length];
     }
 
     private void Start()
@@ -87,6 +92,7 @@ public class GameManager : AManager<GameManager>
         }
 
         remainingTime = gameLength;
+
     }
 
     public void StartGame()
@@ -176,6 +182,12 @@ public class GameManager : AManager<GameManager>
         }
 
         return index;
+    }
+
+    public void AddToScore(int playerID, int points)
+    {
+        Score[playerID] += points;
+        UiManager.Instance.UpdateScore(playerID, Score[playerID]);
     }
 
 
