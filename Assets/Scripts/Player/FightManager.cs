@@ -8,6 +8,9 @@ public class FightManager : MonoBehaviour {
     [SerializeField]
     List<Fight> fightList;
 
+    [SerializeField]
+    AudioClip fightMusic;
+
     private int ID0, ID1;
     private int[] Score;
 
@@ -24,8 +27,12 @@ public class FightManager : MonoBehaviour {
             Score = new int[2];
             fightList.Add(f);
 
+            // Start music
+            SoundManager.Instance.playAndDestroy(fightMusic, 0.5f, 4.5f);
+
             // Start the coroutine
             StartCoroutine(FightingRoutine(f));
+
         }            
     }
 
@@ -115,7 +122,8 @@ public class FightManager : MonoBehaviour {
 
         if (teamOneWins)
         {
-            int possiblePayout = currentFight.secondPlayer.CurrentGroupLoot - 5;
+            int possiblePayout = currentFight.secondPlayer.CurrentGroupLoot;
+            possiblePayout = UnityEngine.Random.Range(possiblePayout/2, possiblePayout+1);
             if (possiblePayout < 0)
                 possiblePayout = 0;
             currentFight.firstPlayer.wonFight(possiblePayout);
@@ -124,7 +132,8 @@ public class FightManager : MonoBehaviour {
         }
         else
         {
-            int possiblePayout = currentFight.secondPlayer.CurrentGroupLoot - 5;
+            int possiblePayout = currentFight.firstPlayer.CurrentGroupLoot;
+            possiblePayout = UnityEngine.Random.Range(possiblePayout / 2, possiblePayout + 1);
             if (possiblePayout < 0)
                 possiblePayout = 0;
             currentFight.secondPlayer.wonFight(possiblePayout);

@@ -119,7 +119,7 @@ public class Squad : MonoBehaviour
     private float _lootDelay = 1.0f;
 
     [SerializeField]
-    private int _lootPerLoot = 3;
+    private int _lootPerLoot = 1;
 
     // Limit of loot a group can carry
     [SerializeField]
@@ -156,7 +156,16 @@ public class Squad : MonoBehaviour
     private bool unloading = false;
 
     // Current allowed (rolled) candy
-    private int allowed_candy = 3;
+    private int allowed_candy = 0;
+
+    // min candy at door
+    [SerializeField]
+    private int allowed_candy_min = 4;
+
+    // max candy at door
+    [SerializeField]
+    private int allowed_candy_max = 6;
+
     private IEnumerator LootingRoutine()
     {
         while (true)
@@ -428,7 +437,7 @@ public class Squad : MonoBehaviour
         // TODO was passiert im kampf???
 
         // Random count for rolling how much candy we are allowed to get at this door
-        allowed_candy = UnityEngine.Random.Range(2, 4);
+        allowed_candy = UnityEngine.Random.Range(allowed_candy_min, allowed_candy_max+1);
 
         // Set speed to 0
         curMoveSpeed = 0.0f;
