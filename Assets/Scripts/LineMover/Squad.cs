@@ -157,16 +157,18 @@ public class Squad : MonoBehaviour
         {
             if (unloading)
             {
-                yield return new WaitForSeconds(0.25f);
-                CurrentGroupLoot -= 1;
                 if (currentGroupLoot <= 0)
                 {
+                    currentGroupLoot = 0;
                     unloading = false;
                     curMoveSpeed = _normalMoveSpeed;
                 }
-                    
                 else
-                    GameManager.Instance.AddToScore(playerID,1);
+                {
+                    yield return new WaitForSeconds(0.25f);
+                    CurrentGroupLoot -= 1;
+                    GameManager.Instance.AddToScore(playerID, 1);
+                }           
             }
             yield return new WaitForEndOfFrame();
         }
