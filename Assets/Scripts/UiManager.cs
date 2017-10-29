@@ -31,6 +31,7 @@ public class UiManager : AManager<UiManager>
         {
             _playerScoreUi[i].SetColor(players[i].PlayerColor);
             _playerScoreUi[i].gameObject.SetActive(true);
+            UpdateScore(i, 0);
         }
     }
 

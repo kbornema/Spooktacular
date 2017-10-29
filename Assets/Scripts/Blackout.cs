@@ -5,11 +5,15 @@ using UnityEngine;
 public class Blackout : MonoBehaviour {
 
     public GameObject[] blackoutGroups;
-    public float Frequency = 10;
+    public GameObject MainCamera;
+    public float Frequency = 12;
     public float LightBackTime = 15;
 
     private float t0;
     private bool islighton;
+
+    [SerializeField]
+    private float NightCurve = 0;
 
     private BlackOutTargets[] currentBlackedOut;
 
@@ -25,7 +29,9 @@ public class Blackout : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        if (islighton && (int)Time.time % Frequency == 0)
+        NightCurve = MainCamera.GetComponent<ScreenLighting>().ReadNightCurve;
+
+        if (islighton && (int)Time.time % Frequency == 0 && NightCurve >= 0.55f)
         {
             
             int var = Random.Range(0, blackoutGroups.Length);

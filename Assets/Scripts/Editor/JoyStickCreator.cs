@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -48,6 +48,7 @@ public class JoystickCreator : ScriptableObject
     private string _keyVerticalNeg;
 
 
+    [ContextMenu("UpdateInput")]
     public void Init()
     {
         if (_buttonNames.Length == _keyboardButtons.Length)

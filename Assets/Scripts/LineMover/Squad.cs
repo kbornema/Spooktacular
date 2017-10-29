@@ -1,10 +1,9 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Squad : MonoBehaviour 
-{
-
+{   
     /*
     [Header("Movement")]
     public  mPath currentPath;
@@ -60,14 +59,13 @@ public class Squad : MonoBehaviour
     [SerializeField, ReadOnly]
     private PlayerController _player;
     public PlayerController Player { get { return _player; } }
-
-
     */
 
-    [Header("Movement")]
     public mPath currentPath;
+
+    [Header("Movement")]
     [SerializeField]
-    WayPoint currentPoint;
+    public WayPoint currentPoint;
 
     [SerializeField]
     float snappingDistance;
@@ -85,7 +83,7 @@ public class Squad : MonoBehaviour
     private bool _randomizeChildren = false;
 
     [SerializeField]
-    private AnimatedSpriteReplacer[] _childrenSpriteReplacer;
+    private SquadMember[] _member;
     [SerializeField]
     private SpriteRenderer[] _coloredSprites;
 
@@ -123,17 +121,36 @@ public class Squad : MonoBehaviour
     // Current gathered loot
     [SerializeField, ReadOnly]
     private int currentGroupLoot = 0;
-    public int CurrentGroupLoot { get { return currentGroupLoot; } set { currentGroupLoot = value; } }
+    public int CurrentGroupLoot { get { return currentGroupLoot; } set { SetCurrenetGroupLoot(value);} }
+
+    private void SetCurrenetGroupLoot(int value)
+    {
+        if (value < 0)
+            return;
+
+        int delta = value - currentGroupLoot;
+
+        Vector2 up = new Vector2(0, 1);
+
+        float range = Mathf.PI * 0.5f;
+
+        Vector2 newUp = up.Rotate((Random.value - 0.5f) * range);
+
+        GameManager.Instance.SpawnText(transform.position, delta, _player.PlayerColor).SetMoveAxis(newUp);
+        currentGroupLoot = value;
+    }
 
     [Header("Other")]
     [SerializeField, ReadOnly]
     private PlayerController _player;
 
     public int playerID;
+    
+    private bool unloading = false;
 
     // Current allowed (rolled) candy
     private int allowed_candy = 3;
-    private IEnumerator LootingRountine()
+    private IEnumerator LootingRoutine()
     {
         while (true)
         {
@@ -149,7 +166,31 @@ public class Squad : MonoBehaviour
         //yield break; // beendet Coroutine
     }
 
-    private IEnumerator InvulnerableRountine()
+    private IEnumerator UnloadLootRoutine()
+    {
+        while (true)
+        {
+            if (unloading)
+            {
+                if (currentGroupLoot <= 0)
+                {
+                    currentGroupLoot = 0;
+                    unloading = false;
+                    curMoveSpeed = _normalMoveSpeed;
+                }
+                else
+                {
+                    yield return new WaitForSeconds(0.25f);
+                    CurrentGroupLoot -= 1;
+                    GameManager.Instance.AddToScore(playerID, 1);
+                }           
+            }
+            yield return new WaitForEndOfFrame();
+        }
+        //yield break; // beendet Coroutine
+    }
+
+    private IEnumerator InvulnerableRoutine()
     {
         while (true)
         {
@@ -170,9 +211,9 @@ public class Squad : MonoBehaviour
     {
         if(_randomizeChildren)
         {
-            for (int i = 0; i < _childrenSpriteReplacer.Length; i++)
+            for (int i = 0; i < _member.Length; i++)
             {
-                _childrenSpriteReplacer[i].SetLookup(_skins[Random.Range(0, _skins.Count)]);
+                _member[i].Init(_skins[Random.Range(0, _skins.Count)]);
             }
         }
 
@@ -182,35 +223,59 @@ public class Squad : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        StartCoroutine(LootingRountine());
-        StartCoroutine(InvulnerableRountine());
+        StartCoroutine(LootingRoutine());
+        StartCoroutine(InvulnerableRoutine());
+        StartCoroutine(UnloadLootRoutine());
     }
 
-    FightManager fightManager;
+    public void SetMoving(Vector2 moveDir)
+    {
+        bool moving = moveDir.sqrMagnitude > 0.05f;
+        float flipVal = Mathf.Sign(moveDir.x);
+
+        for (int i = 0; i < _member.Length; i++)
+        {
+            _member[i].SetMoving(moving);
+
+
+            if(moveDir.x != 0.0f)
+            {
+                var scale = _member[i].transform.localScale;
+                scale.x = Mathf.Abs(scale.x) * -flipVal;
+                _member[i].transform.localScale = scale;
+            }
+
+        }
+    }
 
     // Update is called once per frame
     void Update()
     {
+        _flag.FillAmount = (float)currentGroupLoot / (float)maxGroupLootLimit;
 
         // Check if we can and want to loot further
         if (isLooting)
         {
             // If new route comes in TODO
             // endDoorLoot();
-
             // Allowed candysize reached
             if (allowed_candy < 1)
             {
                 endDoorLoot();
-
                 // Max loot limit of group reached
                 if (CurrentGroupLoot > maxGroupLootLimit - 1)
                     endDoorLoot();
             }
 
+            if (CurrentGroupLoot > maxGroupLootLimit - 1)
+                endDoorLoot();
         }
         else
         {
+            //TODO:
+            if (currentPath == null)
+                return;
+
             Vector3 vecToTarget = currentPath.GetFirstPoint().transform.position - transform.position;
             if (vecToTarget.magnitude < snappingDistance)
             {
@@ -231,11 +296,12 @@ public class Squad : MonoBehaviour
     {
         if (currentPoint == null)
             Debug.Log("There Should always be a current point");
+
         return currentPoint;
     }
 
     public void setPath(mPath newPath)
-    {
+    {   
         currentPath = newPath;
     }
 
@@ -285,8 +351,6 @@ public class Squad : MonoBehaviour
                     CurrentDoor = newFoundDoor;
                     startDoorLoot();
                 }
-
-
         }
 
         var otherSquad = coll.GetComponent<Squad>();
@@ -295,10 +359,15 @@ public class Squad : MonoBehaviour
         if (otherSquad && otherSquad._player != _player && isFighting == false && otherSquad.isFighting == false)
         {
             CurrentOpponent = otherSquad;
-            fightManager.newFight(this, CurrentOpponent);
+
+            GameManager.Instance.fightManager.newFight(this, CurrentOpponent);
         }
         //coll.gameObject.SendMessage("ApplyDamage", 10);
 
+        if (coll.gameObject.tag == "Cauldron")
+        {
+            UnloadLoot();
+        }
 
     }
 
@@ -312,11 +381,16 @@ public class Squad : MonoBehaviour
             CurrentDoor.doorIsClosed = true;
         }
 
+        if (unloading)
+        {
+            unloading = false;
+        }
+
         // Set speed to 0
         curMoveSpeed = 0.0f;
     }
 
-    public void lostFight()
+    public void lostFight(int pay)
     {
 
         // Set speed to normal
@@ -326,12 +400,12 @@ public class Squad : MonoBehaviour
         isInvulnerable = true;
 
         // Lose candycorn
-        CurrentGroupLoot -= 5;
+        CurrentGroupLoot -= pay;
     }
 
 
 
-    public void wonFight()
+    public void wonFight(int pay)
     {
         // not fighting anymore
         isFighting = false;
@@ -340,7 +414,7 @@ public class Squad : MonoBehaviour
         curMoveSpeed = _normalMoveSpeed;
 
         // Win candycorn
-        CurrentGroupLoot += 5;
+        CurrentGroupLoot += pay;
 
     }
 
@@ -349,7 +423,7 @@ public class Squad : MonoBehaviour
         // TODO was passiert im kampf???
 
         // Random count for rolling how much candy we are allowed to get at this door
-        allowed_candy = Random.Range(2, 4);
+        allowed_candy = UnityEngine.Random.Range(2, 4);
 
         // Set speed to 0
         curMoveSpeed = 0.0f;
@@ -369,9 +443,15 @@ public class Squad : MonoBehaviour
         CurrentDoor.doorIsClosed = true;
     }
 
+    private void UnloadLoot()
+    {
+        // Loot leeren
+        unloading = true;
+        curMoveSpeed = 0.0f;
+    }
 
     public void Init(PlayerController player, Color _color)
-    {
+    {   
         _player = player;
         _flag.SetColor(_color);
 
@@ -379,9 +459,29 @@ public class Squad : MonoBehaviour
             _coloredSprites[i].color = _color;
 
         playerID = _player.PlayerId;
-        Debug.Log("ID: " + playerID);
     }
 
     public PlayerController Player { get { return _player; } }
+
+    public void AddNewWaypoint(WayPoint a)
+    {   
+        Debug.Assert(currentPath != null);
+        currentPath.AddNewWaypoint(a);
+    }
+
+    public void ClearPathUpToFirstElement()
+    {
+        if (currentPath == null)
+            return;
+
+        currentPath.ClearPathUpToFirstElement();
+    }
+
+    public void SetFirstWaypoint(WayPoint a)
+    {
+        currentPath = new mPath();
+        currentPath.AddNewWaypoint(a);
+        currentPoint = a;
+    }
 }
 

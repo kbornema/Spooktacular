@@ -29,6 +29,10 @@ public class ScreenLighting : AScreenEffect
     [SerializeField]
     private bool _autoUpdate;
 
+    private float tRead;
+
+    public float ReadNightCurve { get { return tRead; } }
+
     private float _curTime = 0.0f;
 
     public void SetBackgroundColor(Color color)
@@ -89,7 +93,7 @@ public class ScreenLighting : AScreenEffect
         _curTime += Time.deltaTime;
         float t = _curTime / _fullNightCircleTime;
 
-        float tRead = _backgroundCurve.Evaluate(t);
+        tRead = _backgroundCurve.Evaluate(t);
 
         SetBackgroundColor(_daylightGradient.Evaluate(tRead));
         SetAmbientColor(_ambientGradient.Evaluate(tRead));

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -42,13 +42,15 @@ public class EventPanel : MonoBehaviour {
         else
             img.canvasRenderer.SetAlpha(1);
 
-        //Delete Fight, which aren't acitve any more
-        foreach (Fight F in BattleList)
+
+        for (int i = BattleList.Count - 1; i >= 0; i--)
         {
-            if (F.fightIsDone || GameManager.Instance.FightList.IndexOf(F) == -1)
+            Fight f = BattleList[i];
+
+            if (f.fightIsDone || GameManager.Instance.FightList.IndexOf(f) == -1)
             {
-                HandleLabels(F,false);
-                BattleList.Remove(F);
+                HandleLabels(f, false);
+                BattleList.RemoveAt(i);
                 //Debug.Log("deactivate Button"); 
             }
         }

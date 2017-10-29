@@ -218,13 +218,13 @@ public class TileMapcontroller : MonoBehaviour {
             if (otherRoadIndex >= 0)
             {
                 openRoads.RemoveAt(otherRoadIndex);
-                Debug.Log("Removed OtherRoad");
+                //Debug.Log("Removed OtherRoad");
                 if ((++openWaypoints[wpIndex].numCheckedRoads) >= openWaypoints[wpIndex].numAdustingRoads)
                     openWaypoints.RemoveAt(wpIndex);
                 
             }
             openRoads.Remove(incomingRoad);
-            Debug.Log("Removed IncomingRoad");
+            //Debug.Log("Removed IncomingRoad");
             OpenWayPoint otherOpenWayPoint = openWaypoints.Find(wp => wp.wayPoint == incomingRoad.lastWayPoint);
 
             // TODO check why this can be null?!

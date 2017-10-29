@@ -37,16 +37,17 @@ public class FightManager : MonoBehaviour {
 
         for (int i = fightList.Count - 1; i >= 0; i--)
         {
+            HandleFight(fightList[i].FightMode + 1);
+          
             if (fightList[i].fightIsDone)
                 fightList.RemoveAt(i);
 
-            HandleFight(fightList[i].FightMode+1);          
         }
 	}
 
     private void HandleFight(int mode)
     {
-        //TODO: Zähle Buttonmashes von Player 1 und 2 
+        //TODO: Zï¿½hle Buttonmashes von Player 1 und 2 
         if (Input.GetButtonDown("Button" + (mode) + "_" + ID0))
         {
             Score[0]++;
@@ -115,14 +116,20 @@ public class FightManager : MonoBehaviour {
 
         if (teamOneWins)
         {
-            currentFight.firstPlayer.wonFight();
-            currentFight.secondPlayer.lostFight();
+            int possiblePayout = currentFight.secondPlayer.CurrentGroupLoot - 5;
+            if (possiblePayout < 0)
+                possiblePayout = 0;
+            currentFight.firstPlayer.wonFight(possiblePayout);
+            currentFight.secondPlayer.lostFight(possiblePayout);
             GameManager.Instance.AddToScore(ID0,1);
         }
         else
         {
-            currentFight.secondPlayer.wonFight();
-            currentFight.firstPlayer.lostFight();
+            int possiblePayout = currentFight.secondPlayer.CurrentGroupLoot - 5;
+            if (possiblePayout < 0)
+                possiblePayout = 0;
+            currentFight.secondPlayer.wonFight(possiblePayout);
+            currentFight.firstPlayer.lostFight(possiblePayout);
             GameManager.Instance.AddToScore(ID1, 1);
         }
 
