@@ -8028,6 +8028,48 @@ Transform:
   m_PrefabParentObject: {fileID: 4260087277119116, guid: dc6cf24d72d5e4442879c5dfedfb31d8,
     type: 2}
   m_PrefabInternal: {fileID: 659671858}
+--- !u!1001 &582965196
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4138113160886112, guid: a8dded59613565b498be7272eb91a6b6, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138113160886112, guid: a8dded59613565b498be7272eb91a6b6, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138113160886112, guid: a8dded59613565b498be7272eb91a6b6, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138113160886112, guid: a8dded59613565b498be7272eb91a6b6, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138113160886112, guid: a8dded59613565b498be7272eb91a6b6, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138113160886112, guid: a8dded59613565b498be7272eb91a6b6, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138113160886112, guid: a8dded59613565b498be7272eb91a6b6, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138113160886112, guid: a8dded59613565b498be7272eb91a6b6, type: 2}
+      propertyPath: m_RootOrder
+      value: 12
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a8dded59613565b498be7272eb91a6b6, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1001 &583651351
 Prefab:
   m_ObjectHideFlags: 0
@@ -9083,7 +9125,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _destroyMode: 0
   _dontDestroyOnLoad: 1
-  playScene: 03_Master
+  playScene: Cord_Teststuff
   gameLength: 60
   worldTextPrefab: {fileID: 114013854967977948, guid: daa27b85e904d714b91897de0b40fde9,
     type: 2}
@@ -29598,7 +29640,7 @@ MonoBehaviour:
   - {fileID: 521646005}
   - {fileID: 1353327949}
   - {fileID: 1811561866}
-  MainCamera: {fileID: 0}
+  MainCamera: {fileID: 1901345576}
   Frequency: 5
   LightBackTime: 5
   NightCurve: 0
@@ -31025,6 +31067,11 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dc6cf24d72d5e4442879c5dfedfb31d8, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1901345576 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1517353320164060, guid: b24f4a8743451db45b1922fed192aa8b,
+    type: 2}
+  m_PrefabInternal: {fileID: 1014002510}
 --- !u!1 &1903928931 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1165339995118576, guid: dc6cf24d72d5e4442879c5dfedfb31d8,

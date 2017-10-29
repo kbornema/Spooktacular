@@ -289,7 +289,13 @@ public class Squad : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D coll)
     {
-        if (coll.gameObject.tag == "Door")
+        if (coll.gameObject.tag == "Ghost")
+        {
+            SetCurrenetGroupLoot(currentGroupLoot / 2);
+        }
+
+
+            if (coll.gameObject.tag == "Door")
         {
             var newFoundDoor = coll.gameObject.GetComponent<DoorController>();
 
