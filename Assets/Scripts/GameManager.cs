@@ -15,6 +15,9 @@ public class GameManager : AManager<GameManager>
     private float gameLength = 1800.0f;
 
     [SerializeField]
+    private WorldText worldTextPrefab;
+
+    [SerializeField]
     private Squad _squadPrefab;
     public Squad SquadPrefab { get { return _squadPrefab; } }
     public TileMapcontroller Map;
@@ -209,5 +212,13 @@ public class GameManager : AManager<GameManager>
     public PlayerController[] GetPlayers()
     {
         return players;
+    }
+
+    public WorldText SpawnText(Vector3 startPos, int value, Color color)
+    {
+        var instance = Instantiate(worldTextPrefab);
+        instance.transform.position = startPos;
+        instance.Set(value.ToString(), color);
+        return instance;
     }
 }
