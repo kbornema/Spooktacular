@@ -62,7 +62,10 @@ public class FightManager : MonoBehaviour {
     }
 
     private IEnumerator FightingRoutine(Fight currentFight)
-    {
+    {   
+        Vector3 startPos = (currentFight.firstPlayer.transform.position + currentFight.secondPlayer.transform.position) * 0.5f;
+        GameManager.Instance.SpawnText(startPos + new Vector3(0.0f, 0.5f, 0.0f), "Start Fight!", Color.white, 0.66f);
+
         currentFight.firstPlayer.startFight();
         currentFight.secondPlayer.startFight();
         

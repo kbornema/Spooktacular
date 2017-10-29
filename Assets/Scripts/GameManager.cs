@@ -209,11 +209,14 @@ public class GameManager : AManager<GameManager>
         return players;
     }
 
-    public WorldText SpawnText(Vector3 startPos, int value, Color color)
+    public WorldText SpawnText(Vector3 startPos, string value, Color color, float scale = 1.0f)
     {
         var instance = Instantiate(worldTextPrefab);
         instance.transform.position = startPos;
-        instance.Set(value.ToString(), color);
+        instance.Set(value, color);
+
+        instance.transform.localScale = new Vector3(scale, scale, scale);
+
         return instance;
     }
 

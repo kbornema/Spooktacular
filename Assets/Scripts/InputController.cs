@@ -76,7 +76,7 @@ public class InputController : MonoBehaviour
     {
         Vector2 result = Vector2.zero;
 
-        result = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        result = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
         return result;
     }

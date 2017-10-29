@@ -9217,12 +9217,11 @@ MonoBehaviour:
   _destroyMode: 0
   _dontDestroyOnLoad: 1
   playScene: 03_Master
-  gameLength: 60
+  gameLength: 600
   worldTextPrefab: {fileID: 114013854967977948, guid: daa27b85e904d714b91897de0b40fde9,
     type: 2}
   _squadPrefab: {fileID: 114200811897298136, guid: 75c1e786060426d41926d07f7ee9a67b,
     type: 2}
-  Map: {fileID: 397690381}
   inputController: {fileID: 632394865}
   fightManager: {fileID: 632394864}
   _selectionArrowPrefab: {fileID: 1246538774323216, guid: 2989cbbf4719d1b4f9ae77488274e36b,
@@ -9230,7 +9229,7 @@ MonoBehaviour:
   _gameIsRunning: 0
   players: []
   remainingTime: 0
-  _playerIds: 0101000000
+  _playerIds: 0100000001
   FightList: []
 --- !u!4 &632394862
 Transform:
@@ -28834,12 +28833,12 @@ Prefab:
     - target: {fileID: 224351033840203796, guid: 17b141b151b687c4a89a744a3b2132c3,
         type: 2}
       propertyPath: m_LocalPosition.x
-      value: 960
+      value: 309.5
       objectReference: {fileID: 0}
     - target: {fileID: 224351033840203796, guid: 17b141b151b687c4a89a744a3b2132c3,
         type: 2}
       propertyPath: m_LocalPosition.y
-      value: 540
+      value: 174
       objectReference: {fileID: 0}
     - target: {fileID: 224351033840203796, guid: 17b141b151b687c4a89a744a3b2132c3,
         type: 2}

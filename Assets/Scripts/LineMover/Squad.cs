@@ -3,63 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Squad : MonoBehaviour 
-{   
-    /*
-    [Header("Movement")]
-    public  mPath currentPath;
-    [SerializeField]
-    public WayPoint currentPoint;
-
-    public DIRECTION direction;
-
-
-    public float interpolation;
-
-    [SerializeField]
-    private float snappingDistance;
-
-
-    [Header("Visuals")]
-    [SerializeField]
-    private SquadFlag _flag;
-    public SquadFlag Flag { get { return _flag; } }
-    [SerializeField]
-    private List<SpriteLookup> _skins;
-    [SerializeField]
-    private bool _randomizeChildren = false;
-    [SerializeField]
-    private AnimatedSpriteReplacer[] _childrenSpriteReplacer;
-
-
-    [Header("Interaction")]
-    // Group gets invulnerable at spawn and after a lost fight for a short time
-    public bool isInvulnerable = false;
-
-    // Group is looting right now
-    public bool isLooting = false;
-
-    // Limit of loot a group can carry
-    private int maxGroupLootLimit = 25;
-
-    // Current allowed (rolled) candy
-    int allowed_candy = 3;
-
-    // Current gathered loot
-    [SerializeField]
-    private int currentGroupLoot = 0;
-    public int CurrentGroupLoot { get { return currentGroupLoot; } set { currentGroupLoot = value; } }
-
-    // Current movement speed of the group
-    [SerializeField]
-    private int movementSpeed = 5;
-    public int MovementSpeed { get { return movementSpeed; } set { movementSpeed = value; } }
-
-    [Header("Debug")]
-
-    [SerializeField, ReadOnly]
-    private PlayerController _player;
-    public PlayerController Player { get { return _player; } }
-    */
+{
+    private const float WRLD_TEXT_OFFSET = 0.5f;
 
     public mPath currentPath;
 
@@ -136,7 +81,7 @@ public class Squad : MonoBehaviour
 
         Vector2 newUp = up.Rotate((Random.value - 0.5f) * range);
 
-        GameManager.Instance.SpawnText(transform.position, delta, _player.PlayerColor).SetMoveAxis(newUp);
+        GameManager.Instance.SpawnText(transform.position, delta.ToString(), _player.PlayerColor).SetMoveAxis(newUp);
         currentGroupLoot = value;
     }
 
@@ -334,13 +279,23 @@ public class Squad : MonoBehaviour
 
             // Group is not at max loot
             if (CurrentGroupLoot < maxGroupLootLimit)
-
+            {
                 // There is more then zero loot in the house
                 if (newFoundDoor.House.CurrentLoot > 0)
                 {
                     CurrentDoor = newFoundDoor;
                     startDoorLoot();
                 }
+
+                else
+                {
+                    GameManager.Instance.SpawnText(newFoundDoor.transform.position + new Vector3(0, WRLD_TEXT_OFFSET, 0), "House empty!", _player.PlayerColor, 0.66f);
+                }
+            }
+            else
+            {
+                GameManager.Instance.SpawnText(transform.position + new Vector3(0, WRLD_TEXT_OFFSET, 0), "Squad full!", _player.PlayerColor, 0.66f);
+            }
         }
 
         var otherSquad = coll.GetComponent<Squad>();
@@ -420,6 +375,8 @@ public class Squad : MonoBehaviour
 
         // Per seconds are gathered 3 candycorns
         isLooting = true;
+
+        GameManager.Instance.SpawnText(transform.position + new Vector3(0.0f, WRLD_TEXT_OFFSET, 0.0f), "Start Loot", _player.PlayerColor, 0.66f);
     }
 
     public void endDoorLoot()
@@ -435,6 +392,8 @@ public class Squad : MonoBehaviour
 
     private void UnloadLoot()
     {
+        GameManager.Instance.SpawnText(transform.position + new Vector3(0, WRLD_TEXT_OFFSET, 0), "Save Loot!", _player.PlayerColor, 0.66f);
+
         // Loot leeren
         unloading = true;
         curMoveSpeed = 0.0f;
