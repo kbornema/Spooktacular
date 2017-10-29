@@ -13,9 +13,15 @@ public class UiManager : AManager<UiManager>
     private Text _timer;
     public Text Timer { get { return _timer; } }
 
+    [SerializeField]
+    private GameObject _gameOverRoot;
+
+    public Text winnerText;
+
 
     protected override void OnAwake()
     {
+        _gameOverRoot.SetActive(false);
     }
 
 	// Use this for initialization
@@ -47,5 +53,20 @@ public class UiManager : AManager<UiManager>
     public void UpdateScore(int playerId, int score)
     {
         _playerScoreUi[playerId].SetScore(score);
+    }
+
+    public void GameOver(int winnerIndex, PlayerController[] players)
+    {
+        if(winnerIndex == -1)
+        {
+            winnerText.text = "Draw! No Winner";
+        }
+
+        else
+        {
+            winnerText.text = "Player " + (players[winnerIndex].PlayerId + 1) + " won with " + players[winnerIndex].Stats.Score + " points!";
+        }
+
+        _gameOverRoot.SetActive(true);
     }
 }

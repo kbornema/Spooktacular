@@ -193,7 +193,7 @@ MonoBehaviour:
   _destroyMode: 0
   _dontDestroyOnLoad: 1
   playScene: 03_Master
-  gameLength: 600
+  gameLength: 120
   worldTextPrefab: {fileID: 114013854967977948, guid: daa27b85e904d714b91897de0b40fde9,
     type: 2}
   _squadPrefab: {fileID: 114200811897298136, guid: 75c1e786060426d41926d07f7ee9a67b,
@@ -205,7 +205,7 @@ MonoBehaviour:
   _gameIsRunning: 0
   players: []
   remainingTime: 0
-  _playerIds: 
+  _playerIds: 0100000001
   FightList: []
 --- !u!114 &114944826416762992
 MonoBehaviour:

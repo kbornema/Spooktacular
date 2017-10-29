@@ -198,19 +198,29 @@ public class GameManager : AManager<GameManager>
     private void EndGame()
     {
         //TODO:
-        //int winnerIndex = FindPlayerWithHighestScore();
-        //Debug.Log("Player " + winnerIndex + " won with " + players[winnerIndex].Stats.Score + " points! Congrats!");
+        int winnerIndex = FindPlayerWithHighestScore();
+
+        if(winnerIndex != -1)
+        {
+            Time.timeScale = 0.0f;
+
+            UiManager.Instance.GameOver(winnerIndex, players);
+        }
+        
     }
 
     // returns index of Best Player
-    int FindPlayerWithHighestScore()
+    public int FindPlayerWithHighestScore()
     {
         int index = -1;
         int currentScore = 0;
         for(int i = 0; i < players.Length; i++)
         {
-            if (currentScore < players[i].Stats.Score)
+            if (currentScore <= players[i].Stats.Score)
+            {
                 currentScore = players[i].Stats.Score;
+                index = i;
+            }
         }
 
         return index;
