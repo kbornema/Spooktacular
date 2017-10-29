@@ -50,7 +50,14 @@ public class Squad : MonoBehaviour
 
     [SerializeField]
     private float curMoveSpeed = 5.0f;
-    public float CurMoveSpeed { get { return curMoveSpeed; } set { curMoveSpeed = value; } }
+    public float CurMoveSpeed
+    {
+        get { return curMoveSpeed * LootToSpeedModifier.Evaluate(1F - currentGroupLoot / maxGroupLootLimit); }
+        set { curMoveSpeed = value / LootToSpeedModifier.Evaluate(1F - currentGroupLoot / maxGroupLootLimit); }
+    }
+
+    [SerializeField]
+    private AnimationCurve LootToSpeedModifier = new AnimationCurve(new Keyframe(0F, 0.5F), new Keyframe(1F, 1F));
 
     [Header("LootParams")]
     [SerializeField]
@@ -102,7 +109,7 @@ public class Squad : MonoBehaviour
             if(isLooting)
             {
                 yield return new WaitForSeconds(1.0f);
-                CurrentGroupLoot += 3;
+                CurrentGroupLoot += _lootPerLoot;
                 allowed_candy--;
             }
 
