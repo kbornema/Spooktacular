@@ -24,7 +24,8 @@ public class SquadFlag : MonoBehaviour
         if (_fillSprites.Length <= 0)
             return;
 
-        int curId = (int)((1.0f - _fillAmount) * (_fillSprites.Length - 1));
+        float inv = 1.0f - _fillAmount;
+        int curId = (int)(inv * (_fillSprites.Length - 1));
     
         if(curId != _oldId)
         {

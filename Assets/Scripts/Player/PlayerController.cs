@@ -45,8 +45,8 @@ public class PlayerController : MonoBehaviour
 
         SelectionArrowInstance = Instantiate(selectionArrowPrefab);
         SelectionArrowInstance.SetActive(false);
-        
-        CreateSquads(3);
+
+        SelectionArrowInstance.GetComponent<SpriteRenderer>().color = _color;
     }
 
     public void SelectSquad(int i)
@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour
             SelectionArrowInstance.SetActive(true);
             SelectionArrowInstance.transform.SetParent(squads[i].transform);
 
-            SelectionArrowInstance.transform.localPosition = new Vector3(0.0f, 1.0f, 0.0f);
+            SelectionArrowInstance.transform.localPosition = new Vector3(0.0f, 1.5f, 0.0f);
         }
     }
 

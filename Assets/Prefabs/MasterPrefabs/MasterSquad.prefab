@@ -260,8 +260,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1985135942405718}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
+  m_LocalPosition: {x: 0, y: -0.375, z: 0}
+  m_LocalScale: {x: 1.5, y: 0.75, z: 1.5}
   m_Children: []
   m_Father: {fileID: 4946994822253904}
   m_RootOrder: 4
@@ -286,7 +286,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1991624292315898}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.84, y: 2.47, z: 0}
+  m_LocalPosition: {x: -21.21, y: 1.92, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4187195327567698}
@@ -421,9 +421,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66ebdb90f3de8d64d81d226eb67333fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fillAmount: 1
+  _fillAmount: 0
   _fillSprites:
-  - {fileID: 0}
   - {fileID: 21300000, guid: 9aad51f83168bae479b3ed92b68d9508, type: 3}
   - {fileID: 21300002, guid: 9aad51f83168bae479b3ed92b68d9508, type: 3}
   - {fileID: 21300004, guid: 9aad51f83168bae479b3ed92b68d9508, type: 3}
@@ -435,6 +434,7 @@ MonoBehaviour:
   - {fileID: 21300016, guid: 9aad51f83168bae479b3ed92b68d9508, type: 3}
   - {fileID: 21300018, guid: 9aad51f83168bae479b3ed92b68d9508, type: 3}
   - {fileID: 21300020, guid: 9aad51f83168bae479b3ed92b68d9508, type: 3}
+  - {fileID: 0}
   _borderRenderer: {fileID: 212747423474660190}
   _fillRenderer: {fileID: 212466056295247090}
 --- !u!114 &114200811897298136
@@ -471,8 +471,10 @@ MonoBehaviour:
   _coloredSprites:
   - {fileID: 212788049023894896}
   CurrentDoor: {fileID: 0}
+  CurrentOpponent: {fileID: 0}
   isInvulnerable: 0
   isLooting: 0
+  isFighting: 0
   _normalMoveSpeed: 5
   curMoveSpeed: 5
   _lootDelay: 1
@@ -605,7 +607,7 @@ SortingGroup:
   m_Enabled: 1
   m_SortingLayerID: 2100120115
   m_SortingLayer: 2
-  m_SortingOrder: -58
+  m_SortingOrder: -45
 --- !u!212 &212005568478648202
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -683,7 +685,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2100120115
   m_SortingLayer: 2
-  m_SortingOrder: -55
+  m_SortingOrder: -41
   m_Sprite: {fileID: 21300000, guid: c6c8445a80380804d8a83f58b90bc094, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -861,7 +863,7 @@ SpriteRenderer:
   m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 7946c31d63691c04a92f4c5b043ce3d7, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 0.6862745}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -903,7 +905,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2100120115
   m_SortingLayer: 2
-  m_SortingOrder: -53
+  m_SortingOrder: -40
   m_Sprite: {fileID: 21300000, guid: bc4032d10bb438a49ad774122694aaba, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -947,7 +949,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2100120115
   m_SortingLayer: 2
-  m_SortingOrder: -49
+  m_SortingOrder: -35
   m_Sprite: {fileID: 21300000, guid: ef80861a466885e44b9f06be90d6a3e0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
