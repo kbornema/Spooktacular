@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class LineMover : MonoBehaviour
 {
+    /*
     [Range(0,0.5f)]
     [SerializeField]
     float directionSwitchThreshhold = 0;
@@ -168,6 +169,6 @@ public class LineMover : MonoBehaviour
         }
 
         return newInterpolation;
-        */
-    }
+        
+    }*/
 }

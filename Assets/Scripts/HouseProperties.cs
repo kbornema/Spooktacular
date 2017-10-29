@@ -1,12 +1,22 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class HouseProperties : MonoBehaviour {
 
-    private int maxLootStorage = 25;
+    public int maxLootStorage = 25;
+
+    public int minStart = 12;
+    public int maxStart = 21;
+
+    public float _regenerateTime = 1.0f;
+
+    public float LootPercent { get { return ((float)currentLoot / (float)maxLootStorage); } }
 
     [SerializeField]
+    List<Collider2D> doorList;
+
+    [SerializeField, ReadOnly]
     private int currentLoot = 0;
     public int CurrentLoot
     {
@@ -17,27 +27,25 @@ public class HouseProperties : MonoBehaviour {
         set
         {
             currentLoot = value;
+            if (currentLoot <= 0)
+                currentLoot = 0;
         }
     }
 
     // Use this for initialization
     void Start () {
         // Starts with between 12 and 20 candycorns
-		CurrentLoot = Random.Range(12, 21);
+        CurrentLoot = Random.Range(minStart, maxStart);
         StartCoroutine(RegenerationCoroutine());
     }
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     // Houses slowly regenerate candycorn
     private IEnumerator RegenerationCoroutine()
     {
         while(true)
         {
-            yield return new WaitForSeconds(1.0f);
+            yield return new WaitForSeconds(_regenerateTime);
             if (CurrentLoot < maxLootStorage)
                 CurrentLoot += 1;
         }

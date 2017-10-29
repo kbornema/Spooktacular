@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : AManager<GameManager> 
 {
-    private const string GAME_SCENE_NAME = "03_Master";
+    [SerializeField]
+    private string playScene = "03_Master";
 
     [Header("Common")]
 
@@ -15,6 +17,10 @@ public class GameManager : AManager<GameManager>
     [SerializeField]
     private Squad _squadPrefab;
     public Squad SquadPrefab { get { return _squadPrefab; } }
+    public TileMapcontroller Map;
+
+    [SerializeField]
+    private GameObject _selectionArrowPrefab;
     
     [Header("Debug")]
 
@@ -36,16 +42,29 @@ public class GameManager : AManager<GameManager>
 
     public int NumberOfPlayer { get { return players.Length; } }
 
+    public List<Fight> FightList;
+
+    private int[] Score;
+    public int[] _Score { get { return Score; } }
+
     protected override void OnAwake()
     {
         remainingTime = gameLength;
+        FightList = new List<Fight>();
 
         //Only setup the game of the scene is the gameplay scene and there are no players yet:
-        if (NumberOfPlayer == 0 && SceneManager.GetActiveScene().name.Equals(GAME_SCENE_NAME))
-        {
-            Debug.Log("B");
+        if (NumberOfPlayer == 0 && SceneManager.GetActiveScene().name.Equals(playScene))
+        {   
             SetupGame(_playerIds);
         }
+
+        Score = new int[players.Length];
+    }
+
+    private void Start()
+    {
+        if(SceneManager.GetActiveScene().name.Equals(playScene))
+            StartGame();
     }
 
     public void SetupGame(bool[] joinedPlayers)
@@ -69,14 +88,47 @@ public class GameManager : AManager<GameManager>
         {
             GameObject playerControllerObj = new GameObject("Player_" + i);
             players[i] = playerControllerObj.AddComponent<PlayerController>();
-            players[i].Setup(i, playerIndices[i]);
+            players[i].Setup(i, playerIndices[i], _selectionArrowPrefab);                  
         }
 
         remainingTime = gameLength;
+
     }
-	
-	// Update is called once per frame
-	private void Update () 
+
+    public void StartGame()
+    {
+        CreateSquads();
+        _gameIsRunning = true;
+    }
+
+    public void CreateSquads()
+    {
+        List<WayPoint> WPList = Map.GetWaypointList();
+
+        for (int i = 0; i < players.Length; i++)
+        {
+            players[i].CreateSquads(3);
+
+            for (int j = 0; j < players[i].Squads.Length; j++)
+            {
+                var a = ChooseWayPoint(WPList).position;
+                players[i].Squads[j].transform.position = a;
+            }
+        }
+    }
+
+    private Transform ChooseWayPoint(List<WayPoint> wPList)
+    {
+        int var = UnityEngine.Random.Range(0, wPList.Count);
+        //Debug.Log("Random:"+ var  +" = "+ wPList[var].transform.position);
+        Transform result = wPList[var].transform;
+        wPList.Remove(wPList[var]);
+
+        return result;
+    }
+
+    // Update is called once per frame
+    private void Update () 
     {   
         if (_gameIsRunning)
         {
@@ -113,8 +165,9 @@ public class GameManager : AManager<GameManager>
 
     private void EndGame()
     {
-        int winnerIndex = FindPlayerWithHighestScore();
-        Debug.Log("Player " + winnerIndex + " won with " + players[winnerIndex].Stats.Score + " points! Congrats!");
+        //TODO:
+        //int winnerIndex = FindPlayerWithHighestScore();
+        //Debug.Log("Player " + winnerIndex + " won with " + players[winnerIndex].Stats.Score + " points! Congrats!");
     }
 
     // returns index of Best Player
@@ -131,6 +184,17 @@ public class GameManager : AManager<GameManager>
         return index;
     }
 
+    public void AddToScore(int playerID, int points)
+    {
+        Score[playerID] += points;
+        UiManager.Instance.UpdateScore(playerID, Score[playerID]);
+    }
 
 
+
+
+    public PlayerController[] GetPlayers()
+    {
+        return players;
+    }
 }

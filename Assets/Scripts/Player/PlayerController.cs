@@ -24,7 +24,12 @@ public class PlayerController : MonoBehaviour
     private Color _color;
     public Color PlayerColor { get { return _color; } }
 
-    public void Setup(int playerId, int playerInputId)
+    public GameObject SelectionArrowInstance;
+
+    [SerializeField]
+    private int _selectedSquadId = -1;
+
+    public void Setup(int playerId, int playerInputId, GameObject selectionArrowPrefab)
     {
         this._playerId = playerId;
         this._playerInputId = playerInputId;
@@ -32,8 +37,34 @@ public class PlayerController : MonoBehaviour
         stats = new PlayerStats();
         stats.Reset();
 
+        if(SelectionArrowInstance)
+        {
+            Destroy(SelectionArrowInstance);
+            SelectionArrowInstance = null;
+        }
 
-        CreateSquads(3);
+        SelectionArrowInstance = Instantiate(selectionArrowPrefab);
+        SelectionArrowInstance.SetActive(false);
+
+        SelectionArrowInstance.GetComponent<SpriteRenderer>().color = _color;
+    }
+
+    public void SelectSquad(int i)
+    {
+        if(i < 0 || i >= squads.Length)
+        {   
+            _selectedSquadId = -1;
+            SelectionArrowInstance.SetActive(false);
+        }
+
+        else
+        {
+            _selectedSquadId = i;
+            SelectionArrowInstance.SetActive(true);
+            SelectionArrowInstance.transform.SetParent(squads[i].transform);
+
+            SelectionArrowInstance.transform.localPosition = new Vector3(0.0f, 1.5f, 0.0f);
+        }
     }
 
     public void CreateSquads(int num)
@@ -43,7 +74,6 @@ public class PlayerController : MonoBehaviour
             for (int i = 0; i < squads.Length; i++)
                 Destroy(squads[i].gameObject);
         }
-
         
         squads = new Squad[num];
 
@@ -61,13 +91,13 @@ public class PlayerController : MonoBehaviour
         if (playerId == 0)
             return Color.red;
 
-        if (playerId == 1)
+        else if (playerId == 1)
             return Color.green;
 
-        if (playerId == 2)
+        else if (playerId == 2)
             return Color.blue;
 
-        if (playerId == 3)
+        else if (playerId == 3)
             return Color.yellow;
 
         return Color.magenta;

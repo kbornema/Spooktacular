@@ -58,8 +58,6 @@ public class LobbyManager : MonoBehaviour
             GameManager.Instance.SetupGame(playerJoined);
             SceneManager.LoadScene("03_Master");
         }
-        
-
     }
 
     private void UpdatePlayers()

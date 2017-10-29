@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - WayPoint
+  - Door
+  - ActionPanel
   layers:
   - Default
   - TransparentFX
@@ -35,13 +37,22 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Overlay
   - LightAndWorld
   - Light
   m_SortingLayers:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Floor
+    uniqueID: 925960645
+    locked: 0
   - name: Dynamic
     uniqueID: 2100120115
+    locked: 0
+  - name: WorldUi
+    uniqueID: 89759291
+    locked: 0
+  - name: Light
+    uniqueID: 2154483931
     locked: 0
