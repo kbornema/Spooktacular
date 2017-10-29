@@ -28,7 +28,7 @@ public class FightManager : MonoBehaviour {
             fightList.Add(f);
 
             // Start music
-            SoundManager.Instance.playAndDestroy(fightMusic, 1.0f, 4.5f);
+            SoundManager.Instance.playAndDestroy(fightMusic, 0.5f, 4.5f);
 
             // Start the coroutine
             StartCoroutine(FightingRoutine(f));
@@ -68,10 +68,7 @@ public class FightManager : MonoBehaviour {
     }
 
     private IEnumerator FightingRoutine(Fight currentFight)
-    {   
-        Vector3 startPos = (currentFight.firstPlayer.transform.position + currentFight.secondPlayer.transform.position) * 0.5f;
-        GameManager.Instance.SpawnText(startPos + new Vector3(0.0f, 0.5f, 0.0f), "Start Fight!", Color.white, 0.66f);
-
+    {
         currentFight.firstPlayer.startFight();
         currentFight.secondPlayer.startFight();
         
@@ -125,7 +122,8 @@ public class FightManager : MonoBehaviour {
 
         if (teamOneWins)
         {
-            int possiblePayout = currentFight.secondPlayer.CurrentGroupLoot - 0;
+            int possiblePayout = currentFight.secondPlayer.CurrentGroupLoot;
+            possiblePayout = UnityEngine.Random.Range(possiblePayout/2, possiblePayout+1);
             if (possiblePayout < 0)
                 possiblePayout = 0;
             currentFight.firstPlayer.wonFight(possiblePayout);
@@ -134,7 +132,8 @@ public class FightManager : MonoBehaviour {
         }
         else
         {
-            int possiblePayout = currentFight.secondPlayer.CurrentGroupLoot - 0;
+            int possiblePayout = currentFight.firstPlayer.CurrentGroupLoot;
+            possiblePayout = UnityEngine.Random.Range(possiblePayout / 2, possiblePayout + 1);
             if (possiblePayout < 0)
                 possiblePayout = 0;
             currentFight.secondPlayer.wonFight(possiblePayout);
