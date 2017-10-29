@@ -16,7 +16,7 @@ MonoBehaviour:
   _axisSensitivity: 3
   _axisGravity: 3
   _axisDead: 0.0001
-  _invertY: 0
+  _invertY: 1
   _invertX: 0
   _moveAxisXName: X_
   _moveAxisYName: Y_
