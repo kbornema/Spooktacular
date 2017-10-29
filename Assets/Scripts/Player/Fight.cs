@@ -16,6 +16,7 @@ public class Fight
         firstPlayer = _firstPlayer;
         secondPlayer = _secondPlayer;
         FightMode = ChoseActionButton();
+        fightIsDone = false;
     }
 
     private int ChoseActionButton()
