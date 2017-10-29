@@ -8,6 +8,9 @@ public class FightManager : MonoBehaviour {
     [SerializeField]
     List<Fight> fightList;
 
+    [SerializeField]
+    AudioClip fightMusic;
+
     private int ID0, ID1;
     private int[] Score;
 
@@ -24,8 +27,12 @@ public class FightManager : MonoBehaviour {
             Score = new int[2];
             fightList.Add(f);
 
+            // Start music
+            SoundManager.Instance.playAndDestroy(fightMusic, 0.5f, 4.5f);
+
             // Start the coroutine
             StartCoroutine(FightingRoutine(f));
+
         }            
     }
 

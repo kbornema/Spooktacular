@@ -44,4 +44,18 @@ public class SoundManager : AManager<SoundManager>
         yield return new WaitForSeconds(audioSource.clip.length);
         returnSource(audioSource);
     }
+
+    public void playAndDestroy(AudioClip soundFile, float volume, float duration)
+    {
+        AudioSource audioPlayer = getPlayer(soundFile);
+        audioPlayer.volume = volume;
+        StartCoroutine(PlaySound(audioPlayer, duration));
+    }
+
+    IEnumerator PlaySound(AudioSource audioSource, float duration)
+    {
+        audioSource.Play();
+        yield return new WaitForSeconds(duration);
+        returnSource(audioSource);
+    }
 }
