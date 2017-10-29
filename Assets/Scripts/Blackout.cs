@@ -13,6 +13,7 @@ public class Blackout : MonoBehaviour {
 
     private BlackOutTargets[] currentBlackedOut;
 
+    [SerializeField]
     private AudioClip _blackOutAudio;
 
 	// Use this for initialization
@@ -33,6 +34,9 @@ public class Blackout : MonoBehaviour {
 
             t0 = Time.time;
             islighton = false;
+
+            if(_blackOutAudio)
+                SoundManager.Instance.playAndDestroy(_blackOutAudio, 0.5f);
         }
 
         if (!islighton && Time.time - t0 > LightBackTime)
