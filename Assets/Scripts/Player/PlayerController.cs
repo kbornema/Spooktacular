@@ -85,12 +85,15 @@ public class PlayerController : MonoBehaviour
         }
 
 
-        Vector2 move =  inputController.GetMoveVector(this);
+        Vector2 move =  inputController.GetMoveVector(this) * GetActiveSquad().CurMoveSpeed;
 
         Vector2 newPos = GetActiveSquad().transform.position;
-        newPos += move * Time.deltaTime * GetActiveSquad().CurMoveSpeed;
+        newPos += move * Time.deltaTime;
 
         GetActiveSquad().transform.position = newPos;
+
+        GetActiveSquad().SetMoving(move);
+
     }
 
     public void CreateSquads(int num)

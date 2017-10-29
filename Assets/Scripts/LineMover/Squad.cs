@@ -84,7 +84,7 @@ public class Squad : MonoBehaviour
     private bool _randomizeChildren = false;
 
     [SerializeField]
-    private AnimatedSpriteReplacer[] _childrenSpriteReplacer;
+    private SquadMember[] _member;
     [SerializeField]
     private SpriteRenderer[] _coloredSprites;
 
@@ -169,9 +169,9 @@ public class Squad : MonoBehaviour
     {
         if(_randomizeChildren)
         {
-            for (int i = 0; i < _childrenSpriteReplacer.Length; i++)
+            for (int i = 0; i < _member.Length; i++)
             {
-                _childrenSpriteReplacer[i].SetLookup(_skins[Random.Range(0, _skins.Count)]);
+                _member[i].Init(_skins[Random.Range(0, _skins.Count)]);
             }
         }
 
@@ -185,9 +185,30 @@ public class Squad : MonoBehaviour
         StartCoroutine(InvulnerableRountine());
     }
 
+    public void SetMoving(Vector2 moveDir)
+    {
+        bool moving = moveDir.sqrMagnitude > 0.05f;
+        float flipVal = Mathf.Sign(moveDir.x);
+
+        for (int i = 0; i < _member.Length; i++)
+        {
+            _member[i].SetMoving(moving);
+
+
+            if(moveDir.x != 0.0f)
+            {
+                var scale = _member[i].transform.localScale;
+                scale.x = Mathf.Abs(scale.x) * -flipVal;
+                _member[i].transform.localScale = scale;
+            }
+
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
+        _flag.FillAmount = (float)currentGroupLoot / (float)maxGroupLootLimit;
 
         // Check if we can and want to loot further
         if (isLooting)
