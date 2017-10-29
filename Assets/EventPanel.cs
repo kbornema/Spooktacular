@@ -34,7 +34,7 @@ public class EventPanel : MonoBehaviour {
         //Delete Fight, which aren't acitve any more
         foreach (Fight F in BattleList)
         {
-            if (GameManager.Instance.FightList.IndexOf(F) == -1)
+            if (F.fightIsDone || GameManager.Instance.FightList.IndexOf(F) == -1)
             {
                 HandleLabels(F,false);
                 BattleList.Remove(F);

@@ -56,6 +56,12 @@ public class GameManager : AManager<GameManager>
         }
     }
 
+    private void Start()
+    {
+        if(SceneManager.GetActiveScene().name.Equals(playScene))
+            StartGame();
+    }
+
     public void SetupGame(bool[] joinedPlayers)
     {
         this._playerIds = joinedPlayers;
@@ -72,31 +78,37 @@ public class GameManager : AManager<GameManager>
             Destroy(players[i].gameObject);
 
         players = new PlayerController[playerIndices.Count];
-        List<WayPoint> WPList = new List<WayPoint>();
-        foreach (WayPoint wp in Map.GetComponentsInChildren<WayPoint>())
-        {
-            WPList.Add(wp);
-        }
 
         for (int i = 0; i < players.Length; i++)
         {
             GameObject playerControllerObj = new GameObject("Player_" + i);
             players[i] = playerControllerObj.AddComponent<PlayerController>();
-            players[i].Setup(i, playerIndices[i], _selectionArrowPrefab);       
-
-            for (int k = 0; k < players[i].Squads.Length; k++)
-            {
-                if (WPList.Count > 0)
-                {
-                    var a = ChooseWayPoint(WPList).position;
-                    players[i].Squads[k].transform.position = a;
-                    //Debug.LogWarning("SquadPos"+k + "= " + a);
-                }                    
-                else
-                    Debug.LogError("Your waypoint list is empty, stupid cunt!");
-            }            
+            players[i].Setup(i, playerIndices[i], _selectionArrowPrefab);                  
         }
+
         remainingTime = gameLength;
+    }
+
+    public void StartGame()
+    {
+        CreateSquads();
+        _gameIsRunning = true;
+    }
+
+    public void CreateSquads()
+    {
+        List<WayPoint> WPList = Map.GetWaypointList();
+
+        for (int i = 0; i < players.Length; i++)
+        {
+            players[i].CreateSquads(3);
+
+            for (int j = 0; j < players[i].Squads.Length; j++)
+            {
+                var a = ChooseWayPoint(WPList).position;
+                players[i].Squads[j].transform.position = a;
+            }
+        }
     }
 
     private Transform ChooseWayPoint(List<WayPoint> wPList)
@@ -147,8 +159,9 @@ public class GameManager : AManager<GameManager>
 
     private void EndGame()
     {
-        int winnerIndex = FindPlayerWithHighestScore();
-        Debug.Log("Player " + winnerIndex + " won with " + players[winnerIndex].Stats.Score + " points! Congrats!");
+        //TODO:
+        //int winnerIndex = FindPlayerWithHighestScore();
+        //Debug.Log("Player " + winnerIndex + " won with " + players[winnerIndex].Stats.Score + " points! Congrats!");
     }
 
     // returns index of Best Player

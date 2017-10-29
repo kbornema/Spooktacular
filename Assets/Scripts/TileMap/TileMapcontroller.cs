@@ -54,8 +54,12 @@ public class TileMapcontroller : MonoBehaviour {
     List<OpenWayPoint> openWaypoints;
     List<OpenRoad> openRoads;
 
-    [SerializeField]
     List<WayPoint> finishedWayPointList;
+
+    public List<WayPoint> GetWaypointList()
+    {
+        return new List<WayPoint>(finishedWayPointList);
+    }
 
     [SerializeField]
     public GameObject wayPointPrefab;
@@ -69,8 +73,7 @@ public class TileMapcontroller : MonoBehaviour {
     }
 
     private void Awake()
-    {
-
+    {   
         GenerateWayPoints();
     }
 	
@@ -81,7 +84,10 @@ public class TileMapcontroller : MonoBehaviour {
         for (int j = 0; j < transform.childCount; j++)
             Destroy(transform.GetChild(j));
 
-        finishedWayPointList.Clear();
+        if (finishedWayPointList != null)
+            finishedWayPointList.Clear();
+        else
+            finishedWayPointList = new List<WayPoint>();
 
         Vec2i startPoint = findWalkableTile();
 
@@ -128,7 +134,6 @@ public class TileMapcontroller : MonoBehaviour {
         int i = 0;
         while (openRoads.Count > 0 && i < 100) 
         {
-            Debug.Log(openRoads.Count);
             ProcessRoad(openRoads[0]);
             i++;
         }
@@ -180,8 +185,7 @@ public class TileMapcontroller : MonoBehaviour {
     {
         int wpIndex = openWaypoints.FindIndex(wp => wp.tilePos == currentTile);
         if (wpIndex >= 0)
-        {
-            Debug.Log("Found a Road to an OLD WayPoint");
+        {   
             // add Incoming road to existing Waypoint
             if(incomingRoad.direction == new Vec2i(0, 1))
             {
@@ -229,9 +233,6 @@ public class TileMapcontroller : MonoBehaviour {
         {
             // add new OpenCrossRoad
             // openWaypoints.Add(new OpenWayPoint(currentTile, ))
-
-            Debug.Log("Found a Road to an NEW WayPoint");
-
             WayPoint currentWP = Instantiate(wayPointPrefab).GetComponent<WayPoint>();
 
             currentWP.transform.SetParent(transform);

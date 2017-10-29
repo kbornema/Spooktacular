@@ -120,8 +120,6 @@ public class Squad : MonoBehaviour {
                 _childrenSpriteReplacer[i].SetLookup(_skins[Random.Range(0, _skins.Count)]);
             }
         }
-
-        
     }
 
     // Use this for initialization
@@ -130,13 +128,10 @@ public class Squad : MonoBehaviour {
         StartCoroutine(LootingRountine());
         StartCoroutine(InvulnerableRountine());
 
-        gameManager = GameObject.Find("GameManager");
-        fightManager = gameManager.GetComponent<FightManager>();
-
-
+        fightManager = GameManager.Instance.GetComponent<FightManager>();
         PathWalking = GameObject.Find("Path"); // TAKEOUT
     }
-    GameObject gameManager;
+
     FightManager fightManager;
 
     // TAKEOUT
@@ -227,14 +222,14 @@ public class Squad : MonoBehaviour {
                 
 
         }
-        // Check if colliding objects is an opponent
-        else if(coll.gameObject.transform.parent.GetComponent<PlayerController>() != gameObject.GetComponent<PlayerController>() && isFighting == false)
-        {
-            CurrentOpponent = coll.gameObject.GetComponent<Squad>();
-            CurrentOpponent.startFight();
-            startFight();
 
-            //TODO is already fighting
+        var otherSquad = coll.GetComponent<Squad>();
+        
+        // Check if colliding objects is an opponent
+        if (otherSquad && otherSquad._player != _player && isFighting == false && otherSquad.isFighting == false)
+        {
+            CurrentOpponent = otherSquad;
+            fightManager.newFight(this, CurrentOpponent);
         }
             //coll.gameObject.SendMessage("ApplyDamage", 10);
             
@@ -248,13 +243,11 @@ public class Squad : MonoBehaviour {
         if(isLooting)
         {
             isLooting = false;
-
             CurrentDoor.doorIsClosed = true;
         }
 
         // Set speed to 0
         curMoveSpeed = 0.0f;
-        fightManager.newFight(this, CurrentOpponent);
     }
 
     public void lostFight()
@@ -321,4 +314,6 @@ public class Squad : MonoBehaviour {
 
         playerID = _player.PlayerId;
     }
+
+    public PlayerController Player { get { return _player; } }
 }
