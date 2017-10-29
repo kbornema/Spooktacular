@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Squad : MonoBehaviour 
-{
-
+{   
     /*
     [Header("Movement")]
     public  mPath currentPath;
@@ -122,15 +121,31 @@ public class Squad : MonoBehaviour
     // Current gathered loot
     [SerializeField, ReadOnly]
     private int currentGroupLoot = 0;
-    public int CurrentGroupLoot { get { return currentGroupLoot; } set { currentGroupLoot = value; } }
+    public int CurrentGroupLoot { get { return currentGroupLoot; } set { SetCurrenetGroupLoot(value);} }
+
+    private void SetCurrenetGroupLoot(int value)
+    {
+        if (value < 0)
+            return;
+
+        int delta = value - currentGroupLoot;
+
+        Vector2 up = new Vector2(0, 1);
+
+        float range = Mathf.PI * 0.5f;
+
+        Vector2 newUp = up.Rotate((Random.value - 0.5f) * range);
+
+        GameManager.Instance.SpawnText(transform.position, delta, _player.PlayerColor).SetMoveAxis(newUp);
+        currentGroupLoot = value;
+    }
 
     [Header("Other")]
     [SerializeField, ReadOnly]
     private PlayerController _player;
 
     public int playerID;
-
-
+    
     private bool unloading = false;
 
     // Current allowed (rolled) candy
