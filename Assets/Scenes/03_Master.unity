@@ -29347,6 +29347,7 @@ MonoBehaviour:
   - {fileID: 1811561866}
   Frequency: 5
   LightBackTime: 5
+  _blackOutAudio: {fileID: 8300000, guid: 083a96ae7a6a9324ba15980467cc5973, type: 3}
 --- !u!1001 &1785020476
 Prefab:
   m_ObjectHideFlags: 0

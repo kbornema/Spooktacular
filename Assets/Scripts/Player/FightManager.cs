@@ -37,8 +37,7 @@ public class FightManager : MonoBehaviour {
     {
         currentFight.firstPlayer.startFight();
         currentFight.secondPlayer.startFight();
-
-        print("start fight" + currentFight.firstPlayer.Player.name + " vs "+  currentFight.secondPlayer.Player.name);
+        
         bool teamOneWins = false;
         // TODO startClap
         yield return new WaitForSeconds(4.5f);

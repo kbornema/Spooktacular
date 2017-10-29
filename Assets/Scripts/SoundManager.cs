@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -42,17 +42,17 @@ public class SoundManager : AManager<SoundManager> {
         Destroy(source);
     }
 
-    public void playAndDestroy(AudioClip soundFile)
+    public void playAndDestroy(AudioClip soundFile, float volume)
     {
         AudioSource audioPlayer = getPlayer(soundFile);
-        StartCoroutine(PlaySound(soundFile));
+        audioPlayer.volume = volume;
+        StartCoroutine(PlaySound(audioPlayer));
     }
 
-    IEnumerator PlaySound(AudioClip soundFile)
+    IEnumerator PlaySound(AudioSource audioSource)
     {
-        AudioSource player = getPlayer(soundFile);
-        player.Play();
-        yield return new WaitForSeconds(player.clip.length);
-        returnSource(player);
+        audioSource.Play();
+        yield return new WaitForSeconds(audioSource.clip.length);
+        returnSource(audioSource);
     }
 }
