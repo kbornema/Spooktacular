@@ -64,10 +64,13 @@ public class PlayerController : MonoBehaviour
         else
         {
             _selectedSquadId = i;
-            SelectionArrowInstance.SetActive(true);
-            SelectionArrowInstance.transform.SetParent(squads[i].transform);
 
-            SelectionArrowInstance.transform.localPosition = new Vector3(0.0f, 1.5f, 0.0f);
+            if (SelectionArrowInstance)
+            {
+                SelectionArrowInstance.SetActive(true);
+                SelectionArrowInstance.transform.SetParent(squads[i].transform);
+                SelectionArrowInstance.transform.localPosition = new Vector3(0.0f, 1.5f, 0.0f);
+            }
         }
     }
 

@@ -20,7 +20,7 @@ public class GameManager : AManager<GameManager>
     [SerializeField]
     private Squad _squadPrefab;
     public Squad SquadPrefab { get { return _squadPrefab; } }
-    public TileMapcontroller Map;
+    private TileMapcontroller Map;
     public InputController inputController;
 
     public FightManager fightManager;
@@ -60,15 +60,12 @@ public class GameManager : AManager<GameManager>
 
         //Only setup the game of the scene is the gameplay scene and there are no players yet:
         if (NumberOfPlayer == 0 )
-        {
-
+        {   
             if(SceneManager.GetActiveScene().name.Equals(playScene))
                 SetupGame(_playerIds);
             else
                 Debug.LogWarning("Could not automatically start game. Did you setup playScene in GameManager?", this);
         }
-
-        Score = new int[players.Length];
     }
 
     private void Start()
@@ -110,6 +107,7 @@ public class GameManager : AManager<GameManager>
 
     public void StartGame()
     {
+        Score = new int[players.Length];
         CreateSquads();
         _gameIsRunning = true;
     }
@@ -205,10 +203,7 @@ public class GameManager : AManager<GameManager>
         Score[playerID] += points;
         UiManager.Instance.UpdateScore(playerID, Score[playerID]);
     }
-
-
-
-
+    
     public PlayerController[] GetPlayers()
     {
         return players;
@@ -220,5 +215,11 @@ public class GameManager : AManager<GameManager>
         instance.transform.position = startPos;
         instance.Set(value.ToString(), color);
         return instance;
+    }
+
+    public void SetMap(TileMapcontroller tileMapcontroller)
+    {
+        this.Map = tileMapcontroller;
+        StartGame();
     }
 }

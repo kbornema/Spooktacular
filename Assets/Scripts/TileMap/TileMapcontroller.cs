@@ -78,6 +78,11 @@ public class TileMapcontroller : MonoBehaviour {
     }
 	
 
+    void Start()
+    {
+        GameManager.Instance.SetMap(this);
+    }
+
     
     public void GenerateWayPoints()
     {   

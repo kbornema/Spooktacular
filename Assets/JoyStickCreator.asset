@@ -27,8 +27,8 @@ MonoBehaviour:
   - Button4_
   - RB_
   - LB_
-  - Start_
   - Select_
+  - Start_
   _keyboardButtons:
   - 1
   - 2
@@ -36,8 +36,8 @@ MonoBehaviour:
   - 4
   - q
   - e
-  - space
   - escape
+  - space
   _keyHorizontalPos: right
   _keyHorizontalNeg: left
   _keyVerticalPos: up

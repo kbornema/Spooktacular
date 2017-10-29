@@ -116,7 +116,7 @@ public class FightManager : MonoBehaviour {
 
         if (teamOneWins)
         {
-            int possiblePayout = currentFight.secondPlayer.CurrentGroupLoot - 5;
+            int possiblePayout = currentFight.secondPlayer.CurrentGroupLoot - 0;
             if (possiblePayout < 0)
                 possiblePayout = 0;
             currentFight.firstPlayer.wonFight(possiblePayout);
@@ -125,7 +125,7 @@ public class FightManager : MonoBehaviour {
         }
         else
         {
-            int possiblePayout = currentFight.secondPlayer.CurrentGroupLoot - 5;
+            int possiblePayout = currentFight.secondPlayer.CurrentGroupLoot - 0;
             if (possiblePayout < 0)
                 possiblePayout = 0;
             currentFight.secondPlayer.wonFight(possiblePayout);

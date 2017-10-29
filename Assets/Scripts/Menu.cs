@@ -4,9 +4,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour 
-{   
+{
+    public string sceneName = "02_Lobby";
+
     public void StartNewGame()
     {
-        SceneManager.LoadScene("02_Lobby");
+        SceneManager.LoadScene(sceneName);
     }
 }
